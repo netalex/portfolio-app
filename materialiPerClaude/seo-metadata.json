@@ -1,0 +1,58 @@
+{
+  "default": {
+    "title": "Alessandro Aprile - Front End Developer",
+    "description": "Senior Front End Developer specializing in Angular and modern web technologies. View my portfolio of enterprise-level projects and technical expertise.",
+    "keywords": "front end developer, angular developer, web development, typescript, javascript",
+    "image": "/assets/images/og-default.jpg",
+    "author": "Alessandro Aprile",
+    "twitterCard": "summary_large_image",
+    "twitterCreator": "@alessandroaprile"
+  },
+  "pages": {
+    "home": {
+      "title": "Alessandro Aprile - Senior Front End Developer | Portfolio",
+      "description": "Portfolio of Alessandro Aprile, a senior front end developer with over 20 years of experience in web development and enterprise applications.",
+      "keywords": "portfolio, front end developer, angular expert, web development"
+    },
+    "projects": {
+      "title": "Projects | Alessandro Aprile",
+      "description": "Explore my latest projects including enterprise applications, web development solutions, and custom design systems.",
+      "keywords": "web projects, angular applications, enterprise software, portfolio projects"
+    },
+    "skills": {
+      "title": "Skills & Expertise | Alessandro Aprile",
+      "description": "Comprehensive overview of my technical skills including Angular, TypeScript, React, and modern web development technologies.",
+      "keywords": "technical skills, programming languages, web technologies, development tools"
+    },
+    "experience": {
+      "title": "Professional Experience | Alessandro Aprile",
+      "description": "Details of my professional experience working with leading companies on enterprise-level web applications.",
+      "keywords": "work experience, professional history, career timeline"
+    },
+    "blog": {
+      "title": "Technical Blog | Alessandro Aprile",
+      "description": "Articles and insights about front end development, best practices, and modern web technologies.",
+      "keywords": "technical blog, web development articles, programming tutorials"
+    },
+    "contact": {
+      "title": "Contact | Alessandro Aprile",
+      "description": "Get in touch with me for professional opportunities or collaborations.",
+      "keywords": "contact, hire developer, professional collaboration"
+    },
+    "designSystem": {
+      "title": "Design System | Alessandro Aprile",
+      "description": "Documentation of my custom-built design system using Angular CDK and modern web technologies.",
+      "keywords": "design system, UI components, frontend architecture"
+    }
+  },
+  "dynamicContent": {
+    "project": {
+      "titleTemplate": "%s | Projects | Alessandro Aprile",
+      "descriptionTemplate": "Detailed overview of %s, including technologies used and key features."
+    },
+    "blogPost": {
+      "titleTemplate": "%s | Blog | Alessandro Aprile",
+      "descriptionTemplate": "%s - Read more about front end development insights and experiences."
+    }
+  }
+}

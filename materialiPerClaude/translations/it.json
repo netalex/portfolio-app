@@ -1,0 +1,78 @@
+{
+  "navigation": {
+    "home": "Home",
+    "projects": "Progetti",
+    "skills": "Competenze",
+    "experience": "Esperienza",
+    "blog": "Blog",
+    "contact": "Contatti",
+    "designSystem": "Design System"
+  },
+  "home": {
+    "hero": {
+      "title": "Sviluppatore Front End",
+      "subtitle": "Creo Esperienze Utente con Tecnologie Web Moderne",
+      "cta": "Guarda i Miei Lavori"
+    },
+    "about": {
+      "title": "Chi Sono",
+      "description": "Con oltre vent'anni di esperienza nell'IT, mi specializzo nella creazione di soluzioni frontend robuste e scalabili utilizzando Angular e tecnologie web moderne.",
+      "location": "Basato in Italia, lavoro da remoto",
+      "availability": "Disponibile per nuove opportunità"
+    }
+  },
+  "projects": {
+    "title": "Progetti",
+    "filters": {
+      "all": "Tutti",
+      "featured": "In Evidenza",
+      "web": "Sviluppo Web",
+      "enterprise": "Enterprise"
+    },
+    "viewProject": "Vedi Progetto",
+    "visitSite": "Visita il Sito",
+    "viewCode": "Vedi il Codice"
+  },
+  "skills": {
+    "title": "Competenze",
+    "technicalSkills": "Competenze Tecniche",
+    "softSkills": "Soft Skills",
+    "languages": "Lingue",
+    "yearsExperience": "Anni di Esperienza",
+    "proficiencyLevel": "Livello di Competenza"
+  },
+  "experience": {
+    "title": "Esperienza Lavorativa",
+    "current": "Attuale",
+    "viewDetails": "Vedi Dettagli",
+    "technologies": "Tecnologie Utilizzate",
+    "duration": "Durata"
+  },
+  "contact": {
+    "title": "Contattami",
+    "form": {
+      "name": "Nome",
+      "email": "Email",
+      "message": "Messaggio",
+      "send": "Invia Messaggio",
+      "sending": "Invio in corso...",
+      "success": "Messaggio inviato con successo!",
+      "error": "Errore nell'invio del messaggio. Riprova."
+    }
+  },
+  "designSystem": {
+    "title": "Design System",
+    "introduction": "Introduzione",
+    "components": "Componenti",
+    "patterns": "Pattern",
+    "guidelines": "Linee Guida"
+  },
+  "common": {
+    "loading": "Caricamento...",
+    "error": "Errore",
+    "retry": "Riprova",
+    "readMore": "Leggi di Più",
+    "showMore": "Mostra di Più",
+    "showLess": "Mostra Meno"
+  }
+}

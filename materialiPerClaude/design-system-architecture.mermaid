@@ -1,0 +1,63 @@
+graph TB
+    subgraph Foundations
+        T[Typography]
+        C[Colors]
+        S[Spacing]
+        G[Grid]
+        I[Icons]
+    end
+
+    subgraph Atoms
+        B[Button]
+        I[Input]
+        L[Label]
+        IC[Icon]
+        TX[Text]
+    end
+
+    subgraph Molecules
+        F[Form Field]
+        CD[Card]
+        AL[Alert]
+        MD[Modal]
+        NV[Navigation Item]
+    end
+
+    subgraph Organisms
+        FRM[Form]
+        HDR[Header]
+        FTR[Footer]
+        SB[Sidebar]
+        TB[Toolbar]
+    end
+
+    subgraph Templates
+        LP[Landing Page]
+        DP[Detail Page]
+        GP[Grid Page]
+        PP[Profile Page]
+    end
+
+    subgraph Infrastructure
+        TH[Theme Service]
+        DS[Design Token Service]
+        AS[Animation Service]
+        LS[Layout Service]
+    end
+
+    Foundations --> Atoms
+    Atoms --> Molecules
+    Molecules --> Organisms
+    Organisms --> Templates
+    Infrastructure --> Foundations
+    Infrastructure --> Atoms
+    Infrastructure --> Molecules
+    Infrastructure --> Organisms
+
+    classDef foundation fill:#f9f9f9,stroke:#333,stroke-width:2px
+    classDef component fill:#e6f3ff,stroke:#0066cc,stroke-width:2px
+    classDef service fill:#f9e6ff,stroke:#6600cc,stroke-width:2px
+    
+    class T,C,S,G,I foundation
+    class B,I,L,IC,TX,F,CD,AL,MD,NV,FRM,HDR,FTR,SB,TB component
+    class TH,DS,AS,LS service

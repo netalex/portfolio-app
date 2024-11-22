@@ -1,0 +1,78 @@
+{
+  "navigation": {
+    "home": "Home",
+    "projects": "Projects",
+    "skills": "Skills",
+    "experience": "Experience",
+    "blog": "Blog",
+    "contact": "Contact",
+    "designSystem": "Design System"
+  },
+  "home": {
+    "hero": {
+      "title": "Front End Developer",
+      "subtitle": "Crafting User Experiences with Modern Web Technologies",
+      "cta": "View My Work"
+    },
+    "about": {
+      "title": "About Me",
+      "description": "With over two decades of experience in IT, I specialize in creating robust and scalable frontend solutions using Angular and modern web technologies.",
+      "location": "Based in Italy, working remotely",
+      "availability": "Available for new opportunities"
+    }
+  },
+  "projects": {
+    "title": "Projects",
+    "filters": {
+      "all": "All",
+      "featured": "Featured",
+      "web": "Web Development",
+      "enterprise": "Enterprise"
+    },
+    "viewProject": "View Project",
+    "visitSite": "Visit Site",
+    "viewCode": "View Code"
+  },
+  "skills": {
+    "title": "Skills",
+    "technicalSkills": "Technical Skills",
+    "softSkills": "Soft Skills",
+    "languages": "Languages",
+    "yearsExperience": "Years of Experience",
+    "proficiencyLevel": "Proficiency Level"
+  },
+  "experience": {
+    "title": "Work Experience",
+    "current": "Current",
+    "viewDetails": "View Details",
+    "technologies": "Technologies Used",
+    "duration": "Duration"
+  },
+  "contact": {
+    "title": "Contact Me",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "send": "Send Message",
+      "sending": "Sending...",
+      "success": "Message sent successfully!",
+      "error": "Error sending message. Please try again."
+    }
+  },
+  "designSystem": {
+    "title": "Design System",
+    "introduction": "Introduction",
+    "components": "Components",
+    "patterns": "Patterns",
+    "guidelines": "Guidelines"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "retry": "Retry",
+    "readMore": "Read More",
+    "showMore": "Show More",
+    "showLess": "Show Less"
+  }
+}

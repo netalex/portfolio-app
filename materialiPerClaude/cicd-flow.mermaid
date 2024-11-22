@@ -1,0 +1,53 @@
+flowchart TD
+    subgraph Development
+        LC[Local Changes]
+        TC[Run Tests]
+        LB[Local Build]
+    end
+
+    subgraph GitHub Actions
+        PR[Pull Request]
+        CI[CI Pipeline]
+        LINT[Lint Check]
+        UT[Unit Tests]
+        E2E[E2E Tests]
+        BUILD[Production Build]
+        PERF[Performance Check]
+    end
+
+    subgraph Deployment
+        STAGE[Staging Deploy]
+        PROD[Production Deploy]
+        CDN[CDN Cache]
+        PWA[PWA Update]
+    end
+
+    subgraph Monitoring
+        LOG[Logging]
+        METRICS[Performance Metrics]
+        ERROR[Error Tracking]
+    end
+
+    LC --> TC
+    TC --> LB
+    LB --> PR
+    PR --> CI
+    CI --> LINT
+    LINT --> UT
+    UT --> E2E
+    E2E --> BUILD
+    BUILD --> PERF
+    PERF --> STAGE
+    STAGE -- Approval --> PROD
+    PROD --> CDN
+    PROD --> PWA
+    PROD --> LOG
+    PROD --> METRICS
+    PROD --> ERROR
+
+    classDef process fill:#f9f,stroke:#333,stroke-width:2px
+    classDef check fill:#bbf,stroke:#333,stroke-width:2px
+    classDef deploy fill:#bfb,stroke:#333,stroke-width:2px
+    class LC,TC,LB process
+    class LINT,UT,E2E,PERF check
+    class STAGE,PROD,CDN,PWA deploy

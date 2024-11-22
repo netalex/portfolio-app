@@ -1,0 +1,55 @@
+graph TB
+    subgraph Browser
+        SW[Service Worker]
+        LC[Local Cache]
+        IDB[IndexedDB]
+        LS[Local Storage]
+    end
+
+    subgraph Cache Strategies
+        NET[Network First]
+        CACHE[Cache First]
+        STALE[Stale While Revalidate]
+        RACE[Race]
+    end
+
+    subgraph Resources
+        STATIC[Static Assets]
+        API[API Responses]
+        IMAGES[Images]
+        FONTS[Fonts]
+    end
+
+    subgraph Optimization
+        LAZY[Lazy Loading]
+        PRELOAD[Preloading]
+        PREFETCH[Prefetching]
+    end
+
+    STATIC --> CACHE
+    API --> STALE
+    IMAGES --> NET
+    FONTS --> RACE
+
+    CACHE --> SW
+    STALE --> SW
+    NET --> SW
+    RACE --> SW
+
+    SW --> LC
+    SW --> IDB
+    SW --> LS
+
+    LAZY --> STATIC
+    PRELOAD --> FONTS
+    PREFETCH --> API
+
+    classDef strategy fill:#f9f,stroke:#333,stroke-width:2px
+    classDef storage fill:#bbf,stroke:#333,stroke-width:2px
+    classDef resource fill:#bfb,stroke:#333,stroke-width:2px
+    classDef opt fill:#fbf,stroke:#333,stroke-width:2px
+
+    class NET,CACHE,STALE,RACE strategy
+    class SW,LC,IDB,LS storage
+    class STATIC,API,IMAGES,FONTS resource
+    class LAZY,PRELOAD,PREFETCH opt

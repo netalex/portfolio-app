@@ -1,0 +1,71 @@
+import argparse
+import logging
+import os
+import subprocess
+from datetime import datetime
+
+logging.basicConfig(level=logging.INFO)
+
+def is_binary_file(file_path):
+    # List of common image and binary file extensions
+    binary_extensions = ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.ico', '.svg', '.pdf', '.doc', '.docx', '.xls', '.xlsx', '.ppt', '.pptx', '.zip', '.tar', '.gz', '.rar', '.7z', '.exe', '.dll', '.so', '.dylib']
+    _, extension = os.path.splitext(file_path)
+    return extension.lower() in binary_extensions
+
+def generate_markdown(root_dir, output_file, include_prompt):
+    command = ["git", "log", "-10"]
+    commandResult = subprocess.run(command, capture_output=True, text=True, cwd=root_dir)
+
+    excluded_dirs = ['node_modules', '.git', '.idea', 'dist', 'out', 'build', '.angular']
+    excluded_files = ['.gitignore', '.editorconfig', 'package-lock.json', 'tsconfig.json', 'tslint.json', 'gerarchia-prodotto-data.json']
+
+    with open(output_file, 'w', encoding='utf-8') as f:
+        if include_prompt:
+            f.write("# Prompt\n\n")
+            f.write("""Sei un esperto di Angular 15 con una vasta conoscenza di Git, Node.js, TypeScript, Angular Material, RxJS e NgRx. In questo file Markdown ti fornisco l'intero codice di un progetto Angular per un'applicazione front end che consente il caricamento di file CSV su un database Oracle attraverso un backend Java Spring Boot (db e be non forniti). Il file è strutturato in modo che ogni sezione riporti il percorso relativo di un file specifico del progetto, seguito dal relativo snippet di codice. Trovi la lista delle librerie e le loro versioni esatte nello snippet di "package.json". Utilizza queste informazioni come contesto per assistere con domande, suggerimenti e best practice riguardanti il progetto. Se qualche cosa non ti è chiara, chiedimi maggiori informazoni. Nelle tue risposte, segui le best practice di Angular, fornisci spiegazioni chiare e dettagliate, includi esempi di codice quando necessario e suggerisci eventuali ottimizzazioni o miglioramenti del codice. Se rilevi potenziali problemi o bug nel codice fornito, ti prego di segnalarli e proporre soluzioni appropriate. Al termine di ogni risposta, indica quanti token disponibili mi restano.""")
+            f.write("\n\n")
+        f.write("# Ultimi 10 commit message, per riferimento")
+        f.write("\n\n")
+        f.write(commandResult.stdout)
+        f.write("\n\n")
+        f.write("# Codice del progetto")
+        f.write("\n\n")
+        for dirpath, dirnames, filenames in os.walk(root_dir):
+            dirnames[:] = [d for d in dirnames if d not in excluded_dirs]
+
+            for filename in filenames:
+                file_path = os.path.join(dirpath, filename)
+                if not is_binary_file(file_path) and filename.endswith(('.ts', '.html', '.css', '.scss', '.json')) and filename not in excluded_files:
+                    relative_path = os.path.relpath(file_path, root_dir)
+
+                    f.write(f"## {relative_path}\n\n")
+                    f.write("```" + os.path.splitext(filename)[1][1:] + "\n")
+
+                    with open(file_path, 'r', encoding='utf-8') as code_file:
+                        f.write(code_file.read())
+
+                    f.write("\n```\n\n")
+
+def main():
+    parser = argparse.ArgumentParser(description="Generate Markdown file for Angular project")
+    parser.add_argument("root_directory", help="Root directory of the Angular project")
+    parser.add_argument("-p", "--prompt", action="store_true", help="Include prompt in the Markdown file")
+    args = parser.parse_args()
+
+    root_directory = args.root_directory
+    include_prompt = args.prompt
+
+    now = datetime.now()
+    formatted_now = now.strftime('%Y-%m-%d_%H-%M-%S')
+
+    output_file = f"project_code{'_include_prompt' if include_prompt else ''}{formatted_now}.md"
+
+    logging.info(f"Generating Markdown file for {root_directory}...")
+    generate_markdown(root_directory, output_file, include_prompt)
+    logging.info(f"Markdown file generated: {output_file}")
+
+if __name__ == "__main__":
+    main()
+    
+    # usage example
+    # #python generate_project_markdown.py /path/to/angular/project [-p|--prompt]

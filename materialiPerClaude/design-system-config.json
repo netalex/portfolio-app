@@ -1,0 +1,116 @@
+{
+  "colors": {
+    "primary": {
+      "main": "#007bff",
+      "light": "#4dabf5",
+      "dark": "#0056b3",
+      "contrast": "#ffffff"
+    },
+    "secondary": {
+      "main": "#6c757d",
+      "light": "#868e96",
+      "dark": "#545b62",
+      "contrast": "#ffffff"
+    },
+    "success": {
+      "main": "#28a745",
+      "light": "#34ce57",
+      "dark": "#1e7e34",
+      "contrast": "#ffffff"
+    },
+    "error": {
+      "main": "#dc3545",
+      "light": "#e4606d",
+      "dark": "#bd2130",
+      "contrast": "#ffffff"
+    }
+  },
+  "typography": {
+    "fontFamily": {
+      "primary": "'Inter', sans-serif",
+      "secondary": "'Roboto', sans-serif",
+      "monospace": "'Fira Code', monospace"
+    },
+    "fontSize": {
+      "base": "16px",
+      "scale": 1.25,
+      "levels": {
+        "h1": "2.488rem",
+        "h2": "2.074rem",
+        "h3": "1.728rem",
+        "h4": "1.44rem",
+        "h5": "1.2rem",
+        "body": "1rem",
+        "small": "0.833rem"
+      }
+    },
+    "fontWeight": {
+      "light": 300,
+      "regular": 400,
+      "medium": 500,
+      "semibold": 600,
+      "bold": 700
+    },
+    "lineHeight": {
+      "tight": 1.2,
+      "normal": 1.5,
+      "loose": 1.8
+    }
+  },
+  "spacing": {
+    "unit": 8,
+    "scale": {
+      "xs": 0.25,
+      "sm": 0.5,
+      "md": 1,
+      "lg": 1.5,
+      "xl": 2,
+      "xxl": 3
+    }
+  },
+  "breakpoints": {
+    "xs": "320px",
+    "sm": "576px",
+    "md": "768px",
+    "lg": "992px",
+    "xl": "1200px",
+    "xxl": "1400px"
+  },
+  "components": {
+    "button": {
+      "borderRadius": "4px",
+      "sizes": {
+        "small": {
+          "padding": "0.25rem 0.5rem",
+          "fontSize": "0.875rem"
+        },
+        "medium": {
+          "padding": "0.5rem 1rem",
+          "fontSize": "1rem"
+        },
+        "large": {
+          "padding": "0.75rem 1.5rem",
+          "fontSize": "1.125rem"
+        }
+      }
+    },
+    "card": {
+      "borderRadius": "8px",
+      "padding": "1.5rem",
+      "shadowLight": "0 2px 4px rgba(0,0,0,0.1)",
+      "shadowHover": "0 4px 8px rgba(0,0,0,0.15)"
+    }
+  },
+  "animations": {
+    "duration": {
+      "fast": "150ms",
+      "normal": "300ms",
+      "slow": "500ms"
+    },
+    "easing": {
+      "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "easeOut": "cubic-bezier(0.0, 0, 0.2, 1)",
+      "easeIn": "cubic-bezier(0.4, 0, 1, 1)"
+    }
+  }
+}

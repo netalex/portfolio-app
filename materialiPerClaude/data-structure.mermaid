@@ -1,0 +1,70 @@
+erDiagram
+    PROJECT ||--o{ TECHNOLOGY : uses
+    PROJECT ||--o{ IMAGE : contains
+    PROJECT ||--o{ LINK : has
+    PROJECT {
+        string id
+        string title
+        string description
+        date startDate
+        date endDate
+        boolean featured
+        string category
+        string status
+    }
+
+    TECHNOLOGY {
+        string id
+        string name
+        string category
+        int experienceYears
+    }
+
+    SKILL ||--o{ PROJECT : demonstrates
+    SKILL ||--o{ CATEGORY : belongsTo
+    SKILL {
+        string id
+        string name
+        int level
+        int yearsOfExperience
+        string description
+        array keywords
+    }
+
+    EXPERIENCE ||--o{ PROJECT : includes
+    EXPERIENCE ||--o{ TECHNOLOGY : utilizes
+    EXPERIENCE {
+        string id
+        string company
+        string position
+        date startDate
+        date endDate
+        string description
+        string location
+        boolean current
+    }
+
+    BLOG-POST ||--o{ TAG : tagged
+    BLOG-POST ||--o{ CATEGORY : belongsTo
+    BLOG-POST {
+        string id
+        string title
+        string content
+        string excerpt
+        date publishDate
+        date lastModified
+        string author
+        int readingTime
+        boolean featured
+    }
+
+    DESIGN-SYSTEM ||--o{ COMPONENT : contains
+    DESIGN-SYSTEM ||--o{ PATTERN : includes
+    DESIGN-SYSTEM {
+        string id
+        string name
+        string version
+        object theme
+        object typography
+        object spacing
+    }

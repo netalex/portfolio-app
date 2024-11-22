@@ -1,0 +1,62 @@
+graph TB
+    subgraph Client Application
+        UI[UI Layer]
+        FM[Feature Modules]
+        SM[Shared Module]
+        CM[Core Module]
+        DS[Design System]
+        
+        UI --> FM
+        FM --> SM
+        FM --> CM
+        UI --> DS
+        SM --> DS
+    end
+
+    subgraph State Management
+        LS[Local Storage]
+        LDB[LokiJS DB]
+        GUN[GUN.js]
+        
+        CM --> LS
+        CM --> LDB
+        CM --> GUN
+    end
+
+    subgraph External Services
+        GH[GitHub CMS]
+        PWA[Service Worker]
+        CDN[CDN Assets]
+        
+        CM --> GH
+        UI --> PWA
+        UI --> CDN
+    end
+
+    subgraph Development Tools
+        TS[TypeScript]
+        SCSS[SCSS]
+        CDK[Angular CDK]
+        
+        UI --> TS
+        UI --> SCSS
+        DS --> CDK
+    end
+
+    subgraph Testing Infrastructure
+        UNIT[Unit Tests]
+        E2E[E2E Tests]
+        COMP[Component Tests]
+        
+        FM --> UNIT
+        UI --> E2E
+        DS --> COMP
+    end
+
+    classDef primary fill:#f96,stroke:#333,stroke-width:2px;
+    classDef secondary fill:#9cf,stroke:#333,stroke-width:2px;
+    classDef external fill:#fcf,stroke:#333,stroke-width:2px;
+    
+    class UI,FM,CM primary;
+    class DS,SM secondary;
+    class GH,PWA,CDN external;

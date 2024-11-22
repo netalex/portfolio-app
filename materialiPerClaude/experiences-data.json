@@ -1,0 +1,69 @@
+{
+  "workExperiences": [
+    {
+      "id": "volo-consulting-2024",
+      "company": "Volo Consulting/Orangee S.r.l",
+      "position": "Front End Developer (Angular)",
+      "location": "Italy",
+      "type": "Contract",
+      "period": {
+        "start": "2024-07",
+        "end": "2024-10"
+      },
+      "current": false,
+      "description": "Worked on three interconnected projects for the Italian Ministry of Justice's Joint Forces Command, focusing on DNA analysis management systems",
+      "achievements": [
+        "Implemented critical change requests ensuring seamless integration",
+        "Conducted thorough bug fixes improving system stability",
+        "Developed new features based on evolving requirements",
+        "Collaborated with cross-functional teams",
+        "Maintained code consistency across multiple applications"
+      ],
+      "technologies": [
+        "Angular",
+        "TypeScript",
+        "REST API",
+        "Angular Material"
+      ],
+      "keywords": ["Government", "Enterprise Software", "Team Collaboration"]
+    },
+    {
+      "id": "thinkopen-2018",
+      "company": "THINKOPEN",
+      "position": "Front End Developer",
+      "location": "Milan, Italy",
+      "type": "Full-time",
+      "period": {
+        "start": "2018-02",
+        "end": "2024-07"
+      },
+      "current": false,
+      "projects": [
+        {
+          "name": "ICCREA Banking Application",
+          "description": "Maintained and updated internal banking application for bulk CSV uploads",
+          "achievements": [
+            "Improved front-end performance",
+            "Implemented features within tight deadlines",
+            "Integrated Git hooks for continuous delivery"
+          ]
+        },
+        {
+          "name": "Insurance Dashboard",
+          "description": "Developed centralized registry branches dashboard tool",
+          "achievements": [
+            "Achieved 80% test coverage",
+            "Mentored junior developers",
+            "Integrated specialized components"
+          ]
+        }
+      ],
+      "technologies": [
+        "Angular",
+        "TypeScript",
+        "PrimeNG",
+        "Git"
+      ]
+    }
+  ]
+}

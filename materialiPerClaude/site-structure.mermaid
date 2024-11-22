@@ -1,0 +1,38 @@
+graph TD
+    A[Home] --> B[Progetti]
+    A --> C[Competenze]
+    A --> D[Esperienze Lavorative]
+    A --> E[Blog]
+    A --> F[Contatti]
+    A --> G[Design System]
+    
+    B --> B1[Lista Progetti]
+    B --> B2[Dettaglio Progetto]
+    
+    C --> C1[Competenze Tecniche]
+    C --> C2[Soft Skills]
+    
+    D --> D1[Timeline Esperienze]
+    D --> D2[Dettaglio Esperienza]
+    
+    E --> E1[Lista Articoli]
+    E --> E2[Articolo Singolo]
+    
+    G --> G1[Introduzione]
+    G --> G2[Principi di Design]
+    G --> G3[Componenti UI]
+    G --> G4[Patterns]
+    G --> G5[Accessibilità]
+    
+    G3 --> G3A[Button]
+    G3 --> G3B[Card]
+    G3 --> G3C[Form Elements]
+    G3 --> G3D[Navigation]
+    
+    H[Header] --> A
+    I[Footer] --> A
+    
+    classDef highlight fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef designSystem fill:#bbf,stroke:#333,stroke-width:2px;
+    class A highlight;
+    class G designSystem;

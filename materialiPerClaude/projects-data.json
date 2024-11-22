@@ -1,0 +1,72 @@
+{
+  "projects": [
+    {
+      "id": "portfolio-2024",
+      "title": "Personal Portfolio Website",
+      "shortDescription": "A modern portfolio website built with Angular and custom design system",
+      "fullDescription": "Advanced portfolio website showcasing frontend development skills. Features include a custom design system, interactive visualizations, and multi-language support.",
+      "technologies": [
+        "Angular",
+        "TypeScript",
+        "SCSS",
+        "Angular CDK",
+        "GitHub API",
+        "LokiJS",
+        "Mermaid.js"
+      ],
+      "role": "Full Stack Developer",
+      "duration": {
+        "start": "2024-01",
+        "end": "2024-03"
+      },
+      "features": [
+        "Custom Design System",
+        "Interactive Project Showcase",
+        "Multi-language Support",
+        "PWA Implementation",
+        "Performance Optimization"
+      ],
+      "links": {
+        "github": "https://github.com/netalex/portfolio-2024",
+        "live": "https://alessandroaprile.dev"
+      },
+      "images": {
+        "thumbnail": "/assets/images/projects/portfolio/thumbnail.webp",
+        "screenshots": [
+          "/assets/images/projects/portfolio/screenshot1.webp",
+          "/assets/images/projects/portfolio/screenshot2.webp"
+        ]
+      },
+      "category": "Web Development",
+      "featured": true,
+      "status": "In Progress"
+    },
+    {
+      "id": "dna-analysis-system",
+      "title": "DNA Analysis Management System",
+      "shortDescription": "System for Italian Ministry of Justice's Joint Forces Command",
+      "fullDescription": "Developed interconnected projects for DNA analysis management, implementing critical features and ensuring seamless integration.",
+      "technologies": [
+        "Angular",
+        "TypeScript",
+        "REST API",
+        "Angular Material",
+        "RxJS"
+      ],
+      "role": "Frontend Developer",
+      "duration": {
+        "start": "2024-07",
+        "end": "2024-10"
+      },
+      "features": [
+        "Complex Data Visualization",
+        "Real-time Updates",
+        "Advanced Search Functionality",
+        "Secure Authentication"
+      ],
+      "category": "Enterprise Software",
+      "featured": true,
+      "status": "Completed"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+sequenceDiagram
+    participant U as User
+    participant C as Client App
+    participant A as Auth Service
+    participant G as GitHub API
+    participant DB as Local Storage
+
+    U->>C: Access Admin Area
+    C->>DB: Check Local Token
+    alt Has Valid Token
+        DB-->>C: Return Token
+        C->>G: Validate Token
+        G-->>C: Token Valid
+        C-->>U: Grant Access
+    else No Token/Invalid
+        DB-->>C: No Token/Expired
+        C->>A: Redirect to Auth
+        A->>G: GitHub OAuth Flow
+        G-->>A: Auth Code
+        A->>G: Exchange for Token
+        G-->>A: Access Token
+        A->>C: Return Token
+        C->>DB: Store Token
+        C-->>U: Grant Access
+    end
+
+    note over U,C: Admin actions require valid token
+    note over C,G: Token refresh happens automatically
+    note over A: Using GitHub as auth provider for admin

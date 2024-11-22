@@ -1,0 +1,100 @@
+{
+  "technicalSkills": [
+    {
+      "category": "Frontend Frameworks",
+      "skills": [
+        {
+          "name": "Angular",
+          "level": 95,
+          "yearsOfExperience": 6,
+          "description": "Advanced experience with Angular, including complex enterprise applications",
+          "keywords": ["Angular Material", "NgRx", "RxJS", "Angular CDK"],
+          "featured": true
+        },
+        {
+          "name": "React",
+          "level": 80,
+          "yearsOfExperience": 4,
+          "description": "Experience with React, including React Native for mobile development",
+          "keywords": ["Redux", "React Native", "Hooks", "Context API"]
+        }
+      ]
+    },
+    {
+      "category": "Languages",
+      "skills": [
+        {
+          "name": "TypeScript",
+          "level": 90,
+          "yearsOfExperience": 5,
+          "description": "Advanced TypeScript including generics and decorators",
+          "featured": true
+        },
+        {
+          "name": "JavaScript",
+          "level": 95,
+          "yearsOfExperience": 10,
+          "description": "Expert knowledge of JavaScript including ES6+ features"
+        },
+        {
+          "name": "HTML5/CSS3",
+          "level": 95,
+          "yearsOfExperience": 10,
+          "description": "Expert in semantic HTML and modern CSS including Grid and Flexbox",
+          "keywords": ["SCSS", "CSS Grid", "Flexbox", "CSS Animations"]
+        }
+      ]
+    },
+    {
+      "category": "Tools & Technologies",
+      "skills": [
+        {
+          "name": "Git",
+          "level": 85,
+          "yearsOfExperience": 8,
+          "description": "Advanced version control and collaboration"
+        },
+        {
+          "name": "DevTools",
+          "level": 90,
+          "yearsOfExperience": 8,
+          "description": "Expert in browser developer tools and debugging"
+        }
+      ]
+    }
+  ],
+  "softSkills": [
+    {
+      "name": "Team Leadership",
+      "level": 85,
+      "description": "Experience in leading development teams and mentoring junior developers"
+    },
+    {
+      "name": "Problem Solving",
+      "level": 90,
+      "description": "Strong analytical and problem-solving abilities"
+    },
+    {
+      "name": "Communication",
+      "level": 85,
+      "description": "Excellent written and verbal communication skills in multiple languages"
+    }
+  ],
+  "languages": [
+    {
+      "name": "Italian",
+      "level": "Native",
+      "code": "it"
+    },
+    {
+      "name": "English",
+      "level": "Fluent",
+      "code": "en"
+    },
+    {
+      "name": "French",
+      "level": "Fluent",
+      "code": "fr"
+    }
+  ]
+}

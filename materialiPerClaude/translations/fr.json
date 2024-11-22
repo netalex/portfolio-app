@@ -1,0 +1,78 @@
+{
+  "navigation": {
+    "home": "Accueil",
+    "projects": "Projets",
+    "skills": "Compétences",
+    "experience": "Expérience",
+    "blog": "Blog",
+    "contact": "Contact",
+    "designSystem": "Design System"
+  },
+  "home": {
+    "hero": {
+      "title": "Développeur Front End",
+      "subtitle": "Création d'Expériences Utilisateur avec les Technologies Web Modernes",
+      "cta": "Voir Mes Travaux"
+    },
+    "about": {
+      "title": "À Propos",
+      "description": "Avec plus de vingt ans d'expérience en IT, je me spécialise dans la création de solutions frontend robustes et évolutives utilisant Angular et les technologies web modernes.",
+      "location": "Basé en Italie, travail à distance",
+      "availability": "Disponible pour de nouvelles opportunités"
+    }
+  },
+  "projects": {
+    "title": "Projets",
+    "filters": {
+      "all": "Tous",
+      "featured": "En Vedette",
+      "web": "Développement Web",
+      "enterprise": "Enterprise"
+    },
+    "viewProject": "Voir le Projet",
+    "visitSite": "Visiter le Site",
+    "viewCode": "Voir le Code"
+  },
+  "skills": {
+    "title": "Compétences",
+    "technicalSkills": "Compétences Techniques",
+    "softSkills": "Soft Skills",
+    "languages": "Langues",
+    "yearsExperience": "Années d'Expérience",
+    "proficiencyLevel": "Niveau de Compétence"
+  },
+  "experience": {
+    "title": "Expérience Professionnelle",
+    "current": "Actuel",
+    "viewDetails": "Voir les Détails",
+    "technologies": "Technologies Utilisées",
+    "duration": "Durée"
+  },
+  "contact": {
+    "title": "Me Contacter",
+    "form": {
+      "name": "Nom",
+      "email": "Email",
+      "message": "Message",
+      "send": "Envoyer le Message",
+      "sending": "Envoi en cours...",
+      "success": "Message envoyé avec succès !",
+      "error": "Erreur lors de l'envoi du message. Veuillez réessayer."
+    }
+  },
+  "designSystem": {
+    "title": "Design System",
+    "introduction": "Introduction",
+    "components": "Composants",
+    "patterns": "Patterns",
+    "guidelines": "Directives"
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "retry": "Réessayer",
+    "readMore": "Lire Plus",
+    "showMore": "Afficher Plus",
+    "showLess": "Afficher Moins"
+  }
+}

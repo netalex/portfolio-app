@@ -1,0 +1,1590 @@
+# Alessandro Aprile Front End Developer Portfolio Application
+
+## Obiettivo del Progetto
+Creare un portfolio web professionale e tecnicamente avanzato che:
+- Mostri le competenze, i progetti e le esperienze di Alessandro Aprile come sviluppatore front-end
+- Incorpori un design system personalizzato basato su Angular CDK
+- Utilizzi tecnologie moderne e best practices di sviluppo
+- Sia in sé una dimostrazione pratica di competenze avanzate in sviluppo frontend
+
+## stile di sviluppo
+- **inline templates**: utilizzo di template inline per una migliore leggibilità e manutenibilità
+- **Agile**: utilizzo di metodologie agili per lo sviluppo del progetto
+- **Component-based**: utilizzo di componenti riutilizzabili e personalizzabili
+- **Data-driven**: utilizzo di dati statici e dinamici per la visualizzazione dei contenuti
+- **Performance-oriented**: ottimizzazione delle prestazioni e delle risorse
+- **Testing**: implementazione di test unitari ed E2E per garantire la qualità del codice
+- **Design System**: creazione di un design system personalizzato per la coerenza e l'efficienza
+
+
+## Stack Tecnologico
+
+### Core Framework e Linguaggi
+- Angular 19
+- TypeScript 5.5+
+- SCSS per gli stili
+- Angular CDK per componenti avanzati
+
+### Gestione dei Dati
+- LokiJS per caching locale e state management
+- GUN.js per funzionalità decentralizzate (opzionale)
+- GitHub come CMS per contenuti statici
+
+### Testing
+- Jasmine per unit testing
+- Cypress per E2E testing
+- Configurazione aggiornata per il nuovo comportamento di `ComponentFixture`
+
+### Ottimizzazioni e Performance
+- Server-side rendering con Angular Universal
+- PWA support
+- Ottimizzazione immagini integrata
+
+
+## Struttura del Sito
+1. Home
+   - Hero section con introduzione personale
+   - Highlights delle competenze chiave
+   - Progetti in evidenza
+   - Call-to-action
+2. Progetti
+   - Lista Progetti (con filtri e ricerca)
+   - Dettaglio Progetto
+3. Competenze
+   - Visualizzazione interattiva delle competenze (es. grafico radar)
+   - Competenze Tecniche
+   - Soft Skills
+4. Esperienze Lavorative
+   - Timeline interattiva delle esperienze
+   - Dettaglio Esperienza
+5. Blog (opzionale)
+   - Lista Articoli
+   - Articolo Singolo
+6. Contatti
+   - Formulario di contatto
+   - Links ai profili social e professionali
+7. Design System
+   - Introduzione e principi
+   - Componenti UI (con esempi interattivi)
+   - Patterns e best practices
+   - Accessibilità
+   - Documentazione tecnica
+8. About This Site
+   - Panoramica della struttura del sito (utilizzando Mermaid)
+   - Tecnologie utilizzate
+   - Processo di sviluppo
+
+
+## Design System
+### Componenti Chiave
+1. Button
+2. Card
+3. Form Elements (Input, Textarea, Select, Checkbox, Radio)
+4. Navigation (Menu, Breadcrumbs)
+5. Modal/Dialog
+6. Typography
+7. Color Palette
+8. Grid System
+9. Icons
+10. Tooltip
+11. Accordion
+12. Tabs
+13. Progress Indicator (Loader, Progress Bar)
+14. Alert/Notification
+
+### Implementazione
+- Utilizzare Angular CDK per funzionalità avanzate (es. Overlay per modali, A11y per accessibilità)
+- Creare componenti altamente riutilizzabili e personalizzabili
+- Implementare theming per supportare modalità chiara/scura
+
+## Struttura del Progetto
+```
+src/
+├── app/
+│   ├── core/               # Servizi e funzionalità core
+│   │   ├── services/
+│   │   ├── guards/
+│   │   └── interceptors/
+│   ├── shared/            # Componenti e utilities condivise
+│   │   ├── components/
+│   │   ├── directives/
+│   │   └── pipes/
+│   ├── features/          # Feature modules
+│   │   ├── home/
+│   │   ├── projects/
+│   │   ├── skills/
+│   │   └── experience/
+│   ├── design-system/     # Design system components
+│   │   ├── components/
+│   │   ├── styles/
+│   │   ├── ...
+│   │   └── documentation/
+│   └── data-access/       # Gestione dati e state
+│       ├── models/
+│       ├── services/
+│       └── store/
+├── assets/
+│   ├── i18n/             # File di traduzione
+│   ├── images/
+│   └── styles/
+└── environments/
+```
+
+### Struttura del Design System
+```
+src/
+└── app/
+    └── design-system/
+        ├── components/
+        │   ├── button/
+        │   ├── card/
+        │   ├── input/
+        │   ├── modal/
+        │   └── ...
+        ├── styles/
+        │   ├── _variables.scss
+        │   ├── _typography.scss
+        │   └── _themes.scss
+        ├── directives/
+        │   ├── click-outside/
+        │   └── ...
+        ├── pipes/
+        │   ├── truncate/
+        │   └── ...
+        └── documentation/
+            ├── intro.md
+            ├── components.md
+            ├── patterns.md
+            └── ...
+```
+
+
+## Configurazioni Base
+
+
+### Configurazione di Base typescript
+```json
+// tsconfig.json
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ES2022",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "useDefineForClassFields": false,
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  }
+}
+```
+
+
+### Main Entry Point
+```typescript
+// main.ts
+import { bootstrapApplication } from '@angular/platform-browser';
+import { AppComponent } from './app/app.component';
+import { appConfig } from './app/app.config';
+
+bootstrapApplication(AppComponent, appConfig)
+  .catch(err => console.error(err));
+```
+
+### Configurazione dell'Applicazione
+```typescript
+// app.config.ts
+import { ApplicationConfig } from '@angular/core';
+import { provideRouter } from '@angular/router';
+import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideClientHydration } from '@angular/platform-browser';
+
+import { routes } from './app.routes';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideRouter(routes),
+    provideHttpClient(withFetch()),
+    provideClientHydration(),
+    // Configurazioni aggiuntive per performance e ottimizzazioni
+    withHttpTransferCache({
+      includeRequestsWithAuthHeaders: false // Nuovo comportamento di default
+    }),
+    withI18nSupport() // Supporto i18n
+  ]
+};
+```
+
+### Componente Root
+```typescript
+// app.component.ts
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { HeaderComponent } from './core/components/header.component';
+import { FooterComponent } from './core/components/footer.component';
+
+@Component({
+  selector: 'app-root',
+  template: `
+    <app-header />
+    <main>
+      <router-outlet />
+    </main>
+    <app-footer />
+  `,
+  imports: [
+    RouterOutlet,
+    HeaderComponent,
+    FooterComponent
+  ]
+})
+export class AppComponent {
+  // Nota: non serve più specificare standalone: true
+}
+```
+
+# Componenti e Feature
+
+## Signal-Based Components
+
+### Componente con Signal Inputs
+```typescript
+// projects/project-card.component.ts
+import { Component, input, model, output } from '@angular/core';
+import { Project } from '../models/project.model';
+
+@Component({
+  selector: 'app-project-card',
+  template: `
+    <article class="project-card">
+      <h3>{{ title() }}</h3>
+      <p>{{ description() }}</p>
+      
+      @if (isExpanded()) {
+        <div class="project-details">
+          <ng-content />
+        </div>
+      }
+
+      <div class="actions">
+        <button (click)="toggleExpand()">
+          {{ isExpanded() ? 'Less' : 'More' }}
+        </button>
+        <button (click)="selected.emit(id())">Select</button>
+      </div>
+    </article>
+  `
+})
+export class ProjectCardComponent {
+  // Signal inputs
+  id = input.required<string>();
+  title = input.required<string>();
+  description = input<string>('No description available');
+  
+  // Model (two-way binding con signals)
+  isExpanded = model(false);
+  
+  // Output event
+  selected = output<string>();
+  
+  toggleExpand() {
+    this.isExpanded.update(v => !v);
+  }
+}
+```
+
+### Utilizzo del Let Operator
+```typescript
+// skills/skills-list.component.ts
+@Component({
+  selector: 'app-skills-list',
+  template: `
+    @for (category of skillCategories(); track category.id) {
+      @let(totalSkills = category.skills.length) {
+        <section class="skills-category">
+          <h3>{{ category.name }} ({{ totalSkills }})</h3>
+          <ul>
+            @for (skill of category.skills; track skill.id) {
+              <li>{{ skill.name }} - {{ skill.level }}%</li>
+            }
+          </ul>
+        </section>
+      }
+    }
+  `
+})
+export class SkillsListComponent {
+  skillCategories = input.required<SkillCategory[]>();
+}
+```
+
+## Gestione Stato con Signals
+
+```typescript
+// services/projects.service.ts
+import { computed, signal } from '@angular/core';
+import { inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { toSignal } from '@angular/core/rxjs-interop';
+
+export class ProjectsService {
+  private http = inject(HttpClient);
+  
+  // Signal per i progetti
+  private projectsSignal = signal<Project[]>([]);
+  
+  // Signal computed per progetti filtrati
+  filteredProjects = computed(() => {
+    return this.projectsSignal().filter(p => 
+      p.tags.includes(this.currentFilter()));
+  });
+  
+  // Signal per il filtro corrente
+  private currentFilter = signal<string>('all');
+  
+  // Conversione Observable in Signal
+  private dataFromApi = toSignal(
+    this.http.get<Project[]>('/api/projects'),
+    { initialValue: [] }
+  );
+  
+  constructor() {
+    // Sincronizzazione automatica con API
+    effect(() => {
+      this.projectsSignal.set(this.dataFromApi());
+    });
+  }
+  
+  setFilter(filter: string) {
+    this.currentFilter.set(filter);
+  }
+}
+```
+
+## Afterrender Hooks e Performance
+
+```typescript
+// components/image-gallery.component.ts
+@Component({
+  selector: 'app-image-gallery',
+  template: `
+    <div class="gallery" #gallery>
+      @for (image of images(); track image.id) {
+        <img 
+          [src]="image.url" 
+          [alt]="image.alt"
+          loading="lazy"
+          (load)="onImageLoad(image.id)"
+        />
+      }
+    </div>
+  `
+})
+export class ImageGalleryComponent {
+  private elementRef = inject(ElementRef);
+  
+  images = input.required<GalleryImage[]>();
+  
+  constructor() {
+    // Nuovo hook afterRender
+    afterRender(() => {
+      this.optimizeVisibleImages();
+    });
+  }
+  
+  private optimizeVisibleImages() {
+    const gallery = this.elementRef.nativeElement;
+    // Logica di ottimizzazione per le immagini visibili
+  }
+}
+```
+
+## Forms con Signal-based Model
+
+```typescript
+// contact/contact-form.component.ts
+@Component({
+  selector: 'app-contact-form',
+  template: `
+    <form (submit)="onSubmit()">
+      <div>
+        <label for="name">Name</label>
+        <input 
+          id="name"
+          [ngModel]="formData().name"
+          (ngModelChange)="updateName($event)"
+        />
+      </div>
+      
+      <div>
+        <label for="email">Email</label>
+        <input 
+          id="email"
+          [ngModel]="formData().email"
+          (ngModelChange)="updateEmail($event)"
+        />
+      </div>
+      
+      <button type="submit" [disabled]="!isValid()">
+        Send
+      </button>
+    </form>
+  `
+})
+export class ContactFormComponent {
+  formData = signal({
+    name: '',
+    email: ''
+  });
+  
+  isValid = computed(() => {
+    const data = this.formData();
+    return data.name.length > 0 && 
+           data.email.includes('@');
+  });
+  
+  updateName(name: string) {
+    this.formData.update(data => ({
+      ...data,
+      name
+    }));
+  }
+  
+  updateEmail(email: string) {
+    this.formData.update(data => ({
+      ...data,
+      email
+    }));
+  }
+  
+  onSubmit() {
+    if (this.isValid()) {
+      // Logica di invio
+    }
+  }
+}
+```
+
+## Routing con Nuove Feature
+
+```typescript
+// app.routes.ts
+import { Routes } from '@angular/router';
+
+export const routes: Routes = [
+  {
+    path: 'projects',
+    loadComponent: () => import('./features/projects/projects.component'),
+    resolve: {
+      // Nuovo supporto per RedirectCommand nei resolver
+      data: (route) => {
+        const id = route.paramMap.get('id');
+        if (!id) return redirectToRoute(['projects']);
+        return getProjectData(id);
+      }
+    }
+  },
+  {
+    path: 'admin',
+    // Nuova sintassi per redirectTo funzionale
+    redirectTo: (route) => {
+      const user = getCurrentUser();
+      return user?.isAdmin ? 'admin/dashboard' : 'login';
+    }
+  }
+];
+```
+
+Questi componenti e feature mostrano le principali novità di Angular 19:
+1. Signal inputs e model
+2. Sintassi `@let`
+3. Nuovo sistema di change detection
+4. Hook `afterRender`
+5. Nuove funzionalità di routing
+6. Forms con signals
+
+# Testing e Configurazioni Avanzate
+
+## Unit Testing
+
+### Setup di Base per i Test
+```typescript
+// test.base.ts
+import { TestBed, ComponentFixture } from '@angular/core/testing';
+
+export function setupTest<T>(
+  component: Type<T>,
+  imports: any[] = [],
+  providers: any[] = []
+) {
+  TestBed.configureTestingModule({
+    imports: [...imports],
+    providers: [
+      ...providers,
+      // Nuovo provider per controllare la change detection
+      provideZoneChangeDetection({
+        schedulingMode: NgZoneSchedulingMode.Async
+      })
+    ]
+  });
+
+  const fixture = TestBed.createComponent(component);
+  const instance = fixture.componentInstance;
+
+  return { fixture, instance };
+}
+```
+
+### Test di Componenti con Signals
+```typescript
+// project-card.component.spec.ts
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ProjectCardComponent } from './project-card.component';
+
+describe('ProjectCardComponent', () => {
+  let component: ProjectCardComponent;
+  let fixture: ComponentFixture<ProjectCardComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ProjectCardComponent]
+    })
+    .compileComponents();
+    
+    fixture = TestBed.createComponent(ProjectCardComponent);
+    component = fixture.componentInstance;
+    
+    // Inizializza i signal inputs
+    component.id.set('test-id');
+    component.title.set('Test Project');
+    
+    fixture.detectChanges();
+  });
+
+  it('should reflect signal input changes', () => {
+    // Arrange
+    const newTitle = 'Updated Title';
+    
+    // Act
+    component.title.set(newTitle);
+    fixture.detectChanges();
+    
+    // Assert
+    const titleElement = fixture.nativeElement.querySelector('h3');
+    expect(titleElement.textContent).toBe(newTitle);
+  });
+
+  it('should emit selected event', () => {
+    // Arrange
+    let emittedId: string | undefined;
+    component.selected.subscribe((id: string) => emittedId = id);
+    
+    // Act
+    const button = fixture.nativeElement.querySelector('button:last-child');
+    button.click();
+    
+    // Assert
+    expect(emittedId).toBe('test-id');
+  });
+});
+```
+
+### Test con afterRender e Change Detection
+```typescript
+// image-gallery.component.spec.ts
+describe('ImageGalleryComponent', () => {
+  let component: ImageGalleryComponent;
+  let fixture: ComponentFixture<ImageGalleryComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ImageGalleryComponent]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(ImageGalleryComponent);
+    component = fixture.componentInstance;
+  });
+
+  it('should optimize images after render', async () => {
+    // Arrange
+    const images = [
+      { id: '1', url: 'test1.jpg', alt: 'Test 1' },
+      { id: '2', url: 'test2.jpg', alt: 'Test 2' }
+    ];
+    component.images.set(images);
+
+    // Act
+    fixture.detectChanges();
+    
+    // Attendi che afterRender sia completato
+    await fixture.whenStable();
+    
+    // Assert
+    const imgElements = fixture.nativeElement.querySelectorAll('img');
+    expect(imgElements.length).toBe(2);
+  });
+
+  // Test con il nuovo parametro flush in fakeAsync
+  it('should handle image load events', fakeAsync(() => {
+    // Arrange
+    const spy = jasmine.createSpy('loadSpy');
+    component.onImageLoad = spy;
+
+    // Act
+    fixture.detectChanges();
+    
+    // Flush completa dopo detectChanges
+    flush();
+    
+    // Assert
+    expect(spy).toHaveBeenCalled();
+  }, true)); // nuovo parametro flush
+});
+```
+
+## E2E Testing con Cypress
+
+```typescript
+// cypress/e2e/portfolio.cy.ts
+describe('Portfolio Application', () => {
+  beforeEach(() => {
+    cy.visit('/');
+  });
+
+  it('should display projects and handle filtering', () => {
+    // Naviga alla pagina progetti
+    cy.get('[data-testid="nav-projects"]').click();
+    
+    // Verifica il caricamento iniziale
+    cy.get('[data-testid="project-card"]').should('have.length.gt', 0);
+    
+    // Testa il filtro
+    cy.get('[data-testid="filter-select"]').select('Angular');
+    
+    // Verifica che il filtro funzioni
+    cy.get('[data-testid="project-card"]')
+      .should('have.length.gt', 0)
+      .each($card => {
+        cy.wrap($card).should('contain.text', 'Angular');
+      });
+  });
+
+  it('should handle form submission', () => {
+    // Naviga al form di contatto
+    cy.get('[data-testid="nav-contact"]').click();
+    
+    // Compila il form
+    cy.get('#name').type('Test User');
+    cy.get('#email').type('test@example.com');
+    cy.get('#message').type('Test message');
+    
+    // Invia il form
+    cy.get('button[type="submit"]').click();
+    
+    // Verifica il messaggio di successo
+    cy.get('[data-testid="success-message"]')
+      .should('be.visible');
+  });
+});
+```
+
+## Configurazioni Avanzate
+
+### Performance Monitoring
+```typescript
+// monitoring.config.ts
+import { ApplicationConfig } from '@angular/core';
+
+export const monitoringConfig: ApplicationConfig = {
+  providers: [
+    // Nuovo monitoring per performance
+    providePerformanceMonitoring({
+      navigationTiming: true,
+      firstInputDelay: true,
+      largestContentfulPaint: true
+    }),
+    
+    // Tracciamento afterRender hooks
+    provideAfterRenderMonitoring()
+  ]
+};
+```
+
+### Lazy Loading Ottimizzato
+```typescript
+// app.routes.ts
+export const routes: Routes = [
+  {
+    path: 'projects',
+    // Nuovo syntax per lazy loading con preloading hint
+    loadComponent: () => 
+      import('./features/projects/projects.component')
+        .then(m => m.ProjectsComponent),
+    preloadingHint: 'high'
+  },
+  {
+    path: 'blog',
+    loadChildren: () => 
+      import('./features/blog/blog.routes')
+        .then(m => m.BLOG_ROUTES),
+    preloadingHint: 'low'
+  }
+];
+```
+
+### Configurazione i18n
+```typescript
+// i18n.config.ts
+import { ApplicationConfig } from '@angular/core';
+import { provideI18n } from '@angular/core';
+
+export const i18nConfig: ApplicationConfig = {
+  providers: [
+    provideI18n({
+      defaultLocale: 'en-US',
+      supportedLocales: ['en-US', 'it-IT', 'fr-FR'],
+      // Nuova feature per hydration i18n
+      withI18nHydration: true
+    })
+  ]
+};
+```
+
+### HTTP Caching Avanzato
+```typescript
+// http.config.ts
+import { ApplicationConfig } from '@angular/core';
+import { provideHttpClient, withFetch } from '@angular/common/http';
+
+export const httpConfig: ApplicationConfig = {
+  providers: [
+    provideHttpClient(
+      withFetch(), // Usa Fetch API
+      withHttpTransferCache({
+        // Nuovo comportamento per richieste autenticate
+        includeRequestsWithAuthHeaders: false,
+        // Cache personalizzata per specifici endpoint
+        filter: (req) => req.url.includes('/api/public')
+      })
+    )
+  ]
+};
+```
+
+### Zone Configuration
+```typescript
+// zone.config.ts
+import { ApplicationConfig } from '@angular/core';
+
+export const zoneConfig: ApplicationConfig = {
+  providers: [
+    provideZoneChangeDetection({
+      // Nuova modalità per change detection
+      schedulingMode: NgZoneSchedulingMode.Async,
+      // Configurazione per performance
+      coalesceEventChanges: true,
+      runCoalescing: true
+    })
+  ]
+};
+```
+
+Questi aggiornamenti completano l'implementazione delle nuove funzionalità di Angular 19, con particolare attenzione a:
+
+1. Testing moderno con supporto per signals
+2. Nuove configurazioni per performance e monitoring
+3. Gestione avanzata del caching HTTP
+4. Supporto i18n migliorato
+5. Configurazioni ottimizzate per zone e change detection
+
+# Design System e Integrazioni
+
+## Design System Core
+
+### Theme Provider
+```typescript
+// design-system/theme.provider.ts
+import { computed, signal } from '@angular/core';
+import { Theme, ThemeColors } from './theme.types';
+
+export class ThemeProvider {
+  private themeSignal = signal<Theme>('light');
+  
+  colors = computed(() => {
+    const theme = this.themeSignal();
+    return themeColors[theme];
+  });
+  
+  spacing = {
+    xs: '0.25rem',
+    sm: '0.5rem',
+    md: '1rem',
+    lg: '1.5rem',
+    xl: '2rem'
+  };
+  
+  typography = {
+    fontFamily: {
+      sans: 'Inter, system-ui, sans-serif',
+      mono: 'Fira Code, monospace'
+    },
+    fontSize: {
+      sm: '0.875rem',
+      base: '1rem',
+      lg: '1.125rem',
+      xl: '1.25rem'
+    }
+  };
+  
+  setTheme(theme: Theme) {
+    this.themeSignal.set(theme);
+  }
+}
+```
+
+### Base Components
+
+```typescript
+// design-system/components/button/button.component.ts
+import { Component, input } from '@angular/core';
+
+type ButtonVariant = 'primary' | 'secondary' | 'text';
+type ButtonSize = 'sm' | 'md' | 'lg';
+
+@Component({
+  selector: 'ds-button',
+  template: `
+    <button
+      [class]="computedClasses()"
+      [disabled]="disabled()"
+      [attr.data-size]="size()"
+      [attr.data-variant]="variant()"
+    >
+      @if (loading()) {
+        <ds-spinner size="small" />
+      }
+      <ng-content />
+    </button>
+  `,
+  styleUrls: ['./button.component.scss']
+})
+export class ButtonComponent {
+  variant = input<ButtonVariant>('primary');
+  size = input<ButtonSize>('md');
+  disabled = input<boolean>(false);
+  loading = input<boolean>(false);
+  
+  protected computedClasses = computed(() => {
+    return {
+      'ds-btn': true,
+      [`ds-btn-${this.variant()}`]: true,
+      [`ds-btn-${this.size()}`]: true,
+      'ds-btn-loading': this.loading(),
+      'ds-btn-disabled': this.disabled()
+    };
+  });
+}
+```
+
+## Portfolio Specific Integrations
+
+### Project Card Component
+```typescript
+// design-system/components/project-card/project-card.component.ts
+@Component({
+  selector: 'ds-project-card',
+  template: `
+    <article 
+      class="ds-project-card"
+      [class.ds-project-card-featured]="featured()"
+    >
+      @if (imageUrl()) {
+        <img 
+          [src]="imageUrl()"
+          [alt]="title()"
+          class="ds-project-card-image"
+          loading="lazy"
+        />
+      }
+      
+      <div class="ds-project-card-content">
+        <h3>{{ title() }}</h3>
+        <p>{{ description() }}</p>
+        
+        <div class="ds-project-card-tags">
+          @for (tag of tags(); track tag) {
+            <ds-badge>{{ tag }}</ds-badge>
+          }
+        </div>
+        
+        <div class="ds-project-card-actions">
+          @if (demoUrl()) {
+            <ds-button 
+              variant="primary"
+              size="sm"
+              (click)="onDemoClick()"
+            >
+              View Demo
+            </ds-button>
+          }
+          
+          @if (sourceUrl()) {
+            <ds-button 
+              variant="secondary"
+              size="sm"
+              (click)="onSourceClick()"
+            >
+              View Source
+            </ds-button>
+          }
+        </div>
+      </div>
+    </article>
+  `
+})
+export class ProjectCardComponent {
+  // Required inputs
+  title = input.required<string>();
+  description = input.required<string>();
+  
+  // Optional inputs
+  imageUrl = input<string | undefined>();
+  demoUrl = input<string | undefined>();
+  sourceUrl = input<string | undefined>();
+  tags = input<string[]>(() => []);
+  featured = input<boolean>(false);
+  
+  // Events
+  demoClicked = output<void>();
+  sourceClicked = output<void>();
+  
+  onDemoClick() {
+    this.demoClicked.emit();
+  }
+  
+  onSourceClick() {
+    this.sourceClicked.emit();
+  }
+}
+```
+
+### Experience Timeline
+```typescript
+// design-system/components/experience-timeline/experience-timeline.component.ts
+@Component({
+  selector: 'ds-experience-timeline',
+  template: `
+    <div class="ds-timeline">
+      @for (item of experiences(); track item.id) {
+        <div class="ds-timeline-item">
+          <div class="ds-timeline-marker"></div>
+          
+          <div class="ds-timeline-content">
+            <div class="ds-timeline-header">
+              <h3>{{ item.role }}</h3>
+              <span class="ds-timeline-company">
+                {{ item.company }}
+              </span>
+            </div>
+            
+            <div class="ds-timeline-period">
+              {{ formatPeriod(item.startDate, item.endDate) }}
+            </div>
+            
+            <p class="ds-timeline-description">
+              {{ item.description }}
+            </p>
+            
+            <div class="ds-timeline-technologies">
+              @for (tech of item.technologies; track tech) {
+                <ds-badge variant="tech">{{ tech }}</ds-badge>
+              }
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  `
+})
+export class ExperienceTimelineComponent {
+  experiences = input.required<Experience[]>();
+  
+  protected formatPeriod(start: Date, end?: Date) {
+    const startStr = new Date(start).toLocaleDateString('en', {
+      month: 'short',
+      year: 'numeric'
+    });
+    
+    const endStr = end 
+      ? new Date(end).toLocaleDateString('en', {
+          month: 'short',
+          year: 'numeric'
+        })
+      : 'Present';
+      
+    return `${startStr} - ${endStr}`;
+  }
+}
+```
+
+### Skills Chart
+```typescript
+// design-system/components/skills-chart/skills-chart.component.ts
+@Component({
+  selector: 'ds-skills-chart',
+  template: `
+    <div class="ds-skills-chart">
+      @for (category of categories(); track category.name) {
+        <div class="ds-skills-category">
+          <h3>{{ category.name }}</h3>
+          
+          <div class="ds-skills-grid">
+            @for (skill of category.skills; track skill.name) {
+              <div class="ds-skill-item">
+                <div class="ds-skill-header">
+                  <span>{{ skill.name }}</span>
+                  <span>{{ skill.level }}%</span>
+                </div>
+                
+                <div class="ds-skill-bar">
+                  <div 
+                    class="ds-skill-progress"
+                    [style.width.%]="skill.level"
+                  ></div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  `
+})
+export class SkillsChartComponent {
+  categories = input.required<SkillCategory[]>();
+}
+```
+
+### Form Components
+```typescript
+// design-system/components/form/text-input.component.ts
+@Component({
+  selector: 'ds-text-input',
+  template: `
+    <div 
+      class="ds-input-wrapper"
+      [class.ds-input-error]="hasError()"
+    >
+      @if (label()) {
+        <label [for]="id()">{{ label() }}</label>
+      }
+      
+      <input
+        [id]="id()"
+        [type]="type()"
+        [value]="value()"
+        [placeholder]="placeholder()"
+        [disabled]="disabled()"
+        (input)="onInput($event)"
+        (blur)="onBlur()"
+      />
+      
+      @if (hasError() && errorMessage()) {
+        <span class="ds-input-error-message">
+          {{ errorMessage() }}
+        </span>
+      }
+    </div>
+  `
+})
+export class TextInputComponent {
+  id = input.required<string>();
+  label = input<string>();
+  type = input<'text' | 'email' | 'password'>('text');
+  placeholder = input<string>();
+  disabled = input<boolean>(false);
+  value = model<string>('');
+  errorMessage = input<string>();
+  hasError = input<boolean>(false);
+  
+  // Events
+  blur = output<void>();
+  
+  onInput(event: Event) {
+    const target = event.target as HTMLInputElement;
+    this.value.set(target.value);
+  }
+  
+  onBlur() {
+    this.blur.emit();
+  }
+}
+```
+
+### Esempio di Componente Modal con CDK Overlay
+```typescript
+import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { TemplatePortal } from '@angular/cdk/portal';
+
+@Component({
+  selector: 'app-modal',
+  template: `
+    <ng-template #modalContent>
+      <div class="modal">
+        <ng-content></ng-content>
+        <button (click)="close()">Close</button>
+      </div>
+    </ng-template>
+  `
+})
+export class ModalComponent {
+  @ViewChild('modalContent') modalContent: TemplateRef<any>;
+  private overlayRef: OverlayRef;
+
+  constructor(private overlay: Overlay) {}
+
+  open() {
+    this.overlayRef = this.overlay.create({
+      hasBackdrop: true,
+      positionStrategy: this.overlay.position().global().centerHorizontally().centerVertically()
+    });
+    this.overlayRef.attach(new TemplatePortal(this.modalContent, null));
+  }
+
+  close() {
+    this.overlayRef.detach();
+  }
+}
+```
+
+### Creating a custom stepper using the CDK stepper
+The [CDK stepper](https://material.angular.io/cdk/stepper/overview) allows to build a custom stepper which you can completely style yourself without any specific Material Design styling.
+
+```ts
+@Component({
+  selector: 'app-custom-stepper',
+template: `
+<section class="container">
+  <header><h2>Step {{selectedIndex + 1}}/{{steps.length}}</h2></header>
+
+  <div [style.display]="selected ? 'block' : 'none'">
+    <!-- Content from the CdkStep is projected here -->
+    <ng-container [ngTemplateOutlet]="selected.content"></ng-container>
+  </div>
+
+  <footer class="step-navigation-bar">
+    <button class="nav-button" cdkStepperPrevious>&larr;</button>
+    @for (step of steps; track step) {
+      <button class="step" [class.active]="selectedIndex === $index" (click)="onClick(i)">
+        Step {{i + 1}}
+      </button>
+    }
+    <button class="nav-button" cdkStepperNext>&rarr;</button>
+  </footer>
+</section>
+
+`,
+  styleUrl: './custom-stepper.component.css',
+  // This custom stepper provides itself as CdkStepper so that it can be recognized
+  // by other components.
+  providers: [{ provide: CdkStepper, useExisting: CustomStepperComponent }]
+})
+export class CustomStepperComponent extends CdkStepper {
+  onClick(index: number): void {
+    this.selectedIndex = index;
+  }
+}
+```
+
+### 5.5 Theming e Stili
+```scss
+// _themes.scss
+:root {
+  --primary-color: #007bff;
+  --secondary-color: #6c757d;
+  --text-color: #333;
+  --background-color: #fff;
+}
+
+.dark-theme {
+  --primary-color: #0056b3;
+  --secondary-color: #545b62;
+  --text-color: #f8f9fa;
+  --background-color: #343a40;
+}
+```
+
+## 6. Gestione dei Dati e State Management
+
+### 6.1 Dati Statici con GitHub come CMS
+- Creare un repository GitHub separato per i dati statici (progetti, competenze, esperienze)
+- Strutturare i dati in file JSON o Markdown
+- Implementare un servizio Angular per fetching e caching dei dati:
+
+```typescript
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class GitHubDataService {
+  private apiUrl = 'https://api.github.com/repos/[username]/[repo]/contents/';
+
+  constructor(private http: HttpClient) {}
+
+  getData(path: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}${path}`).pipe(
+      tap(data => console.log('Fetched data', data)),
+      catchError(this.handleError('getData', []))
+    );
+  }
+
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      console.error(`${operation} failed: ${error.message}`);
+      return of(result as T);
+    };
+  }
+}
+```
+
+- Utilizzare GitHub Actions per trigger automatici di rebuild/redeploy quando i dati vengono aggiornati
+
+### 6.2 Dati Dinamici e Caching con LokiJS
+- Installare LokiJS: `npm install lokijs`
+- Creare un servizio per gestire il database locale:
+
+```typescript
+import { Injectable } from '@angular/core';
+import Loki from 'lokijs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class LokiService {
+  private db: Loki;
+
+  constructor() {
+    this.db = new Loki('portfolio.db');
+  }
+
+  getCollection(name: string) {
+    let collection = this.db.getCollection(name);
+    if (!collection) {
+      collection = this.db.addCollection(name);
+    }
+    return collection;
+  }
+
+  insertData(collectionName: string, data: any) {
+    const collection = this.getCollection(collectionName);
+    collection.insert(data);
+  }
+
+  getData(collectionName: string) {
+    const collection = this.getCollection(collectionName);
+    return collection.data;
+  }
+}
+```
+
+### 6.3 Funzionalità Real-time con GUN.js (Opzionale)
+- Installare GUN.js: `npm install gun`
+- Creare un servizio per gestire le funzionalità real-time:
+
+```typescript
+import { Injectable } from '@angular/core';
+import Gun from 'gun/gun';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class GunService {
+  private gun: any;
+
+  constructor() {
+    this.gun = Gun();
+  }
+
+  setData(key: string, data: any) {
+    this.gun.get(key).put(data);
+  }
+
+  getData(key: string, callback: (data: any) => void) {
+    this.gun.get(key).on(callback);
+  }
+}
+```
+
+### State Management
+- Utilizzare i servizi Angular per la gestione dello stato locale
+- Per applicazioni più complesse, considerare l'uso di NgRx o NGXS
+
+## Testing Avanzato
+
+### Unit Testing con Jasmine e Karma
+Esempio di test per un componente:
+
+```typescript
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ButtonComponent } from './button.component';
+
+describe('ButtonComponent', () => {
+  let component: ButtonComponent;
+  let fixture: ComponentFixture<ButtonComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ ButtonComponent ]
+    }).compileComponents();
+  });
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(ButtonComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should emit click event', () => {
+    spyOn(component.clicked, 'emit');
+    const button = fixture.nativeElement.querySelector('button');
+    button.click();
+    expect(component.clicked.emit).toHaveBeenCalled();
+  });
+});
+```
+
+### E2E Testing con Cypress
+Esempio di test E2E:
+
+```javascript
+describe('Portfolio Homepage', () => {
+  beforeEach(() => {
+    cy.visit('/');
+  });
+
+  it('should display the hero section', () => {
+    cy.get('.hero-section').should('be.visible');
+    cy.get('.hero-section h1').should('contain', 'Alessandro Aprile');
+  });
+
+  it('should navigate to projects page', () => {
+    cy.get('nav').contains('Projects').click();
+    cy.url().should('include', '/projects');
+    cy.get('.project-list').should('exist');
+  });
+});
+```
+
+## Internazionalizzazione (i18n)
+
+- Utilizzare il modulo di internazionalizzazione di Angular
+- Creare file di traduzione per italiano, inglese e francese
+
+Esempio di configurazione:
+
+```xml
+// messages.it.xlf
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="introHeader" datatype="html">
+        <source>Welcome to my portfolio</source>
+        <target>Benvenuto nel mio portfolio</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
+```
+
+Uso nel template:
+
+```html
+<h1 i18n="@@introHeader">Welcome to my portfolio</h1>
+```
+
+## Progressive Web App (PWA)
+
+- Utilizzare `@angular/pwa` per aggiungere funzionalità PWA
+- Configurare il service worker per caching e funzionalità offline
+
+```typescript
+// app.module.ts
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
+
+@NgModule({
+  imports: [
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+  ],
+})
+export class AppModule { }
+```
+
+## SEO e Performance
+
+### SEO
+- Utilizzare il servizio `Meta` di Angular per gestire i meta tag dinamicamente
+- Implementare Server-Side Rendering (SSR) con Angular Universal per migliorare il SEO
+
+### Performance
+- Implementare lazy loading per i moduli non critici
+- Ottimizzare le immagini e utilizzare lazy loading per le immagini
+- Utilizzare la compressione Gzip per le risorse statiche
+
+## Visualizzazione della Struttura del Sito
+
+Implementare un componente che utilizza Mermaid per visualizzare la struttura del sito:
+
+```typescript
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import mermaid from 'mermaid';
+
+@Component({
+  selector: 'app-site-structure',
+  template: `
+    <div class="site-structure">
+      <h2>Struttura del Sito</h2>
+      <div #mermaidDiv></div>
+    </div>
+  `,
+  styles: [`
+    .site-structure {
+      width: 100%;
+      overflow-x: auto;
+    }
+  `]
+})
+export class SiteStructureComponent implements OnInit {
+  @ViewChild('mermaidDiv') mermaidDiv: ElementRef;
+
+  ngOnInit() {
+    mermaid.initialize({ startOnLoad: true });
+  }
+
+  ngAfterViewInit() {
+    const mermaidDefinition = `
+      graph TD
+      A[Home] --> B[Progetti]
+      A --> C[Competenze]
+      A --> D[Esperienze Lavorative]
+      A --> E[Blog]
+      A --> F[Contatti]
+      A --> G[Design System]
+      
+      B --> B1[Lista Progetti]
+      B --> B2[Dettaglio Progetto]
+      
+      C --> C1[Competenze Tecniche]
+      C --> C2[Soft Skills]
+      
+      D --> D1[Timeline Esperienze]
+      D --> D2[Dettaglio Esperienza]
+      
+      E --> E1[Lista Articoli]
+      E --> E2[Articolo Singolo]
+      
+      G --> G1[Introduzione]
+      G --> G2[Principi di Design]
+      G --> G3[Componenti UI]
+      G --> G4[Patterns]
+      G --> G5[Accessibilità]
+      
+      classDef highlight fill:#f9f,stroke:#333,stroke-width:2px;
+      classDef designSystem fill:#bbf,stroke:#333,stroke-width:2px;
+      class A highlight;
+      class G designSystem;
+    `;
+
+    mermaid.render('mermaid', mermaidDefinition, (svgCode) => {
+      this.mermaidDiv.nativeElement.innerHTML = svgCode;
+    });
+  }
+}
+```
+
+## Funzionalità Speciali e Avanzate
+1. Tema dinamico (modalità chiara/scura)
+2. Visualizzazione interattiva delle competenze (D3.js o Chart.js)
+3. Timeline interattiva delle esperienze lavorative
+4. Filtro e ricerca avanzati per progetti
+5. Lazy loading dei moduli per ottimizzazione performance
+6. Animazioni fluide tra le transizioni di pagina
+7. Internazionalizzazione (i18n) per supporto multilingua (Italiano, Inglese, Francese)
+8. PWA per funzionalità offline e installabilità
+9. Integrazione con API di GitHub per mostrare attività recenti
+10. Showcase interattivo del design system con playground per componenti
+
+## Considerazioni Aggiuntive
+- **Accessibilità**: Seguire WCAG 2.1 AA standards, utilizzare ARIA labels dove necessario
+- **Responsive Design**: Implementare approccio mobile-first, testare su vari dispositivi e risoluzioni
+- **Performance**: Ottimizzare First Contentful Paint e Time to Interactive
+- **Sicurezza**: Implementare best practices di sicurezza frontend, come sanitizzazione input e protezione contro XSS
+- **SEO**: Utilizzare meta tags dinamici, implementare sitemap, ottimizzare per condivisione social
+- **Documentazione**: Mantenere README dettagliato, documentare decisioni architetturali e pattern utilizzati
+
+## Metriche di Successo
+- Tempo di caricamento inferiore a 3 secondi su 3G
+- Punteggio Lighthouse superiore a 90 in tutte le categorie
+- Copertura dei test superiore all'80%
+- Zero violazioni di accessibilità di livello A o AA
+- Supporto browser: ultime 2 versioni dei browser principali
+
+## Piano di Implementazione
+1. **Fase 1: Setup e Struttura di Base** (2-3 settimane)
+   - Inizializzazione del progetto Angular
+   - Configurazione ambiente di sviluppo
+   - Struttura base del progetto e routing
+   - Setup iniziale del design system
+   - Configurazione CI/CD iniziale
+
+2. **Fase 2: Sviluppo Core** (3-4 settimane)
+   - Implementazione componenti base del design system
+   - Sviluppo pagine principali
+   - Integrazione con GitHub per dati statici
+   - Implementazione funzionalità di base
+
+3. **Fase 3: Funzionalità Avanzate** (2-3 settimane)
+   - Completamento del design system
+   - Implementazione tema dinamico
+   - Sviluppo visualizzazioni interattive (competenze, timeline)
+   - Ottimizzazione performance
+
+4. **Fase 4: Internazionalizzazione e PWA** (1-2 settimane)
+   - Implementazione i18n
+   - Setup PWA
+   - Ottimizzazione SEO
+
+5. **Fase 5: Testing e Rifinitura** (2 settimane)
+   - Testing approfondito (unit, integration, E2E)
+   - Audit di accessibilità
+   - Ottimizzazione finale delle prestazioni
+
+6. **Fase 6: Documentazione e Lancio** (1 settimana)
+   - Completamento della documentazione
+   - Preparazione per il lancio
+   - Deployment finale
+
+## Conclusione
+Questo documento fornisce una guida completa per lo sviluppo del portfolio di Alessandro Aprile come sviluppatore front-end. Il progetto mira a creare un'applicazione web avanzata che non solo mostri le competenze e i progetti di Alessandro, ma sia anche una dimostrazione pratica delle sue capacità tecniche.
+
+L'utilizzo di tecnologie moderne come Angular, TypeScript, e varie librerie specializzate, insieme all'implementazione di un design system personalizzato, garantirà un prodotto finale di alta qualità. L'attenzione ai dettagli in aree come performance, accessibilità, e SEO assicurerà che il portfolio si distingua e fornisca un'esperienza utente ottimale.
+
+Questo piano di sviluppo è progettato per essere flessibile e adattabile, permettendo aggiustamenti in corso d'opera in base alle necessità e alle sfide che potrebbero emergere durante il processo di sviluppo.

@@ -1,0 +1,34 @@
+sequenceDiagram
+    participant U as User
+    participant A as App
+    participant LS as Language Service
+    participant TS as Translation Service
+    participant CS as Cache Service
+    participant API as Translation Files
+
+    U->>A: Access App
+    A->>LS: Check Browser Language
+    LS->>CS: Check Cached Language
+    
+    alt Has Cached Language
+        CS-->>A: Return Cached Translations
+    else No Cache
+        LS->>API: Request Translations
+        API-->>TS: Load Translation File
+        TS->>CS: Cache Translations
+        CS-->>A: Return Translations
+    end
+    
+    A-->>U: Render UI in Selected Language
+
+    U->>A: Change Language
+    A->>LS: Update Language Preference
+    LS->>CS: Update Cache
+    LS->>API: Request New Translations
+    API-->>TS: Load New Translation File
+    TS->>CS: Cache New Translations
+    A-->>U: Re-render UI in New Language
+
+    note over A,TS: Lazy loading of translation chunks
+    note over CS: Cache management with versioning
+    note over TS: Fallback chain for missing translations

@@ -1,0 +1,46 @@
+flowchart TD
+    Start((Start)) --> Home
+    Home --> Projects
+    Home --> Skills
+    Home --> Experience
+    Home --> Blog
+    Home --> Contact
+    Home --> DesignSystem
+
+    Projects --> ProjectList[Projects List]
+    ProjectList --> ProjectFilter[Filter Projects]
+    ProjectList --> ProjectSort[Sort Projects]
+    ProjectList --> ProjectDetail[Project Detail]
+    ProjectDetail --> ProjectGallery[Project Gallery]
+    ProjectDetail --> LiveDemo[Live Demo]
+    ProjectDetail --> SourceCode[Source Code]
+
+    Skills --> TechnicalSkills[Technical Skills]
+    Skills --> SoftSkills[Soft Skills]
+    TechnicalSkills --> SkillDetail[Skill Detail]
+    TechnicalSkills --> SkillVisualization[Skill Visualization]
+
+    Experience --> Timeline[Experience Timeline]
+    Timeline --> ExperienceDetail[Experience Detail]
+    ExperienceDetail --> CompanyInfo[Company Info]
+    ExperienceDetail --> ProjectsList[Related Projects]
+
+    Blog --> BlogList[Blog Posts List]
+    BlogList --> BlogFilter[Filter Posts]
+    BlogList --> BlogSearch[Search Posts]
+    BlogList --> BlogPost[Blog Post]
+    BlogPost --> RelatedPosts[Related Posts]
+
+    DesignSystem --> DSIntro[Introduction]
+    DesignSystem --> DSComponents[Components]
+    DesignSystem --> DSPatterns[Patterns]
+    DSComponents --> ComponentDemo[Component Demo]
+    DSComponents --> ComponentCode[Component Code]
+    DSComponents --> ComponentDocs[Component Documentation]
+
+    style Start fill:#f96,stroke:#333,stroke-width:2px
+    style Home fill:#9cf,stroke:#333,stroke-width:2px
+    style ProjectDetail fill:#fcf,stroke:#333,stroke-width:2px
+    style SkillVisualization fill:#fcf,stroke:#333,stroke-width:2px
+    style BlogPost fill:#fcf,stroke:#333,stroke-width:2px
+    style ComponentDemo fill:#fcf,stroke:#333,stroke-width:2px

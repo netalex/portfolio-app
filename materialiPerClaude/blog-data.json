@@ -1,0 +1,90 @@
+{
+  "posts": [
+    {
+      "id": "custom-design-system-angular",
+      "title": "Building a Custom Design System with Angular CDK",
+      "slug": "custom-design-system-angular",
+      "excerpt": "A comprehensive guide to creating a scalable and maintainable design system using Angular CDK and modern web technologies.",
+      "content": "# Building a Custom Design System with Angular CDK\n\nIn this article, I'll share my experience creating a custom design system for my portfolio using Angular CDK...",
+      "author": {
+        "name": "Alessandro Aprile",
+        "avatar": "/assets/images/avatar.webp"
+      },
+      "publishDate": "2024-03-15",
+      "lastModified": "2024-03-15",
+      "category": "Development",
+      "tags": ["Angular", "Design System", "Web Development", "TypeScript"],
+      "readingTime": "8 min",
+      "featured": true,
+      "image": "/assets/images/blog/design-system.webp"
+    },
+    {
+      "id": "frontend-testing-strategies",
+      "title": "Effective Frontend Testing Strategies",
+      "slug": "frontend-testing-strategies",
+      "excerpt": "Learn about different testing approaches for frontend applications and how to implement them effectively.",
+      "content": "# Effective Frontend Testing Strategies\n\nTesting is a crucial part of frontend development...",
+      "author": {
+        "name": "Alessandro Aprile",
+        "avatar": "/assets/images/avatar.webp"
+      },
+      "publishDate": "2024-02-28",
+      "lastModified": "2024-03-01",
+      "category": "Testing",
+      "tags": ["Testing", "Angular", "Cypress", "Jasmine"],
+      "readingTime": "10 min",
+      "featured": false,
+      "image": "/assets/images/blog/testing.webp"
+    }
+  ],
+  "categories": [
+    {
+      "id": "development",
+      "name": "Development",
+      "description": "Articles about software development practices and techniques"
+    },
+    {
+      "id": "testing",
+      "name": "Testing",
+      "description": "Articles focused on testing methodologies and tools"
+    }
+  ],
+  "tags": [
+    {
+      "id": "angular",
+      "name": "Angular",
+      "count": 15
+    },
+    {
+      "id": "typescript",
+      "name": "TypeScript",
+      "count": 12
+    },
+    {
+      "id": "testing",
+      "name": "Testing",
+      "count": 8
+    },
+    {
+      "id": "design-system",
+      "name": "Design System",
+      "count": 5
+    },
+    {
+      "id": "web-development",
+      "name": "Web Development",
+      "count": 10
+    },
+    {
+      "id": "performance",
+      "name": "Performance",
+      "count": 6
+    }
+  ],
+  "settings": {
+    "postsPerPage": 10,
+    "featuredPostsCount": 3,
+    "enableComments": true,
+    "moderationEnabled": true
+  }
+}

@@ -1,0 +1,58 @@
+graph TB
+    subgraph Unit Tests
+        COMP[Component Tests]
+        SERV[Service Tests]
+        PIPE[Pipe Tests]
+        DIR[Directive Tests]
+    end
+
+    subgraph Integration Tests
+        FEAT[Feature Tests]
+        MOD[Module Tests]
+        FLOW[Flow Tests]
+    end
+
+    subgraph E2E Tests
+        USER[User Flows]
+        PERF[Performance Tests]
+        ACC[Accessibility Tests]
+    end
+
+    subgraph Test Infrastructure
+        JEST[Jest]
+        KARMA[Karma]
+        CYPRESS[Cypress]
+        LIGHT[Lighthouse]
+    end
+
+    subgraph CI Integration
+        PRE[Pre-commit Hooks]
+        BUILD[Build Validation]
+        DEPLOY[Deploy Gates]
+    end
+
+    COMP --> JEST
+    SERV --> JEST
+    PIPE --> JEST
+    DIR --> JEST
+
+    FEAT --> KARMA
+    MOD --> KARMA
+    FLOW --> KARMA
+
+    USER --> CYPRESS
+    PERF --> LIGHT
+    ACC --> CYPRESS
+
+    JEST --> PRE
+    KARMA --> BUILD
+    CYPRESS --> DEPLOY
+    LIGHT --> DEPLOY
+
+    classDef test fill:#f9f,stroke:#333,stroke-width:2px
+    classDef tool fill:#bbf,stroke:#333,stroke-width:2px
+    classDef gate fill:#bfb,stroke:#333,stroke-width:2px
+
+    class COMP,SERV,PIPE,DIR,FEAT,MOD,FLOW,USER,PERF,ACC test
+    class JEST,KARMA,CYPRESS,LIGHT tool
+    class PRE,BUILD,DEPLOY gate

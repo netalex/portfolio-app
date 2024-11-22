@@ -1,0 +1,43 @@
+graph TD
+    DS[Design System] --> F[Foundations]
+    DS --> C[Components]
+    DS --> P[Patterns]
+    DS --> G[Guidelines]
+
+    F --> F1[Colors]
+    F --> F2[Typography]
+    F --> F3[Spacing]
+    F --> F4[Grid]
+    F --> F5[Icons]
+
+    C --> C1[Atoms]
+    C --> C2[Molecules]
+    C --> C3[Organisms]
+
+    C1 --> C1A[Buttons]
+    C1 --> C1B[Inputs]
+    C1 --> C1C[Icons]
+    C1 --> C1D[Typography]
+
+    C2 --> C2A[Forms]
+    C2 --> C2B[Cards]
+    C2 --> C2C[Navigation]
+    C2 --> C2D[Modals]
+
+    C3 --> C3A[Headers]
+    C3 --> C3B[Footers]
+    C3 --> C3C[Layouts]
+    
+    P --> P1[Navigation]
+    P --> P2[Forms]
+    P --> P3[Lists]
+    P --> P4[Tables]
+
+    G --> G1[Accessibility]
+    G --> G2[Responsive]
+    G --> G3[Animation]
+    G --> G4[Voice & Tone]
+
+    classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px;
+    classDef highlight fill:#e6f3ff,stroke:#0066cc,stroke-width:2px;
+    class DS,F,C,P,G highlight;
