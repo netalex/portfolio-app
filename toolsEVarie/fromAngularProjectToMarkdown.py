@@ -1,71 +1,195 @@
-import argparse
+#!/usr/bin/env python3
+
+"""
+Portfolio Project Snapshot Generator
+Generate a comprehensive Markdown snapshot of an Angular portfolio project.
+"""
+
 import logging
 import os
 import subprocess
 from datetime import datetime
+from pathlib import Path
 
 logging.basicConfig(level=logging.INFO)
 
 def is_binary_file(file_path):
-    # List of common image and binary file extensions
-    binary_extensions = ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.ico', '.svg', '.pdf', '.doc', '.docx', '.xls', '.xlsx', '.ppt', '.pptx', '.zip', '.tar', '.gz', '.rar', '.7z', '.exe', '.dll', '.so', '.dylib']
-    _, extension = os.path.splitext(file_path)
-    return extension.lower() in binary_extensions
+    """Check if a file is binary based on its extension."""
+    binary_extensions = [
+        '.png', '.jpg', '.jpeg', '.gif', '.bmp', '.ico', '.svg',
+        '.pdf', '.doc', '.docx', '.xls', '.xlsx', '.ppt', '.pptx',
+        '.zip', '.tar', '.gz', '.rar', '.7z', '.exe', '.dll', '.so',
+        '.dylib', '.woff', '.woff2', '.ttf', '.eot'
+    ]
+    return Path(file_path).suffix.lower() in binary_extensions
 
-def generate_markdown(root_dir, output_file, include_prompt):
-    command = ["git", "log", "-10"]
-    commandResult = subprocess.run(command, capture_output=True, text=True, cwd=root_dir)
+def ensure_output_directory(output_dir):
+    """Create output directory if it doesn't exist."""
+    Path(output_dir).mkdir(parents=True, exist_ok=True)
 
-    excluded_dirs = ['node_modules', '.git', '.idea', 'dist', 'out', 'build', '.angular']
-    excluded_files = ['.gitignore', '.editorconfig', 'package-lock.json', 'tsconfig.json', 'tslint.json', 'gerarchia-prodotto-data.json']
+def get_git_info(root_dir):
+    """Retrieve detailed Git information about the project."""
+    git_info = {
+        'last_commits': subprocess.run(
+            ["git", "log", "-10", "--pretty=format:%h%n%s%n%b%n----------------%n"],
+            capture_output=True, text=True, cwd=root_dir
+        ).stdout,
+        'current_branch': subprocess.run(
+            ["git", "branch", "--show-current"],
+            capture_output=True, text=True, cwd=root_dir
+        ).stdout.strip(),
+        'status': subprocess.run(
+            ["git", "status", "--short"],
+            capture_output=True, text=True, cwd=root_dir
+        ).stdout
+    }
+    return git_info
+
+def generate_markdown(root_dir, output_file):
+    """Generate a Markdown snapshot of the project."""
+    # Directories to exclude from the snapshot
+    excluded_dirs = [
+        'node_modules', '.git', '.idea', 'dist', 'out', 'build',
+        '.angular', '.vscode', 'public', 'coverage', 'e2e',
+        '__pycache__', 'tmp', 'toolsEVarie', '.github',
+        'docs', 'test', 'tests'
+    ]
+
+    # Files to exclude from the snapshot
+    excluded_files = [
+        '.gitignore', '.editorconfig', 'package-lock.json',
+        'browserlist', '.prettierrc', '.eslintrc',
+        'karma.conf.js', 'tsconfig.*.json', 'README.md',
+        'CHANGELOG.md', 'LICENSE', '.env', '.env.*'
+    ]
+
+    # Get Git information
+    git_info = get_git_info(root_dir)
 
     with open(output_file, 'w', encoding='utf-8') as f:
-        if include_prompt:
-            f.write("# Prompt\n\n")
-            f.write("""Sei un esperto di Angular 15 con una vasta conoscenza di Git, Node.js, TypeScript, Angular Material, RxJS e NgRx. In questo file Markdown ti fornisco l'intero codice di un progetto Angular per un'applicazione front end che consente il caricamento di file CSV su un database Oracle attraverso un backend Java Spring Boot (db e be non forniti). Il file è strutturato in modo che ogni sezione riporti il percorso relativo di un file specifico del progetto, seguito dal relativo snippet di codice. Trovi la lista delle librerie e le loro versioni esatte nello snippet di "package.json". Utilizza queste informazioni come contesto per assistere con domande, suggerimenti e best practice riguardanti il progetto. Se qualche cosa non ti è chiara, chiedimi maggiori informazoni. Nelle tue risposte, segui le best practice di Angular, fornisci spiegazioni chiare e dettagliate, includi esempi di codice quando necessario e suggerisci eventuali ottimizzazioni o miglioramenti del codice. Se rilevi potenziali problemi o bug nel codice fornito, ti prego di segnalarli e proporre soluzioni appropriate. Al termine di ogni risposta, indica quanti token disponibili mi restano.""")
-            f.write("\n\n")
-        f.write("# Ultimi 10 commit message, per riferimento")
-        f.write("\n\n")
-        f.write(commandResult.stdout)
-        f.write("\n\n")
-        f.write("# Codice del progetto")
-        f.write("\n\n")
+        # Write header with timestamp
+        f.write(f"# Portfolio App Repository Snapshot\n\n")
+        f.write(f"Generated on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
+
+        # Write Git information
+        f.write("## Git Status\n\n")
+        f.write(f"Current Branch: `{git_info['current_branch']}`\n\n")
+        f.write("### Last 10 Commits (with full messages)\n\n")
+        f.write("```\n" + git_info['last_commits'] + "\n```\n\n")
+        f.write("### Working Directory Status\n\n")
+        f.write("```\n" + git_info['status'] + "\n```\n\n")
+
+        f.write("## Project Files\n\n")
+
+        # File grouping configuration
+        file_groups = {
+            'Core Configuration': ['.json', '.conf.js', '.config.ts'],
+            'Components': ['component.ts', 'component.html', 'component.scss'],
+            'Services': ['service.ts'],
+            'Models & Interfaces': ['model.ts', 'interface.ts', 'enum.ts', 'type.ts'],
+            'State Management': ['store.ts', 'actions.ts', 'reducers.ts', 'effects.ts', 'selectors.ts'],
+            'Routing': ['routing.ts', 'routes.ts', 'guard.ts'],
+            'Shared': ['module.ts', 'pipe.ts', 'directive.ts'],
+            'Assets': ['style.scss', 'variables.scss', 'mixins.scss'],
+            'Testing': ['spec.ts'],
+            'Other': []
+        }
+
+        files_by_group = {group: [] for group in file_groups}
+
+        # Collect and categorize files
         for dirpath, dirnames, filenames in os.walk(root_dir):
+            # Filter out excluded directories
             dirnames[:] = [d for d in dirnames if d not in excluded_dirs]
+            rel_path = os.path.relpath(dirpath, root_dir)
+
+            # Skip dot directories
+            if any(part.startswith('.') for part in Path(rel_path).parts):
+                continue
 
             for filename in filenames:
-                file_path = os.path.join(dirpath, filename)
-                if not is_binary_file(file_path) and filename.endswith(('.ts', '.html', '.css', '.scss', '.json')) and filename not in excluded_files:
-                    relative_path = os.path.relpath(file_path, root_dir)
+                if filename in excluded_files or filename.startswith('.'):
+                    continue
 
-                    f.write(f"## {relative_path}\n\n")
-                    f.write("```" + os.path.splitext(filename)[1][1:] + "\n")
+                file_path = Path(dirpath) / filename
+                if is_binary_file(file_path):
+                    continue
 
-                    with open(file_path, 'r', encoding='utf-8') as code_file:
-                        f.write(code_file.read())
+                relative_path = os.path.relpath(file_path, root_dir)
 
+                # Categorize file
+                grouped = False
+                for group, extensions in file_groups.items():
+                    if any(relative_path.endswith(ext) for ext in extensions):
+                        files_by_group[group].append((relative_path, file_path))
+                        grouped = True
+                        break
+
+                if not grouped:
+                    files_by_group['Other'].append((relative_path, file_path))
+
+        # Write files by group
+        for group, files in files_by_group.items():
+            if files:
+                f.write(f"### {group}\n\n")
+                for relative_path, file_path in sorted(files):
+                    f.write(f"#### {relative_path}\n\n")
+                    extension = Path(file_path).suffix[1:] or 'txt'
+                    f.write(f"```{extension}\n")
+                    try:
+                        with open(file_path, 'r', encoding='utf-8') as code_file:
+                            f.write(code_file.read())
+                    except UnicodeDecodeError:
+                        f.write(f"// File non leggibile: {relative_path}\n")
+                    except Exception as e:
+                        f.write(f"// Errore nella lettura del file: {str(e)}\n")
                     f.write("\n```\n\n")
 
+
+
+
+
 def main():
-    parser = argparse.ArgumentParser(description="Generate Markdown file for Angular project")
-    parser.add_argument("root_directory", help="Root directory of the Angular project")
-    parser.add_argument("-p", "--prompt", action="store_true", help="Include prompt in the Markdown file")
-    args = parser.parse_args()
+    """Main entry point for the script."""
+    # Get project root (one level up from toolsEVarie)
+    project_root = Path(__file__).parent.parent
 
-    root_directory = args.root_directory
-    include_prompt = args.prompt
+    # Set up output directory
+    output_dir = project_root / "toolsEVarie" / "markdownRepoComplessivo"
+    ensure_output_directory(output_dir)
 
-    now = datetime.now()
-    formatted_now = now.strftime('%Y-%m-%d_%H-%M-%S')
+    # Create output filename with timestamp
+    timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+    output_file = output_dir / f"portfolio_app_snapshot_{timestamp}.md"
 
-    output_file = f"project_code{'_include_prompt' if include_prompt else ''}{formatted_now}.md"
-
-    logging.info(f"Generating Markdown file for {root_directory}...")
-    generate_markdown(root_directory, output_file, include_prompt)
+    logging.info(f"Generating Markdown file for project...")
+    generate_markdown(project_root, output_file)
     logging.info(f"Markdown file generated: {output_file}")
 
 if __name__ == "__main__":
     main()
-    
-    # usage example
-    # #python generate_project_markdown.py /path/to/angular/project [-p|--prompt]
+
+
+# #                    ## Usage Instructions
+# #
+# #
+# #                    To generate a new snapshot:
+# #
+# #                    1. Navigate to the toolsEVarie directory:
+# #                      ```bash
+# #                      cd toolsEVarie
+# #                      ```
+# #
+# #                    2. Run the script:
+# #                      ```bash
+# #                      python3 fromAngularProjectToMarkdown.py
+# #                      ```
+# #
+# #                    The script will:
+# #                    - Generate a new Markdown file in `/toolsEVarie/markdownRepoComplessivo`
+# #                    - Include the last 10 Git commits with full messages
+# #                    - Organize project files by type
+# #                    - Exclude non-essential directories and files
+# #                    - Add timestamp to the filename
+# #
+# #                    Note: This script requires Python 3.6+ and assumes it's run from the toolsEVarie directory.
