@@ -1,0 +1,17 @@
+AA feat(scope): concise description
+
+REF-XXX: milestone/feature reference
+
+- Main changes:
+  * Change 1
+  * Change 2
+  * Change 3
+
+Technical Notes:
+- Note 1
+- Note 2
+
+Breaking Changes: [None/description]
+
+Documentation: [Status]
+Migration: [N/A/Required steps]

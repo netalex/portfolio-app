@@ -1,0 +1,130 @@
+/// <reference lib="dom" />
+import { AngularAppEngine, createRequestHandler } from '@angular/ssr';
+import express from 'express';
+import { fileURLToPath } from 'node:url';
+import { dirname, resolve } from 'node:path';
+import type { IncomingHttpHeaders } from 'http';
+import type { NextFunction } from 'express';
+
+// Utility per convertire gli headers
+function convertHeaders(headers: IncomingHttpHeaders): Headers {
+  const result = new Headers();
+  for (const [key, value] of Object.entries(headers)) {
+    if (value) {
+      if (Array.isArray(value)) {
+        value.forEach(v => result.append(key, v));
+      } else {
+        result.append(key, value);
+      }
+    }
+  }
+  return result;
+}
+
+// Ottenere il path corretto per i file di distribuzione
+const serverDistFolder = dirname(fileURLToPath(import.meta.url));
+const browserDistFolder = resolve(serverDistFolder, '../browser');
+const indexHtml = resolve(browserDistFolder, 'index.html');
+
+// Funzione per creare l'app Express
+export function app(): express.Express {
+  const server = express();
+  const angularAppEngine = new AngularAppEngine();
+
+  // Serving di file statici
+  server.get(
+    '**',
+    express.static(browserDistFolder, {
+    maxAge: '1y',
+    index: false
+    })
+  );
+
+  // Tutte le altre route usano il rendering Angular
+  server.get('*', async (req, res, next) => {
+    try {
+    const { protocol, originalUrl, baseUrl, headers } = req;
+
+      // Crea la richiesta SSR con l'URL completo
+      const url = new URL(originalUrl, `${protocol}://${headers.host || 'localhost'}`);
+      const request = new Request(url, {
+        method: 'GET',
+        headers: convertHeaders(headers),
+      });
+
+      const response = await angularAppEngine.handle(request);
+      
+        if (!response) {
+          next();
+          return;
+        }
+
+      // Imposta lo status
+        res.status(response.status || 200);
+        
+        // Aggiungi headers dalla risposta
+        if (response.headers) {
+        response.headers.forEach((value, key) => {
+              res.setHeader(key, value);
+        });
+        }
+
+        // Invia il contenuto
+      const body = await response.text();
+      res.send(body);
+    } catch (error) {
+      next(error instanceof Error ? error : new Error(String(error)));
+    }
+  });
+
+  return server;
+}
+
+// Avvio del server quando eseguito direttamente
+if (import.meta.url === `file://${process.argv[1]}`) {
+  const port = process.env['PORT'] || 4000;
+  const server = app();
+  server.listen(port, () => {
+    console.log(`Node Express server listening on http://localhost:${port}`);
+  });
+}
+
+// Funzione handler per la richiesta SSR
+const handler = async (request: Request): Promise<Response> => {
+  const server = app();
+  
+  return new Promise<Response>((resolve, reject) => {
+    let responseBody = '';
+    let responseStatus = 200;
+    const responseHeaders = new Headers();
+
+    const mockResponse = {
+      status(status: number) {
+        responseStatus = status;
+        return this;
+      },
+      setHeader(name: string, value: string) {
+        responseHeaders.set(name, value);
+        return this;
+      },
+      send: (body: string) => {
+        responseBody = body;
+        resolve(
+          new Response(responseBody, {
+            status: responseStatus,
+            headers: responseHeaders,
+          })
+        );
+      }
+    };
+
+    server(request as any, mockResponse as any, ((error: unknown) => {
+      if (error) {
+        reject(error instanceof Error ? error : new Error(String(error)));
+      }
+    }) as NextFunction);
+  });
+};
+
+// Esporre il RequestHandler
+export default createRequestHandler(handler);

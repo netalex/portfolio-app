@@ -1,0 +1,35 @@
+@use 'sass:map';
+@use './variables' as vars;
+
+:root {
+  // Generate CSS variables for colors
+  @each $key, $value in vars.$primary-colors {
+    --primary-#{$key}: #{$value};
+  }
+
+  @each $key, $value in vars.$neutral-colors {
+    --neutral-#{$key}: #{$value};
+  }
+
+  // Base theme variables
+  --background: var(--neutral-50);
+  --foreground: var(--neutral-900);
+  --primary: var(--primary-500);
+  --primary-foreground: white;
+
+  // Typography
+  --font-sans: #{vars.$font-family-sans};
+  --font-mono: #{vars.$font-family-mono};
+
+  // Spacing
+  @each $key, $value in vars.$spacing {
+    --spacing-#{$key}: #{$value};
+  }
+}
+
+.dark-theme {
+  --background: var(--neutral-900);
+  --foreground: var(--neutral-50);
+  --primary: var(--primary-400);
+  --primary-foreground: var(--neutral-900);
+}
