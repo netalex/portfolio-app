@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+//TODO: poterebbe essere interessante realizzare header e footer per la navigazione
 // import { HeaderComponent } from './core/components/header.component';
 // import { FooterComponent } from './core/components/footer.component';
 
@@ -9,8 +10,6 @@ import { RouterOutlet } from '@angular/router';
   imports: [RouterOutlet],
   template: `
     <div class="app-container">
-    <!-- <h1>Welcome to {{title}}!</h1> -->
-
     <router-outlet />
     </div>
   `,

@@ -1,7 +1,6 @@
 // src/app/features/projects/projects-list.component.ts
 import { Component, inject } from '@angular/core';
 import { PortfolioStore } from '../../data-access/store/portfolio.store';
-// import { NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-projects-list',
@@ -57,7 +56,6 @@ export class ProjectsListComponent {
   private store = inject(PortfolioStore);
 
   // Signals automaticamente reattivi
-  // projects = this.store.filteredProjects;
   projects = this.store.projects;
   loading = this.store.loading;
   error = this.store.error;
