@@ -21,8 +21,8 @@ import { PortfolioStore } from '../../data-access/store/portfolio.store';
             <div class="skill-card">
               <h3>{{ skill.name }}</h3>
               <div class="skill-level">
-                <div 
-                  class="skill-progress" 
+                <div
+                  class="skill-progress"
                   [style.width.%]="skill.level"
                   [style.background-color]="getLevelColor(skill.level)"
                 ></div>
@@ -94,7 +94,7 @@ import { PortfolioStore } from '../../data-access/store/portfolio.store';
   `]
 })
 export class SkillsListComponent {
-  private store = inject(PortfolioStore);
+  private readonly store = inject(PortfolioStore);
 
   skills = this.store.skills;
   loading = this.store.loading;

@@ -1,8 +1,12 @@
+// src/environments/environment.ts
 export const environment = {
   production: false,
   githubApiUrl: 'https://api.github.com',
   githubRepo: 'netalex/portfolio-2024',
   githubOwner: 'netalex',
+  dbName: 'portfolio.db',
+  apiUrl: 'http://localhost:4000/api', // Per uso futuro
+  cacheTimeout: 5 * 60 * 1000, // 5 minuti
   api: {
     baseUrl: 'http://localhost:4200/api',
     timeout: 10000,

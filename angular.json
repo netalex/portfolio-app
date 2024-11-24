@@ -57,7 +57,10 @@
             "prerender": true,
             "ssr": {
               "entry": "src/server.ts"
-            }
+            },
+            "allowedCommonJsDependencies": [
+              "lokijs"
+            ]
           },
           "configurations": {
             "production": {
@@ -84,6 +87,14 @@
           },
           "defaultConfiguration": "production"
         },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/portfolio-app-server",
+            "main": "src/main.server.ts",
+            "tsConfig": "tsconfig.server.json"
+          }
+        },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
@@ -96,17 +107,17 @@
           },
           "defaultConfiguration": "development"
         },
-        "serve-ssr": {
-          "builder": "@angular-devkit/build-angular:ssr-dev-server",
-          "configurations": {
-            "development": {
-              "target": "portfolio-app:build:development"
-            },
-            "production": {
-              "target": "portfolio-app:build:production"
-            }
-          },
-          "defaultConfiguration": "development"
+        "prerender": {
+          "builder": "@angular-devkit/build-angular:prerender",
+          "options": {
+            "browserTarget": "portfolio-app:build",
+            "serverTarget": "portfolio-app:server",
+            "routes": [
+              "/",
+              "/skills",
+              "/projects"
+            ]
+          }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",

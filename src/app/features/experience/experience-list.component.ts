@@ -20,7 +20,7 @@ import { PortfolioStore } from '../../data-access/store/portfolio.store';
           @for (experience of experiences(); track experience.id) {
             <div class="experience-card">
               <div class="experience-period">
-                {{ formatDate(experience.startDate) }} - 
+                {{ formatDate(experience.startDate) }} -
                 {{ experience.endDate ? formatDate(experience.endDate) : 'Present' }}
               </div>
               <div class="experience-content">
@@ -107,7 +107,7 @@ import { PortfolioStore } from '../../data-access/store/portfolio.store';
   `]
 })
 export class ExperienceListComponent {
-  private store = inject(PortfolioStore);
+  private readonly store = inject(PortfolioStore);
 
   experiences = this.store.sortedExperiences;
   loading = this.store.loading;
@@ -115,7 +115,7 @@ export class ExperienceListComponent {
 
   formatDate(dateStr: string): string {
     const date = new Date(dateStr);
-    return date.toLocaleDateString('en-US', { 
+    return date.toLocaleDateString('en-US', {
       month: 'short',
       year: 'numeric'
     });

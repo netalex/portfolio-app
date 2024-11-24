@@ -24,8 +24,8 @@
     "types": ["node"],
     "baseUrl": "./",
     "paths": {
+      "@environments/*": ["src/environments/*"],
       "@app/*": ["src/app/*"],
-      "@environments/*": ["src/environments/*"]
     }
   },
   "angularCompilerOptions": {

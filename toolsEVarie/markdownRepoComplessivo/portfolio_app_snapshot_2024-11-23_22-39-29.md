@@ -1,6 +1,6 @@
 # Portfolio App Repository Snapshot
 
-Generated on: 2024-11-23 20:23:56
+Generated on: 2024-11-23 22:39:29
 
 ## Git Status
 
@@ -9,6 +9,35 @@ Current Branch: `main`
 ### Last 10 Commits (with full messages)
 
 ```
+5a9aedf
+git add toolsEVarie/fromAngularProjectToMarkdown.py git add toolsEVarie/markdownRepoComplessivo/.gitkeep
+git commit -m "feat(tools): add project snapshot generator script
+
+SETUP-003: Project Documentation Tools
+
+Main changes:
+  * Add Python script for generating project snapshots
+  * Create markdownRepoComplessivo output directory
+  * Implement file categorization and git info extraction
+
+Technical Notes:
+- Python script using pathlib and modern best practices
+- Smart file categorization by project structure
+- Git integration for repository history and status
+- Robust error handling for file processing
+- Configurable file and directory exclusion lists
+
+Breaking Changes: None
+
+Documentation: Complete
+- Comprehensive docstrings in code
+- Usage instructions in script
+- Example commands in comments
+
+Migration: N/A"
+
+----------------
+
 613ea55
 AA chore(cleanup): organize project structure and remove temporary files
 SETUP-002: Code organization and cleanup
@@ -69,14 +98,6 @@ initial commit
 ### Working Directory Status
 
 ```
- D materialiVari.md
- M toolsEVarie/fromAngularProjectToMarkdown.py
- D toolsEVarie/materialiPerClaude/customInstructions.md
-?? toolsEVarie/customInstructions.md
-?? toolsEVarie/fromAngularProjectToMarkdown.py.bak
-?? toolsEVarie/markdownRepoComplessivo/
-?? toolsEVarie/materialiPerClaude/materialiVari.md
-?? toolsEVarie/project_code2024-11-23_20-03-57.md
 
 ```
 
