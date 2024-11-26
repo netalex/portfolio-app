@@ -10,8 +10,21 @@ import { ConfigService } from '../../core/services/config.service';
   template: `
   <div class="home-container">
       <section class="hero">
-        <h1>Alessandro Aprile</h1>
-        <h2>Frontend Developer</h2>
+      <div class="hero-content">
+        <h1 class="name">Alessandro Aprile</h1>
+        <h2 class="role">Frontend Developer</h2>
+        <p class="tagline">Specializzato in Angular, React e architetture frontend moderne</p>
+
+        <div class="hero-actions">
+          <a routerLink="/projects" class="hero-btn primary">
+            Vedi Progetti
+          </a>
+          <a routerLink="/experience" class="hero-btn secondary">
+            Esperienza
+          </a>
+        </div>
+      </div>
+
         @if (!config.isProduction) {
           <div class="dev-tools">
             <button
@@ -51,6 +64,82 @@ import { ConfigService } from '../../core/services/config.service';
     </section>
   `,
   styles: [`
+    .hero {
+      background: linear-gradient(
+        135deg,
+        var(--background) 0%,
+        rgba(var(--primary-rgb), 0.1) 100%
+      );
+      padding: var(--spacing-16) var(--spacing-4);
+      text-align: center;
+      margin-bottom: var(--spacing-16);
+    }
+
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .name {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: var(--spacing-4);
+      background: linear-gradient(
+        45deg,
+        var(--primary) 0%,
+        var(--primary-light) 100%
+      );
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .role {
+      font-size: 2rem;
+      color: var(--foreground);
+      margin-bottom: var(--spacing-6);
+    }
+
+    .tagline {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      margin-bottom: var(--spacing-8);
+      line-height: 1.6;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: var(--spacing-4);
+      justify-content: center;
+    }
+
+    .hero-btn {
+      padding: var(--spacing-3) var(--spacing-6);
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.2s ease;
+
+      &.primary {
+        background: var(--primary);
+        color: white;
+
+        &:hover {
+          background: var(--primary-dark);
+          transform: translateY(-2px);
+        }
+      }
+
+      &.secondary {
+        background: rgba(var(--primary-rgb), 0.1);
+        color: var(--primary);
+
+        &:hover {
+          background: rgba(var(--primary-rgb), 0.2);
+          transform: translateY(-2px);
+        }
+      }
+    }
+
     .dev-tools {
       margin-top: 2rem;
       padding: 1rem;
