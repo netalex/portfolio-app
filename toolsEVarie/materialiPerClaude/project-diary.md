@@ -6,7 +6,7 @@ Questo diario documenta lo sviluppo dell'applicazione portfolio di Alessandro Ap
 ## Setup Ambiente di Sviluppo
 - IDE: Visual Studio Code
 - Terminal: iTerm
-- Sistema Operativo: macOS 10.15.5 (Catalina)
+- Sistema Operativo: macOS 11.7.10 (Big Sur)
 - Hardware: MacBook Pro (14,1), Dual-Core Intel Core i7 @ 2.5 GHz, 16 GB RAM
 
 ## Log delle Attività
@@ -38,7 +38,7 @@ Questo diario documenta lo sviluppo dell'applicazione portfolio di Alessandro Ap
    - ✓ Reinstallati pacchetti globali necessari
    - ✓ Verificato ambiente
 
-### 26 Marzo 2024 - Setup Iniziale Progetto
+### 26 Ottobre 2024 - Setup Iniziale Progetto
 #### Attività Completate
 - Installazione Angular CLI (v19.0.1)
 - Creazione progetto base con SSR e Server Routing
@@ -231,3 +231,145 @@ Invariati rispetto a prima
 
 
 
+### 26 Novembre 2024 - Implementazione Layout Base 
+#### Attività Completate
+- Creazione HeaderComponent con navigazione principale
+- Creazione FooterComponent con informazioni di contatto
+- Aggiornamento AppComponent con layout responsive
+- Implementazione routing di base con RouterLink e RouterLinkActive
+- Integrazione dei componenti con il sistema di theming
+
+#### Commit Significativi
+1. [REF-LAY-001] - Implementation of base layout components
+   - Added HeaderComponent with main navigation
+   - Added FooterComponent with contact information
+   - Updated AppComponent with responsive layout
+   - Integrated with routing system
+   - Connected to theming system
+
+#### Prossimi Passi
+1. Implementare logica di gestione tema (chiaro/scuro)
+2. Aggiungere animazioni di transizione per le route
+3. Implementare componenti di loading per lazy loading
+4. Ottimizzare il rendering del layout per SSR
+
+### 26 Novembre 2024 - Miglioramenti UI e Design System
+#### Attività Completate
+- Migliorato stile del menu di navigazione con stato attivo più evidente
+- Implementata nuova Hero section nella home page
+- Aggiornata documentazione del design system con migliore visualizzazione delle variabili CSS
+- Aggiunte animazioni e transizioni fluide
+- Migliorata responsività generale
+
+#### Commit Significativi
+1. [REF-UI-001] - UI and Design System improvements
+   - Enhanced navigation active state
+   - Added engaging hero section
+   - Improved design system documentation
+   - Added smooth animations and transitions
+   - Better responsive behavior
+
+#### Prossimi Passi
+1. Implementare dark mode toggle
+2. Aggiungere animazioni di transizione tra le pagine
+3. Implementare loading states per i dati
+4. Ottimizzare le immagini e le risorse statiche
+
+### 26 Novembre 2024 - Design System Types Fix
+#### Attività Completate
+- Corretti errori di tipizzazione nel design system
+- Aggiunte interfacce per i design tokens
+- Migliorata documentazione dei tokens con valori aggiuntivi
+- Implementata visualizzazione hex e rgb per i colori
+- Aggiunti valori in pixel per gli spazi
+
+#### Commit Significativi
+1. [FIX-DS-001] - Design System Types and Documentation
+   - Added interfaces for design tokens
+   - Fixed type errors in the component
+   - Enhanced tokens documentation
+   - Added hex and rgb values for colors
+   - Added pixel values for spacing
+
+#### Prossimi Passi
+1. Aggiungere sezione per i breakpoints
+2. Implementare preview interattive dei componenti
+3. Aggiungere documentazione per l'utilizzo
+4. Migliorare la navigazione nella documentazione
+
+### 26 Novembre 2024 - Design System UI Enhancement (03:21 - 03:35)
+#### Attività Completate
+- Migliorato layout della griglia dei colori
+- Aggiornata visualizzazione della tipografia
+- Ottimizzata presentazione degli spazi
+- Aggiunta navigazione interna al design system
+- Migliorati stili delle card e degli elementi informativi
+
+#### Commit Significativi
+1. [REF-DS-002] - Design System UI Enhancements
+   - Added color grid layout
+   - Improved typography samples
+   - Enhanced spacing visualization
+   - Added internal navigation
+   - Updated card and info styles
+   - Improved overall aesthetics and usability
+
+#### Prossimi Passi
+1. Aggiungere preview componenti interattivi
+2. Implementare copiatura valori al click
+3. Aggiungere tema scuro alle preview
+4. Introdurre esempi di utilizzo nel codice
+
+### 26 Novembre 2024 - Design System Fix (03:36 - 03:40)
+#### Attività Completate
+- Corretto errore di sintassi negli stili del design system
+- Verificato corretto funzionamento dopo la correzione
+- Riorganizzati gli stili per maggiore leggibilità
+- Rimossi stili duplicati
+
+#### Commit Significativi
+1. [FIX-DS-003] - Fix Design System Styles
+   - Fixed SCSS syntax error
+   - Cleaned up redundant styles
+   - Improved styles organization
+   - Verified correct compilation
+
+#### Prossimi Passi
+1. Aggiungere sezione componenti interattivi
+2. Implementare dark mode toggle
+3. Aggiungere documentazione d'uso
+4. Ottimizzare performance rendering
+
+### 27 Novembre 2024 - Documentazione Completa del Progetto (10:06 - 10:16)
+#### Attività Completate
+- Creata struttura cartelle /doc
+- Implementata documentazione per fragment navigation
+- Creato README.md principale del progetto
+- Aggiunto CONTRIBUTING.md
+- Aggiornati tutti i riferimenti al repository
+
+#### Commit Significativi
+1. [REF-DOC-901] - Project Documentation Setup
+   - Creata struttura completa documentazione
+   - Implementata guida per fragment navigation
+   - Aggiunto README.md completo
+   - Creato CONTRIBUTING.md
+   - Aggiornati URL repository
+
+#### Files Principali Prodotti
+- /doc/guides/routing/fragment-navigation.md
+- /doc/guides/routing/ssr-considerations.md
+- /README.md
+- /CONTRIBUTING.md
+
+#### Performance e Struttura
+- Layout documentazione ottimizzato
+- Istruzioni di installazione verificate
+- Linee guida contribuzione stabilite
+- Standard di documentazione definiti
+
+#### Prossimi Passi
+1. Completare documentazione API
+2. Aggiungere esempi di codice per features principali
+3. Implementare documentazione design system
+4. Aggiungere guide per SSR e testing

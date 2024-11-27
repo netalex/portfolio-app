@@ -39,7 +39,7 @@ def get_git_info(root_dir):
             capture_output=True, text=True, cwd=root_dir
         ).stdout.strip(),
         'status': subprocess.run(
-            ["git", "status", "--short"],
+            ["git", "status"], #, "--short"
             capture_output=True, text=True, cwd=root_dir
         ).stdout
     }
