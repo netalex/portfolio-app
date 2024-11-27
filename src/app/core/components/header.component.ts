@@ -1,11 +1,12 @@
 // src/app/core/components/header.component.ts
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { ThemeToggleComponent } from './theme-toggle.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive],
+  imports: [RouterLink, RouterLinkActive, ThemeToggleComponent],
   template: `
     <header class="app-header">
       <div class="header-container">
@@ -38,6 +39,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
             class="nav-link">
             Design System
           </a>
+          <app-theme-toggle />
         </nav>
       </div>
     </header>

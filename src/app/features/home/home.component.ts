@@ -165,7 +165,8 @@ import { ConfigService } from '../../core/services/config.service';
       padding: 1rem;
       border: 1px solid #ddd;
       border-radius: 4px;
-      background: #f5f5f5;
+      background: var(--surface);
+      color: var(--text);
     }
 
     .test-button {
@@ -186,19 +187,31 @@ import { ConfigService } from '../../core/services/config.service';
       margin-top: 1rem;
       padding: 1rem;
       border-radius: 4px;
-      background: white;
+      background: var(--surface);
+      color: var(--text);
 
       &.success {
-        border-left: 4px solid green;
+        border-left: 4px solid var(--color-success);
       }
 
       &:not(.success) {
-        border-left: 4px solid red;
+        border-left: 4px solid var(--color-error);
+      }
+
+      h4 {
+        color: var(--text);      // Assicurati che i titoli abbiano il colore corretto
+        margin-bottom: 0.5rem;
+      }
+
+      ul {
+        list-style: none;
+        padding-left: 1rem;
+        color: var(--text);      // Assicurati che le liste abbiano il colore corretto
       }
     }
 
     .error {
-      color: red;
+      color: var(--color-error);
     }
     .home-container {
       padding: var(--spacing-4);
