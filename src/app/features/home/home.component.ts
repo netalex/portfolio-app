@@ -1,4 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { PortfolioStore } from '../../data-access/store/portfolio.store';
 import { Meta, Title } from '@angular/platform-browser';
 import { DbTestService } from '../../data-access/services/db-test.service';
@@ -7,6 +8,7 @@ import { ConfigService } from '../../core/services/config.service';
 @Component({
   selector: 'app-home',
   standalone: true,
+  imports: [RouterLink],
   template: `
   <div class="home-container">
       <section class="hero">
@@ -73,6 +75,13 @@ import { ConfigService } from '../../core/services/config.service';
       padding: var(--spacing-16) var(--spacing-4);
       text-align: center;
       margin-bottom: var(--spacing-16);
+      position: relative;
+    z-index: 1;
+    
+    a {
+      pointer-events: all;
+    }
+
     }
 
     .hero-content {
@@ -110,31 +119,42 @@ import { ConfigService } from '../../core/services/config.service';
       display: flex;
       gap: var(--spacing-4);
       justify-content: center;
+    position: relative;
+    z-index: 2;  // Assicuriamoci che sia sopra eventuali altri elementi
     }
 
     .hero-btn {
+    display: inline-block;
       padding: var(--spacing-3) var(--spacing-6);
       border-radius: var(--radius-md);
       text-decoration: none;
       font-weight: 500;
       transition: all 0.2s ease;
+    position: relative;
+    z-index: 2;
+    pointer-events: all;  // Forza la clickability
+    cursor: pointer;      // Rende esplicito che è cliccabile
 
       &.primary {
         background: var(--primary);
         color: white;
+      border: 2px solid var(--primary);
 
         &:hover {
-          background: var(--primary-dark);
+        background: white;
+        color: var(--primary);  // Testo diventa blu
           transform: translateY(-2px);
         }
       }
 
       &.secondary {
-        background: rgba(var(--primary-rgb), 0.1);
+      background: white;
         color: var(--primary);
+      border: 2px solid var(--primary);
 
         &:hover {
-          background: rgba(var(--primary-rgb), 0.2);
+        background: var(--primary);
+        color: white;  // Testo diventa bianco
           transform: translateY(-2px);
         }
       }

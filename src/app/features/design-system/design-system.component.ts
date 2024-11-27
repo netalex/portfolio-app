@@ -1,5 +1,7 @@
 // src/app/features/design-system/design-system.component.ts
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router';
+
 
 interface ColorToken {
   name: string;
@@ -27,18 +29,19 @@ interface SpacingToken {
 @Component({
   selector: 'app-design-system',
   standalone: true,
+  imports: [RouterLink, RouterLinkActive],
   template: `
     <div class="design-system-container">
       <header class="design-system-header">
         <h1>Design System</h1>
         <p>A collection of reusable components and design tokens</p>
-              
-      <nav class="ds-nav">
-        <a href="#colors">Colors</a>
-        <a href="#typography">Typography</a>
-        <a href="#spacing">Spacing</a>
-        <a href="#components">Components</a>
-      </nav>
+
+        <nav class="ds-nav">
+          <a [routerLink]="[]" [fragment]="'colors'" routerLinkActive="active">Colors</a>
+          <a [routerLink]="[]" [fragment]="'typography'" routerLinkActive="active">Typography</a>
+          <a [routerLink]="[]" [fragment]="'spacing'" routerLinkActive="active">Spacing</a>
+          <a [routerLink]="[]" [fragment]="'components'" routerLinkActive="active">Components</a>
+        </nav>
       </header>
 
       <section id="colors" class="section">
@@ -57,6 +60,7 @@ interface SpacingToken {
             </div>
           }
         </div>
+        <a (click)="scrollToTop()" class="back-to-top">↑</a>
       </section>
 
       <section id="typography" class="section">
@@ -72,6 +76,7 @@ interface SpacingToken {
             </div>
           }
         </div>
+        <a (click)="scrollToTop()" class="back-to-top">↑</a>
       </section>
 
       <section id="spacing" class="section">
@@ -87,12 +92,14 @@ interface SpacingToken {
             </div>
           }
         </div>
+        <a (click)="scrollToTop()" class="back-to-top">↑</a>
       </section>
 
       <section id="components" class="section">
-      <h2>Components</h2>
-      <!-- Component demos to be added -->
-    </section>
+        <h2>Components</h2>
+        <!-- Component demos to be added -->
+      </section>
+      <a (click)="scrollToTop()" class="back-to-top">↑</a>
     </div>
   `,
   styles: [
@@ -108,37 +115,44 @@ interface SpacingToken {
         text-align: center;
       }
 
-
       .ds-nav {
-    display: flex;
-    justify-content: center;
-    gap: var(--spacing-4);
-    margin-top: var(--spacing-8);
-    padding-bottom: var(--spacing-4);
-    border-bottom: 1px solid var(--neutral-200);
+        display: flex;
+        justify-content: center;
+        gap: var(--spacing-4);
+        margin-top: var(--spacing-8);
+        padding-bottom: var(--spacing-4);
+        border-bottom: 1px solid var(--neutral-200);
 
-    a {
-      color: var(--text);
-      text-decoration: none;
-      padding: var(--spacing-2) var(--spacing-4);
-      border-radius: var(--radius-md);
-      transition: all 0.2s ease;
+        a {
+          color: var(--text);
+          text-decoration: none;
+          padding: var(--spacing-2) var(--spacing-4);
+          border-radius: var(--radius-md);
+          transition: all 0.2s ease;
+          cursor: pointer; // Aggiunto per migliorare UX
 
-      &:hover {
-        background: var(--neutral-100);
+          &:hover {
+            background: var(--neutral-100);
+          }
+
+          &.active {
+            color: var(--primary);
+            background: rgba(var(--primary-rgb), 0.1);
+            font-weight: 500;
+          }
+        }
       }
-    }
-  }
 
-  .section {
-    margin-bottom: var(--spacing-16);
+      .section {
+        scroll-margin-top: 2rem; // Aggiunto per migliorare lo scroll to anchor
+        margin-bottom: var(--spacing-16);
 
-    h2 {
-      margin-bottom: var(--spacing-8);
-      padding-bottom: var(--spacing-4);
-      border-bottom: 1px solid var(--neutral-200);
-    }
-  }
+        h2 {
+          margin-bottom: var(--spacing-8);
+          padding-bottom: var(--spacing-4);
+          border-bottom: 1px solid var(--neutral-200);
+        }
+      }
 
       .color-grid {
         display: grid;
@@ -259,20 +273,77 @@ interface SpacingToken {
       }
 
       .spacing-info {
-          display: flex;
-          gap: var(--spacing-4);
-          font-size: var(--font-size-sm);
+        display: flex;
+        gap: var(--spacing-4);
+        font-size: var(--font-size-sm);
 
-          code {
-            font-family: var(--font-mono);
-            background: var(--neutral-100);
-            padding: var(--spacing-1) var(--spacing-2);
-            border-radius: var(--radius-sm);
-          }
+        code {
+          font-family: var(--font-mono);
+          background: var(--neutral-100);
+          padding: var(--spacing-1) var(--spacing-2);
+          border-radius: var(--radius-sm);
         }
-        `]
+      }
+
+      .back-to-top {
+        display: block;
+        text-align: center;
+        margin-top: var(--spacing-8);
+        padding: var(--spacing-2) var(--spacing-4);
+        color: var(--primary);
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-weight: 500;
+
+        &:hover {
+          transform: translateY(-2px);
+          color: var(--primary-dark);
+        }
+
+        &::after {
+          content: '';
+          display: block;
+          width: 40px;
+          height: 2px;
+          background: var(--primary);
+          margin: var(--spacing-2) auto 0;
+          transition: width 0.2s ease;
+        }
+
+        &:hover::after {
+          width: 60px;
+        }
+      }
+    `,
+  ],
 })
-export class DesignSystemComponent {
+export class DesignSystemComponent implements AfterViewInit {
+  constructor(
+    private readonly route: ActivatedRoute,
+    private readonly router: Router
+  ) {}
+
+  ngAfterViewInit() {
+    // Gestione dell'ancoraggio iniziale
+    this.route.fragment.subscribe(fragment => {
+      if (fragment) {
+        const element = document.getElementById(fragment);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    });
+  }
+
+  scrollToTop(): void {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
+
+
   colors: ColorToken[] = [
     {
       name: 'Primary',

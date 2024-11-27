@@ -29,7 +29,11 @@ export const routes: Routes = [
   {
     path: 'design-system',
     loadComponent: () => import('./features/design-system/design-system.component')
-      .then(m => m.DesignSystemComponent)
+      .then(m => m.DesignSystemComponent),
+      title: 'Design System - Alessandro Aprile',
+      data: { 
+        reuse: true // Aggiunto per mantenere lo stato quando si naviga tra i fragment
+      }
   },
   {
     path: '**',

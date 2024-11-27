@@ -14,8 +14,22 @@
   // Base theme variables
   --background: var(--neutral-50);
   --foreground: var(--neutral-900);
+  
   --primary: var(--primary-500);
+  --primary-rgb: 52, 152, 219;
   --primary-foreground: white;
+
+  --secondary: var(--neutral-700);
+  --secondary-rgb: 44, 62, 80;
+  --secondary-foreground: var(--neutral-50);
+
+  --surface: var(--neutral-50);
+  --surface-rgb: 255, 255, 255;
+  --surface-foreground: var(--neutral-900);
+
+  --text: var(--neutral-900);
+  --text-rgb: 44, 62, 80;
+  --text-secondary: var(--neutral-600);
 
   // Typography
   --font-sans: #{vars.$font-family-sans};
@@ -32,4 +46,13 @@
   --foreground: var(--neutral-50);
   --primary: var(--primary-400);
   --primary-foreground: var(--neutral-900);
+  
+  --secondary: var(--neutral-300);
+  --secondary-foreground: var(--neutral-900);
+  
+  --surface: var(--neutral-800);
+  --surface-foreground: var(--neutral-50);
+  
+  --text: var(--neutral-50);
+  --text-secondary: var(--neutral-400);
 }
