@@ -1,35 +1,80 @@
-import { TestBed } from '@angular/core/testing';
-import { RouterModule } from '@angular/router';
+// src/app/app.component.spec.ts
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { provideRouter } from '@angular/router';
+import { routes } from './app.routes';
+import { PortfolioService } from './data-access/services/portfolio.service';
+import { PLATFORM_ID } from '@angular/core';
 
 describe('AppComponent', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [
-        RouterModule.forRoot([])
-      ],
-      declarations: [
-        AppComponent
-      ],
-    }).compileComponents();
-  });
+  let component: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
+  let portfolioService: jasmine.SpyObj<PortfolioService>;
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
+  // Configurazione per test in ambiente browser
+  function configureTestingModule(platformId: string = 'browser') {
+    portfolioService = jasmine.createSpyObj('PortfolioService', ['loadInitialData']);
+    portfolioService.loadInitialData.and.returnValue(Promise.resolve());
 
-  it(`should have as title 'portfolio-app'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('portfolio-app');
-  });
+    TestBed.configureTestingModule({
+      imports: [AppComponent],
+      providers: [
+        provideRouter(routes),
+        { provide: PortfolioService, useValue: portfolioService },
+        { provide: PLATFORM_ID, useValue: platformId }
+      ]
+    });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
     fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, portfolio-app');
+  }
+
+  describe('Browser Environment', () => {
+    beforeEach(async () => {
+      await TestBed.configureTestingModule({
+        imports: [AppComponent],
+        providers: [
+          provideRouter(routes),
+          { provide: PortfolioService, useValue: portfolioService },
+          { provide: PLATFORM_ID, useValue: 'browser' }
+        ]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
   });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should have correct title', () => {
+    // Verifichiamo che il titolo sia corretto
+    expect(component.title).toBe('portfolio-app');
+  });
+
+    it('should call loadInitialData on init in browser environment', fakeAsync(() => {
+      // Eseguiamo ngOnInit
+      component.ngOnInit();
+      // Facciamo avanzare i timer asincroni
+      tick();
+      
+    expect(portfolioService.loadInitialData).toHaveBeenCalled();
+    }));
+  });
+
+  describe('Server Environment', () => {
+    beforeEach(async () => {
+      await configureTestingModule('server');
+    });
+
+    it('should not call loadInitialData on server', fakeAsync(() => {
+      component.ngOnInit();
+      tick();
+      
+    expect(portfolioService.loadInitialData).not.toHaveBeenCalled();
+    }));
+});
 });

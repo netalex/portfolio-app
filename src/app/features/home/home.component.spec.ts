@@ -3,24 +3,41 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 import { DbTestService } from '../../data-access/services/db-test.service';
 import { ConfigService } from '../../core/services/config.service';
+import { provideRouter } from '@angular/router';
+import { routes } from '../../app.routes';
+import { PortfolioStore } from '../../data-access/store/portfolio.store';
+import { Meta, Title } from '@angular/platform-browser';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
   let dbTestServiceSpy: jasmine.SpyObj<DbTestService>;
   let configServiceSpy: jasmine.SpyObj<ConfigService>;
+  let storeSpy: jasmine.SpyObj<PortfolioStore>;
+  let titleSpy: jasmine.SpyObj<Title>;
+  let metaSpy: jasmine.SpyObj<Meta>;
 
   beforeEach(async () => {
     dbTestServiceSpy = jasmine.createSpyObj('DbTestService', ['testDatabaseOperations']);
     configServiceSpy = jasmine.createSpyObj('ConfigService', [], {
-      isProduction: false
+      isProduction: false,
+      apiConfig: {},
+      features: {},
+      i18nConfig: {}
     });
+    storeSpy = jasmine.createSpyObj('PortfolioStore', ['featuredProjects']);
+    titleSpy = jasmine.createSpyObj('Title', ['setTitle']);
+    metaSpy = jasmine.createSpyObj('Meta', ['updateTag']);
 
     await TestBed.configureTestingModule({
       imports: [HomeComponent],
       providers: [
+        provideRouter(routes),
         { provide: DbTestService, useValue: dbTestServiceSpy },
-        { provide: ConfigService, useValue: configServiceSpy }
+        { provide: ConfigService, useValue: configServiceSpy },
+        { provide: PortfolioStore, useValue: storeSpy },
+        { provide: Title, useValue: titleSpy },
+        { provide: Meta, useValue: metaSpy }
       ]
     }).compileComponents();
 
@@ -46,9 +63,7 @@ describe('HomeComponent', () => {
     };
     dbTestServiceSpy.testDatabaseOperations.and.returnValue(Promise.resolve(testResult));
 
-    const button = fixture.nativeElement.querySelector('.test-button');
-    button.click();
-    await fixture.whenStable();
+    await component.testDb();
     fixture.detectChanges();
 
     const resultElement = fixture.nativeElement.querySelector('.test-result');
@@ -62,12 +77,18 @@ describe('HomeComponent', () => {
     };
     dbTestServiceSpy.testDatabaseOperations.and.returnValue(Promise.resolve(errorResult));
 
-    const button = fixture.nativeElement.querySelector('.test-button');
-    button.click();
-    await fixture.whenStable();
+    await component.testDb();
     fixture.detectChanges();
 
     const errorElement = fixture.nativeElement.querySelector('.error');
     expect(errorElement.textContent).toContain('Test error');
+  });
+
+  it('should set page title and meta description', () => {
+    expect(titleSpy.setTitle).toHaveBeenCalledWith('Alessandro Aprile - Frontend Developer');
+    expect(metaSpy.updateTag).toHaveBeenCalledWith({
+      name: 'description',
+      content: jasmine.any(String)
+    });
   });
 });

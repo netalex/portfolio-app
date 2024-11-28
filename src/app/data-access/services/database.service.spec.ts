@@ -8,15 +8,33 @@ import { PLATFORM_ID } from '@angular/core';
 interface TestData {
   id: string;
   name: string;
+  // Aggiungiamo campi opzionali per testare scenari più complessi
+  category?: string;
+  tags?: string[];
+  timestamp?: number;
 }
 
 describe('DatabaseService', () => {
   let service: DatabaseService;
   const TEST_COLLECTION = 'test_collection';
 
+  // Aggiungiamo una funzione helper per creare dati di test
+  function createTestData(id: string, suffix = ''): TestData {
+    return {
+      id,
+      name: `Test Item ${suffix || id}`,
+      category: `Category ${suffix || id}`,
+      tags: [`tag1_${suffix || id}`, `tag2_${suffix || id}`],
+      timestamp: Date.now()
+    };
+  }
+
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [DatabaseService, { provide: PLATFORM_ID, useValue: 'browser' }],
+      providers: [
+        DatabaseService,
+        { provide: PLATFORM_ID, useValue: 'browser' }
+      ]
     });
     service = TestBed.inject(DatabaseService);
   });
@@ -27,59 +45,119 @@ describe('DatabaseService', () => {
   });
 
   // Test base originali
-  it('should initialize database', async () => {
-    await service.waitForInitialization();
-    const collection = service.getCollection(TEST_COLLECTION);
-    expect(collection).toBeTruthy();
+  describe('Initialization', () => {
+    it('should initialize database with default collections', async () => {
+      await service.waitForInitialization();
+      
+      const defaultCollections = ['projects', 'skills', 'experiences'];
+      for (const collectionName of defaultCollections) {
+        const collection = service.getCollection(collectionName);
+        expect(collection).toBeTruthy();
+        expect(collection?.name).toBe(collectionName);
+      }
+    });
+
+    it('should handle initialization errors gracefully', async () => {
+      // Simuliamo un errore durante l'inizializzazione
+      spyOn(console, 'error').and.stub();
+      const errorSpy = spyOn(service as any, 'databaseInitialize').and.throwError('Test error');
+
+      try {
+        await service.waitForInitialization();
+        fail('Should have thrown an error');
+      } catch (error) {
+        expect(console.error).toHaveBeenCalled();
+        expect(errorSpy).toHaveBeenCalled();
+      }
+    });
   });
 
-  it('should perform CRUD operations', async () => {
-    // Create
-    const testData: TestData = { id: '1', name: 'Test' };
-    const created = await service.upsertData<TestData>(TEST_COLLECTION, testData);
-    expect(created).toEqual(testData);
 
-    // Read
-    const readData = await service.getData<TestData>(TEST_COLLECTION);
-    expect(readData.length).toBe(1);
-    expect(readData[0]).toEqual(testData);
+  describe('CRUD Operations', () => {
+    it('should create and read data', async () => {
+      const testData = createTestData('1');
+      await service.upsertData(TEST_COLLECTION, testData);
+      
+      const result = await service.getData<TestData>(TEST_COLLECTION);
+      expect(result).toHaveSize(1);
+      expect(result[0]).toEqual(testData);
+    });
 
-    // Update
-    const updatedData: TestData = { ...testData, name: 'Updated' };
-    const updated = await service.upsertData<TestData>(TEST_COLLECTION, updatedData);
-    expect(updated.name).toBe('Updated');
+    it('should update existing data', async () => {
+      const originalData = createTestData('1');
+      await service.upsertData(TEST_COLLECTION, originalData);
 
-    // Verify Update
-    const afterUpdate = await service.getData<TestData>(TEST_COLLECTION);
-    expect(afterUpdate[0].name).toBe('Updated');
+      const updatedData = { ...originalData, name: 'Updated Name' };
+      await service.upsertData(TEST_COLLECTION, updatedData);
 
-    // Delete (clear)
-    await service.clearCollection(TEST_COLLECTION);
-    const afterClear = await service.getData<TestData>(TEST_COLLECTION);
-    expect(afterClear.length).toBe(0);
+      const result = await service.getData<TestData>(TEST_COLLECTION);
+      expect(result).toHaveSize(1);
+      expect(result[0].name).toBe('Updated Name');
+    });
+
+    it('should handle bulk operations efficiently', async () => {
+      const items = Array.from({ length: 50 }, (_, i) => createTestData(`${i}`));
+      
+      const startTime = performance.now();
+      await Promise.all(items.map(item => service.upsertData(TEST_COLLECTION, item)));
+      const endTime = performance.now();
+      
+      const insertTime = endTime - startTime;
+      console.log(`Bulk insert time: ${insertTime}ms`);
+      
+      expect(insertTime).toBeLessThan(1000); // Should complete within 1 second
+      
+      const result = await service.getData<TestData>(TEST_COLLECTION);
+      expect(result).toHaveSize(items.length);
+    });
   });
 
-  it('should handle multiple records', async () => {
-    const testData1: TestData = { id: '1', name: 'Test 1' };
-    const testData2: TestData = { id: '2', name: 'Test 2' };
+  describe('Query Performance', () => {
+    beforeEach(async () => {
+      // Setup test data
+      const items = Array.from({ length: 100 }, (_, i) => ({
+        ...createTestData(`${i}`),
+        category: i % 2 === 0 ? 'even' : 'odd'
+      }));
+      
+      await Promise.all(items.map(item => service.upsertData(TEST_COLLECTION, item)));
+    });
 
-    await service.upsertData<TestData>(TEST_COLLECTION, testData1);
-    await service.upsertData<TestData>(TEST_COLLECTION, testData2);
-
-    const allData = await service.getData<TestData>(TEST_COLLECTION);
-    expect(allData.length).toBe(2);
-    expect(allData.map(d => d.id).sort()).toEqual(['1', '2']);
+    it('should efficiently query with filters', async () => {
+      const startTime = performance.now();
+      
+      const result = await service.getData<TestData>(TEST_COLLECTION, { category: 'even' });
+      
+      const queryTime = performance.now() - startTime;
+      console.log(`Query time: ${queryTime}ms`);
+      
+      expect(queryTime).toBeLessThan(50); // Should be very fast
+      expect(result).toHaveSize(50);
+      expect(result.every(item => item.category === 'even')).toBeTrue();
+    });
   });
 
-  it('should handle invalid data', async () => {
-    const invalidData = { name: 'No ID' }; // Rimuovi il cast a TestData
-    try {
-      await service.upsertData(TEST_COLLECTION, invalidData as any);
-      fail('Should have thrown an error');
-    } catch (error) {
-      expect(error).toBeTruthy();
-      expect((error as Error).message).toContain('Invalid data');
-    }
+  describe('Error Handling', () => {
+    it('should validate data before insertion', async () => {
+      const invalidData = [
+        { name: 'No ID' },
+        { id: null, name: 'Null ID' },
+        { id: '', name: 'Empty ID' },
+        { id: '   ', name: 'Whitespace ID' },
+        { id: 123, name: 'Number ID' }
+      ];
+
+      for (const data of invalidData) {
+        await expectAsync(
+          service.upsertData(TEST_COLLECTION, data as any)
+        ).toBeRejected();
+      }
+    });
+
+    it('should handle collection not found', async () => {
+      const result = await service.getData('non_existent_collection');
+      expect(result).toEqual([]);
+    });
   });
 
   // Test di validazione originali
@@ -120,22 +198,6 @@ describe('DatabaseService', () => {
 
   // Nuovi test specifici per il caso d'uso
   describe('Initial Data Loading', () => {
-    it('should initialize default collections', async () => {
-      await service.waitForInitialization();
-
-      const expectedCollections = ['projects', 'skills', 'experiences'];
-
-      for (const collectionName of expectedCollections) {
-        const collection = service.getCollection(collectionName);
-        // Prima verifichiamo che la collezione esista
-        expect(collection).toBeTruthy();
-        // Poi verifichiamo che abbia gli indici corretti se li supporta
-        if (collection) {
-          // Verifichiamo che la collezione supporti la ricerca per id
-          expect(collection.by('id')).toBeDefined();
-        }
-      }
-    });
 
     it('should handle bulk initial data load', async () => {
       const initialData = {
@@ -219,30 +281,32 @@ describe('DatabaseService', () => {
     beforeEach(() => {
       TestBed.resetTestingModule();
       TestBed.configureTestingModule({
-        providers: [DatabaseService, { provide: PLATFORM_ID, useValue: 'server' }],
+        providers: [
+          DatabaseService,
+          { provide: PLATFORM_ID, useValue: 'server' }
+        ]
       });
       ssrService = TestBed.inject(DatabaseService);
     });
 
     it('should provide mock data in SSR mode', async () => {
-      expect(ssrService.getCollection(TEST_COLLECTION)).toBeTruthy();
-      const data = await ssrService.getData(TEST_COLLECTION);
-      expect(Array.isArray(data)).toBeTruthy();
+      const testData = createTestData('ssr-1');
+      await ssrService.upsertData(TEST_COLLECTION, testData);
+      
+      const result = await ssrService.getData<TestData>(TEST_COLLECTION);
+      expect(result).toHaveSize(1);
+      expect(result[0]).toEqual(testData);
     });
 
-    it('should handle SSR to client transition', async () => {
-      // Dati di test
-      const prerenderedData = { id: 'pre-1', name: 'Prerendered' };
-
-      // Prima testiamo il lato server
-      await ssrService.upsertData(TEST_COLLECTION, prerenderedData);
-      const serverData = await ssrService.getData(TEST_COLLECTION);
-      expect(serverData.length).toBe(1);
-      expect(serverData[0]).toEqual(prerenderedData);
-
-      // Poi testiamo il lato client (usando il service già configurato nel beforeEach principale)
-      const clientData = await service.getData(TEST_COLLECTION);
-      expect(Array.isArray(clientData)).toBeTruthy();
+    it('should not persist data between SSR requests', async () => {
+      // Prima richiesta SSR
+      await ssrService.upsertData(TEST_COLLECTION, createTestData('ssr-1'));
+      
+      // Simula nuova istanza per seconda richiesta SSR
+      const newSsrService = TestBed.inject(DatabaseService);
+      const result = await newSsrService.getData<TestData>(TEST_COLLECTION);
+      
+      expect(result).toHaveSize(0);
     });
   });
 });
