@@ -14,6 +14,13 @@ export const routes: Routes = [
       .then(m => m.ProjectsListComponent),
     title: 'Projects - Alessandro Aprile'
   },
+  // In futuro, aggiungeremo anche questa route per i dettagli del progetto
+  {
+    path: 'projects/:id',
+    loadComponent: () => import('./features/projects/project-detail.component')
+      .then(m => m.ProjectDetailComponent),
+    title: 'Project Details - Alessandro Aprile'
+  },
   {
     path: 'skills',
     loadComponent: () => import('./features/skills/skills-list.component')

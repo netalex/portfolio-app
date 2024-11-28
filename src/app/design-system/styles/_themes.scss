@@ -2,6 +2,10 @@
 @use './variables' as vars;
 
 :root {
+
+  // Layout
+  --header-height: 64px;
+
   // Generate CSS variables for colors
   @each $key, $value in vars.$primary-colors {
     --primary-#{$key}: #{$value};
@@ -10,6 +14,7 @@
   @each $key, $value in vars.$neutral-colors {
     --neutral-#{$key}: #{$value};
   }
+
 
   // Base theme variables
   --background: var(--neutral-50);
@@ -32,6 +37,9 @@
   --surface: var(--neutral-50);
   --surface-rgb: 255, 255, 255;
   --surface-foreground: var(--neutral-900);
+  --surface-variant: var(--neutral-100);
+  --surface-variant-hover: var(--neutral-200);
+
 
   --text: var(--neutral-900);
   --text-rgb: 44, 62, 80;
@@ -58,6 +66,8 @@
   
   --surface: var(--neutral-800);
   --surface-foreground: var(--neutral-50);
+  --surface-variant: var(--neutral-700);
+  --surface-variant-hover: var(--neutral-600);
   
   --text: var(--neutral-50);
   --text-secondary: var(--neutral-400);
@@ -66,4 +76,7 @@
   --color-error: #f87171;
   --color-warning: #fbbf24;
   --color-info: #60a5fa;
+
+  --primary-hover: var(--primary-300);
+
 }

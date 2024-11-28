@@ -54,7 +54,7 @@
                 "src/styles"
               ]
             },
-            "prerender": true,
+            "prerender": false, // Disabilitiamo temporaneamente il prerender
             "ssr": {
               "entry": "src/server.ts"
             },
@@ -107,18 +107,18 @@
           },
           "defaultConfiguration": "development"
         },
-        "prerender": {
-          "builder": "@angular-devkit/build-angular:prerender",
-          "options": {
-            "browserTarget": "portfolio-app:build",
-            "serverTarget": "portfolio-app:server",
-            "routes": [
-              "/",
-              "/skills",
-              "/projects"
-            ]
-          }
-        },
+        // "prerender": {
+        //   "builder": "@angular-devkit/build-angular:prerender",
+        //   "options": {
+        //     "browserTarget": "portfolio-app:build",
+        //     "serverTarget": "portfolio-app:server",
+        //     "routes": [
+        //       "/",
+        //       "/skills",
+        //       "/projects"
+        //     ]
+        //   }
+        // },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {

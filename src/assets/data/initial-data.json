@@ -1,0 +1,237 @@
+{
+  "projects": [
+    {
+      "id": "portfolio-app-2024",
+      "title": "Personal Portfolio Application",
+      "shortDescription": "Modern portfolio website built with Angular and custom design system",
+      "fullDescription": "Advanced portfolio application showcasing frontend development expertise. Features include a custom design system, signal-based state management, SSR optimization, and multi-language support. Implements modern Angular 19 features including standalone components, new control flow, and signals for reactive state management.",
+      "technologies": [
+        "Angular 19",
+        "TypeScript 5.5",
+        "SCSS",
+        "Angular CDK",
+        "LokiJS",
+        "SSR",
+        "i18n"
+      ],
+      "featured": true,
+      "startDate": "2024-01-01",
+      "endDate": null,
+      "role": "Full Stack Developer",
+      "demoUrl": "https://alessandroaprile.dev",
+      "sourceUrl": "https://github.com/netalex/portfolio-app",
+      "imageUrl": "/assets/images/projects/portfolio/main.webp",
+      "screenshots": [
+        "/assets/images/projects/portfolio/dashboard.webp",
+        "/assets/images/projects/portfolio/design-system.webp"
+      ],
+      "category": "Web Development",
+      "status": "In Progress",
+      "highlights": [
+        "Custom design system with theme support",
+        "Signal-based state management",
+        "Server-side rendering optimization",
+        "Multi-language support (EN, IT, FR)",
+        "Comprehensive test coverage"
+      ]
+    },
+    {
+      "id": "alkemy-dna-2024",
+      "title": "DNA Analysis Management System",
+      "shortDescription": "Complex system for DNA analysis management for Italian Ministry of Justice",
+      "fullDescription": "Developed key features for three interconnected projects focused on DNA analysis systems for the Italian Ministry of Justice's Joint Forces Command. Implemented critical change requests, conducted thorough bug fixes, and integrated new features while ensuring seamless deployment across all projects.",
+      "technologies": [
+        "Angular",
+        "TypeScript",
+        "PrimeNG",
+        "RxJS",
+        "Git",
+        "REST API"
+      ],
+      "featured": true,
+      "startDate": "2024-07-01",
+      "endDate": "2024-10-01",
+      "role": "Frontend Developer",
+      "category": "Enterprise Software",
+      "status": "Completed",
+      "highlights": [
+        "Complex data visualization",
+        "Real-time updates",
+        "Advanced search functionality",
+        "Secure authentication"
+      ]
+    },
+    {
+      "id": "iccrea-2024",
+      "title": "Banking Contract Management System",
+      "shortDescription": "Internal application for massive CSV upload of contract data for loans and mortgages",
+      "fullDescription": "Maintained and updated an internal application for a banking institution enabling mass upload of CSV files containing contractual data for mortgages and loans. Improved and optimized code, achieving significant frontend performance increases. Implemented new features under extremely tight deadlines while maintaining functional and design consistency.",
+      "technologies": [
+        "Angular",
+        "TypeScript",
+        "Git",
+        "CSV Processing",
+        "Banking APIs"
+      ],
+      "startDate": "2024-02-01",
+      "endDate": "2024-06-01",
+      "role": "Frontend Developer",
+      "category": "Financial Software",
+      "status": "Completed",
+      "highlights": [
+        "Performance optimization",
+        "Large-scale data processing",
+        "Git hooks integration",
+        "Banking sector compliance"
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "id": "angular",
+      "name": "Angular",
+      "category": "FRAMEWORK",
+      "level": 95,
+      "yearsOfExperience": 5,
+      "keywords": [
+        "Angular 19",
+        "TypeScript",
+        "RxJS",
+        "NgRx",
+        "Angular Material",
+        "PrimeNG",
+        "Signals",
+        "SSR"
+      ]
+    },
+    {
+      "id": "react",
+      "name": "React",
+      "category": "FRAMEWORK",
+      "level": 85,
+      "yearsOfExperience": 3,
+      "keywords": [
+        "Redux",
+        "React Native",
+        "Hooks",
+        "Context API",
+        "React Router",
+        "Next.js"
+      ]
+    },
+    {
+      "id": "typescript",
+      "name": "TypeScript",
+      "category": "LANGUAGE",
+      "level": 90,
+      "yearsOfExperience": 5,
+      "keywords": [
+        "ES6+",
+        "Type System",
+        "Generics",
+        "Decorators",
+        "Module System"
+      ]
+    },
+    {
+      "id": "frontend",
+      "name": "Frontend Development",
+      "category": "FRONTEND",
+      "level": 95,
+      "yearsOfExperience": 10,
+      "keywords": [
+        "HTML5",
+        "CSS3",
+        "JavaScript",
+        "SCSS",
+        "Responsive Design",
+        "Web Performance",
+        "Browser APIs"
+      ]
+    }
+  ],
+  "experiences": [
+    {
+      "id": "volo-2024",
+      "company": "Volo Consulting/Orangee S.r.l",
+      "role": "Frontend Developer",
+      "description": "Development of DNA analysis management systems for the Italian Ministry of Justice. Implemented critical features and ensured seamless integration across multiple complex applications.",
+      "technologies": [
+        "Angular",
+        "TypeScript",
+        "PrimeNG",
+        "Git",
+        "REST API"
+      ],
+      "startDate": "2024-07-01",
+      "endDate": "2024-10-01",
+      "location": "Italy",
+      "type": "remote"
+    },
+    {
+      "id": "thinkopen-2024",
+      "company": "THINKOPEN",
+      "role": "Frontend Developer",
+      "description": "Worked on multiple high-profile projects including ICCREA banking systems and GFT insurance platforms. Led development teams and mentored junior developers.",
+      "technologies": [
+        "Angular",
+        "React",
+        "TypeScript",
+        "Node.js",
+        "Git",
+        "Banking APIs"
+      ],
+      "startDate": "2018-02-01",
+      "endDate": "2024-07-01",
+      "location": "Milan",
+      "type": "hybrid"
+    },
+    {
+      "id": "3wlab-2017",
+      "company": "3Wlab Milano/Roma",
+      "role": "Frontend Developer",
+      "description": "Developed an integrated document management system for the public sector and created AI-powered chatbot solutions.",
+      "technologies": [
+        "AngularJS",
+        "JavaScript",
+        "Node.js",
+        "AI/ML",
+        "Document Management"
+      ],
+      "startDate": "2015-01-01",
+      "endDate": "2017-12-31",
+      "location": "Milan/Rome",
+      "type": "hybrid"
+    }
+  ],
+  "about": {
+    "name": "Alessandro Aprile",
+    "title": "Frontend Developer",
+    "location": {
+      "country": "Italy",
+      "timezone": "CET",
+      "remote": true,
+      "availableIn": ["Milan", "Rome"]
+    },
+    "languages": [
+      {
+        "language": "Italian",
+        "level": "Native"
+      },
+      {
+        "language": "English",
+        "level": "Proficient"
+      },
+      {
+        "language": "French",
+        "level": "Proficient"
+      }
+    ],
+    "contact": {
+      "email": "aprile.alessandro@gmail.com",
+      "phone": "+393200625543",
+      "github": "https://github.com/netalex",
+      "linkedin": "https://www.linkedin.com/in/alessandro-aprile-0225106/"
+    }
+  }
+}

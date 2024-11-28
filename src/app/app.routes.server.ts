@@ -5,29 +5,29 @@ export const serverRoutes: ServerRoute[] = [
   {
     // Home page - prerenderizzata per ottimizzare la performance iniziale
     path: '',
-    renderMode: RenderMode.Prerender,
+    renderMode: RenderMode.Client // Per ora rendiamo tutto lato client Prerender,
   },
   {
     path: 'projects',
-    renderMode: RenderMode.Prerender,
+    renderMode: RenderMode.Client // Per ora rendiamo tutto lato client Prerender,
   },
   {
     path: 'skills',
-    renderMode: RenderMode.Prerender,
+    renderMode: RenderMode.Client // Per ora rendiamo tutto lato client Prerender,
   },
   {
     path: 'experience',
-    renderMode: RenderMode.Prerender,
+    renderMode: RenderMode.Client // Per ora rendiamo tutto lato client Prerender,
   },
   {
     // La pagina design system dovrebbe essere server-rendered perché potrebbe cambiare più frequentemente
     path: 'design-system',
-    renderMode: RenderMode.Server,
+    renderMode: RenderMode.Client, // Per ora rendiamo tutto lato client Server,
   },
   {
     // Fallback per tutte le altre route
     path: '**',
-    renderMode: RenderMode.Server,
+    renderMode: RenderMode.Client, // Per ora rendiamo tutto lato client Server,
     status: 404 // Imposta lo status HTTP appropriato per pagine non trovate
   }
 ];
