@@ -1,9 +1,10 @@
-// app.component.ts
-import { Component, inject, OnInit } from '@angular/core';
+// src/app/app.component.ts
+import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './core/components/header.component';
 import { FooterComponent } from './core/components/footer.component';
 import { PortfolioService } from './data-access/services/portfolio.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -12,11 +13,9 @@ import { PortfolioService } from './data-access/services/portfolio.service';
   template: `
     <div class="app-container">
       <app-header />
-
       <main class="main-content">
     <router-outlet />
       </main>
-
       <app-footer />
     </div>
   `,
@@ -38,14 +37,15 @@ import { PortfolioService } from './data-access/services/portfolio.service';
 export class AppComponent implements OnInit {
   title = 'portfolio-app';
   private readonly portfolioService = inject(PortfolioService);
+  private readonly platformId = inject(PLATFORM_ID);
 
   ngOnInit() {
-    // Spostiamo l'inizializzazione in ngOnInit e gestiamo meglio gli errori
-    if (typeof window !== 'undefined') { // Solo lato client
+    // Only load initial data in browser environment
+    if (isPlatformBrowser(this.platformId)) {
       this.portfolioService.loadInitialData()
         .catch(error => {
           console.error('Failed to load initial data:', error);
-          // Qui potremmo gestire l'errore in modo più user-friendly
+          //TODO: Qui potremmo gestire l'errore in modo più user-friendly
     });
     }
 }

@@ -1,0 +1,208 @@
+// src/app/data-access/services/database.service.spec.ts
+import { TestBed } from '@angular/core/testing';
+import { DatabaseService } from './database.service';
+import { PLATFORM_ID } from '@angular/core';
+
+// Interface for test data
+interface TestData {
+  id: string;
+  name: string;
+  category?: string;
+  tags?: string[];
+  timestamp?: number;
+}
+
+// Custom error class for database operations
+class DatabaseError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'DatabaseError';
+  }
+}
+
+describe('DatabaseService', () => {
+  let service: DatabaseService;
+  let initSpy: jasmine.Spy;
+  const TEST_COLLECTION = 'test_collection';
+
+  // Helper function for creating test data
+  function createTestData(id: string, suffix = ''): TestData {
+    return {
+      id,
+      name: `Test Item ${suffix || id}`,
+      category: `Category ${suffix || id}`,
+      tags: [`tag1_${suffix || id}`, `tag2_${suffix || id}`],
+      timestamp: Date.now(),
+    };
+  }
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [DatabaseService, { provide: PLATFORM_ID, useValue: 'browser' }],
+    });
+    service = TestBed.inject(DatabaseService);
+    initSpy = spyOn(service as any, 'databaseInitialize').and.callThrough();
+  });
+
+  afterEach(async () => {
+    // Cleanup after each test
+    await service.clearCollection(TEST_COLLECTION);
+  });
+
+  // Tests for initialization
+  describe('Initialization', () => {
+    it('should call databaseInitialize during initialization', async () => {
+      await service.waitForInitialization();
+      expect(initSpy).toHaveBeenCalled(); // Verifica che sia stato chiamato
+    });
+
+    it('should set initialized to true after successful initialization', async () => {
+      await service.waitForInitialization();
+      expect((service as any).initialized).toBeTrue(); // Verifica che `initialized` sia true
+    });
+
+    it('should handle initialization errors gracefully', async () => {
+      const errorMessage = 'Test initialization error';
+      const errorSpy = spyOn(console, 'error');
+
+      // Mock per generare un errore in `databaseInitialize`
+      initSpy.and.callFake(() => {
+        throw new DatabaseError(errorMessage);
+      });
+
+      try {
+        await service.waitForInitialization();
+        fail('Should have thrown an error');
+      } catch (err) {
+        expect(err).toBeInstanceOf(DatabaseError);
+        expect((err as DatabaseError).message).toBe(errorMessage);
+        expect(errorSpy).toHaveBeenCalledWith(
+          'Error initializing database:',
+          jasmine.any(DatabaseError)
+        );
+        expect((service as any).initialized).toBeFalse(); // Assicurati che `initialized` rimanga false
+      }
+    });
+
+    it('should not reinitialize if already initialized', async () => {
+      // Forza `initialized` a true e verifica che `databaseInitialize` non venga richiamato
+      (service as any).initialized = true;
+
+      await service.waitForInitialization();
+      expect(initSpy).not.toHaveBeenCalled();
+    });
+
+    // it('should log initialization errors', async () => {
+    //   const errorSpy = spyOn(console, 'error');
+    //   // const mockService = TestBed.inject(DatabaseService);
+
+    //   // spyOn(mockService as any, 'databaseInitialize').and.throwError('Test error');
+
+    //   try {
+    //     await service.waitForInitialization();
+    //   } catch (error) {
+    //     expect(errorSpy).toHaveBeenCalledWith('Error initializing database:', jasmine.any(Error));
+    //   }
+    // });
+  });
+
+  // Tests for CRUD operations
+  describe('CRUD Operations', () => {
+    it('should create and read data', async () => {
+      const testData = createTestData('1');
+      await service.upsertData(TEST_COLLECTION, testData);
+
+      const result = await service.getData<TestData>(TEST_COLLECTION);
+      expect(result).toHaveSize(1);
+      expect(result[0]).toEqual(testData);
+    });
+
+    it('should update existing data', async () => {
+      const originalData = createTestData('1');
+      await service.upsertData(TEST_COLLECTION, originalData);
+
+      const updatedData = { ...originalData, name: 'Updated Name' };
+      await service.upsertData(TEST_COLLECTION, updatedData);
+
+      const result = await service.getData<TestData>(TEST_COLLECTION);
+      expect(result).toHaveSize(1);
+      expect(result[0].name).toBe('Updated Name');
+    });
+
+    it('should handle bulk operations efficiently', async () => {
+      const items = Array.from({ length: 50 }, (_, i) => createTestData(`${i}`));
+
+      const startTime = performance.now();
+      await Promise.all(items.map(item => service.upsertData(TEST_COLLECTION, item)));
+      const endTime = performance.now();
+
+      const insertTime = endTime - startTime;
+      console.log(`Bulk insert time: ${insertTime}ms`);
+
+      expect(insertTime).toBeLessThan(1000); // Should complete within 1 second
+
+      const result = await service.getData<TestData>(TEST_COLLECTION);
+      expect(result).toHaveSize(items.length);
+    });
+  });
+
+  // Tests for error handling
+  describe('Error Handling', () => {
+    it('should validate data before insertion', async () => {
+      const invalidData = [
+        { name: 'No ID' },
+        { id: null, name: 'Null ID' },
+        { id: '', name: 'Empty ID' },
+        { id: '   ', name: 'Whitespace ID' },
+        { id: 123, name: 'Number ID' },
+      ];
+
+      for (const data of invalidData) {
+        await expectAsync(service.upsertData(TEST_COLLECTION, data as any)).toBeRejected();
+      }
+    });
+
+    it('should handle collection not found', async () => {
+      const result = await service.getData('non_existent_collection');
+      expect(result).toEqual([]);
+    });
+  });
+
+  // SSR Compatibility Tests
+  describe('SSR Compatibility', () => {
+    let ssrService: DatabaseService;
+
+    beforeEach(() => {
+      TestBed.resetTestingModule();
+      TestBed.configureTestingModule({
+        providers: [DatabaseService, { provide: PLATFORM_ID, useValue: 'server' }],
+      });
+      ssrService = TestBed.inject(DatabaseService);
+    });
+
+    it('should provide mock data in SSR mode', async () => {
+      const testData = createTestData('ssr-1');
+      await ssrService.upsertData(TEST_COLLECTION, testData);
+
+      const result = await ssrService.getData<TestData>(TEST_COLLECTION);
+      expect(result).toHaveSize(1);
+      expect(result[0]).toEqual(testData);
+    });
+
+    it('should not persist data between SSR requests', async () => {
+      const testData = createTestData('ssr-1');
+      await ssrService.upsertData(TEST_COLLECTION, createTestData('ssr-1'));
+
+      TestBed.resetTestingModule();
+      TestBed.configureTestingModule({
+        providers: [DatabaseService, { provide: PLATFORM_ID, useValue: 'server' }],
+      });
+
+      const newSsrService = TestBed.inject(DatabaseService);
+      await newSsrService.waitForInitialization();
+      const result = await newSsrService.getData<TestData>(TEST_COLLECTION);
+
+      expect(result).toEqual([]);
+    });
+  });
+});

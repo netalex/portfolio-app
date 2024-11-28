@@ -21,47 +21,47 @@ describe('AppComponent', () => {
       providers: [
         provideRouter(routes),
         { provide: PortfolioService, useValue: portfolioService },
-        { provide: PLATFORM_ID, useValue: platformId }
-      ]
+        { provide: PLATFORM_ID, useValue: platformId },
+      ],
     });
 
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    // fixture.detectChanges();
   }
 
   describe('Browser Environment', () => {
     beforeEach(async () => {
-      await TestBed.configureTestingModule({
-        imports: [AppComponent],
-        providers: [
-          provideRouter(routes),
-          { provide: PortfolioService, useValue: portfolioService },
-          { provide: PLATFORM_ID, useValue: 'browser' }
-        ]
-    }).compileComponents();
+      await configureTestingModule('browser');
 
-    fixture = TestBed.createComponent(AppComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+      //   await TestBed.configureTestingModule({
+      //     imports: [AppComponent],
+      //     providers: [
+      //       provideRouter(routes),
+      //       { provide: PortfolioService, useValue: portfolioService },
+      //       { provide: PLATFORM_ID, useValue: 'browser' }
+      //     ]
+      // }).compileComponents();
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+      // fixture = TestBed.createComponent(AppComponent);
+      // component = fixture.componentInstance;
+      // fixture.detectChanges();
+    });
 
-  it('should have correct title', () => {
-    // Verifichiamo che il titolo sia corretto
-    expect(component.title).toBe('portfolio-app');
-  });
+    it('should create', () => {
+      expect(component).toBeTruthy();
+    });
+
+    it('should have correct title', () => {
+      // Verifichiamo che il titolo sia corretto
+      expect(component.title).toBe('portfolio-app');
+    });
 
     it('should call loadInitialData on init in browser environment', fakeAsync(() => {
-      // Eseguiamo ngOnInit
       component.ngOnInit();
       // Facciamo avanzare i timer asincroni
       tick();
-      
-    expect(portfolioService.loadInitialData).toHaveBeenCalled();
+      expect(portfolioService.loadInitialData).toHaveBeenCalled();
     }));
   });
 
@@ -73,8 +73,9 @@ describe('AppComponent', () => {
     it('should not call loadInitialData on server', fakeAsync(() => {
       component.ngOnInit();
       tick();
-      
-    expect(portfolioService.loadInitialData).not.toHaveBeenCalled();
+      expect(portfolioService.loadInitialData).not.toHaveBeenCalled();
+      // Aggiungiamo una verifica esplicita che siamo in ambiente server
+      expect(fixture.debugElement.injector.get(PLATFORM_ID)).toBe('server');
     }));
-});
+  });
 });

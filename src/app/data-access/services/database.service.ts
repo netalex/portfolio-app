@@ -34,6 +34,7 @@ export class DatabaseService {
   }
 
   private databaseInitialize(): void {
+    console.log('Database initialized');
     try {
       // Inizializza le collezioni predefinite
       this.defaultCollections.forEach(collectionName => {
@@ -42,6 +43,7 @@ export class DatabaseService {
         }
       });
       this.initialized = true;
+      console.log('Initialization complete');
     } catch (error) {
       console.error('Error initializing database:', error);
       this.initialized = false;
