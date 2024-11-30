@@ -1,4 +1,4 @@
-// features/projects/project-card.component.ts
+// src/app/features/projects/components/project-card.component.ts
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Project } from '../../../data-access/models/portfolio.models';
 
@@ -6,14 +6,14 @@ import { Project } from '../../../data-access/models/portfolio.models';
   selector: 'app-project-card',
   standalone: true,
   template: `
-    <article 
+    <article
       class="project-card"
       [class.featured]="project.featured"
       (click)="onProjectClick()"
     >
-      @if (project.imageUrl) {
-        <img 
-          [src]="project.imageUrl" 
+      @if (project.images?.thumbnail) {
+        <img
+          [src]="project.images.thumbnail"
           [alt]="project.title"
           class="project-image"
           loading="lazy"
@@ -22,7 +22,7 @@ import { Project } from '../../../data-access/models/portfolio.models';
 
       <div class="project-content">
         <h3 class="project-title">{{ project.title }}</h3>
-        <p class="project-description">{{ project.description }}</p>
+        <p class="project-description">{{ project.shortDescription }}</p>
 
         <div class="project-technologies">
           @for (tech of project.technologies; track tech) {
@@ -31,20 +31,20 @@ import { Project } from '../../../data-access/models/portfolio.models';
         </div>
 
         <div class="project-links">
-          @if (project.demoUrl) {
-            <a 
-              [href]="project.demoUrl" 
-              target="_blank" 
+          @if (project.links?.demo) {
+            <a
+              [href]="project.links.demo"
+              target="_blank"
               rel="noopener noreferrer"
               class="project-link demo"
             >
               Demo
             </a>
           }
-          @if (project.sourceUrl) {
-            <a 
-              [href]="project.sourceUrl" 
-              target="_blank" 
+          @if (project.links?.github) {
+            <a
+              [href]="project.links.github"
+              target="_blank"
               rel="noopener noreferrer"
               class="project-link source"
             >

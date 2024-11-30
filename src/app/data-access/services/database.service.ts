@@ -1,8 +1,27 @@
 // src/app/data-access/services/database.service.ts
-import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { Injectable, PLATFORM_ID, inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import Loki, { Collection } from 'lokijs';
 import { environment } from '@environments/environment';
+import {
+  Project,
+  Skill,
+  Experience,
+  SkillGroup,
+  Certification,
+  ProjectCategory,
+  ProjectStatus,
+  SkillCategory
+} from '../models/portfolio.models';
+
+// Definiamo un'interfaccia base che tutti i nostri tipi devono implementare
+interface BaseEntity {
+  id: string;
+  [key: string]: any;
+}
+
+// Ora possiamo vincolare T a BaseEntity
+type CollectionName = 'projects' | 'skills' | 'experiences' | 'skillGroups' | 'certifications';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +29,12 @@ import { environment } from '@environments/environment';
 export class DatabaseService {
   private readonly db: Loki | null = null;
   private initialized = false;
+  private readonly defaultCollections: CollectionName[] = [
+    'projects',
+    'skills',
+    'experiences'
+  ];
+
   private readonly options = {
     autoload: true,
     autoloadCallback: this.databaseInitialize.bind(this),
@@ -17,17 +42,13 @@ export class DatabaseService {
     autosaveInterval: Math.floor(environment.cache.maxAge / 4), // Un quarto del maxAge
   };
 
-  // Lista delle collezioni predefinite
-  private readonly defaultCollections = ['projects', 'skills', 'experiences'];
-
   constructor() {
     if (typeof window === 'undefined') {
       // if (isPlatformBrowser(this.platformId)) {
-      console.warn('LokiJS: Disabling filesystem usage for SSR.');
+      console.warn('LokiJS: Disabling filesystem usage and \nUsing memory adapter for SSR.');
       this.db = new Loki('portfolio.db', {
         adapter: new Loki.LokiMemoryAdapter()
       });
-      // this.db = null as any; // Placeholder lato server
     } else {
       this.db = new Loki(environment.dbName, this.options);
     }
@@ -39,26 +60,32 @@ export class DatabaseService {
       // Inizializza le collezioni predefinite
       this.defaultCollections.forEach(collectionName => {
         if (!this.db?.getCollection(collectionName)) {
-          this.db?.addCollection(collectionName, { indices: ['id'] });
+          this.db?.addCollection(collectionName, {
+            indices: ['id'] as Array<keyof BaseEntity>,
+            unique: ['id'] as Array<keyof BaseEntity>
+          });
         }
       });
       this.initialized = true;
-      console.log('Initialization complete');
+      console.log('All collections initialized');
     } catch (error) {
       console.error('Error initializing database:', error);
       this.initialized = false;
     }
   }
 
-  // Nuovo metodo per creare o ottenere una collezione
-  private ensureCollection(name: string): Collection<any> {
+  // metodo per creare o ottenere una collezione
+  private ensureCollection<T extends BaseEntity>(name: CollectionName): Collection<T> {
     if (!this.db) {
       throw new Error('Database not initialized');
     }
 
-    let collection = this.db.getCollection(name);
+    let collection = this.db.getCollection<T>(name);
     if (!collection) {
-      collection = this.db.addCollection(name, { indices: ['id'] });
+      collection = this.db.addCollection<T>(name, {
+        indices: ['id'] as Array<keyof BaseEntity>,
+        unique: ['id'] as Array<keyof BaseEntity>
+      });
     }
     return collection;
   }
@@ -75,26 +102,17 @@ export class DatabaseService {
     });
   }
 
-  getCollection(name: string): Collection<any> | null {
-    if (!this.db) return null;
-    return this.db.getCollection(name) || this.ensureCollection(name);
-  }
-
-  async upsertData<T extends { id: string }>(
-    collectionName: string,
+  async upsertData<T extends BaseEntity>(
+    collectionName: CollectionName,
     data: T
   ): Promise<T> {
     try {
       await this.waitForInitialization();
-
       this.validateData(data);
 
-      const collection = this.getCollection(collectionName);
-      if (!collection) {
-        throw new Error(`Collection ${collectionName} not found`);
-      }
+      const collection = this.ensureCollection<T>(collectionName);
+      const existing = collection.findOne({ id: data.id } as any) as T | null;
 
-      const existing = collection.findOne({ id: data.id }) as T | null;
       if (existing) {
         Object.assign(existing, data);
         collection.update(existing);
@@ -103,33 +121,60 @@ export class DatabaseService {
         return collection.insert(data) as T;
       }
     } catch (error) {
-      throw error instanceof Error ? error : new Error('Invalid data');
+      console.error(`Error upserting data in ${collectionName}:`, error);
+      throw error;
     }
   }
 
-  async getData<T>(
-    collectionName: string,
-    query: object = {}
+  async getData<T extends BaseEntity>(
+    collectionName: CollectionName,
+    query: Partial<T> = {}
   ): Promise<T[]> {
+    try {
     await this.waitForInitialization();
-    const collection = this.getCollection(collectionName);
-    return (collection?.find(query) || []) as T[];
+      const collection = this.ensureCollection<T>(collectionName);
+      return collection.find(query as any) as T[];
+    } catch (error) {
+      console.error(`Error getting data from ${collectionName}:`, error);
+      throw error;
+    }
   }
 
-  async clearCollection(collectionName: string): Promise<void> {
+  async getById<T extends BaseEntity>(
+    collectionName: CollectionName,
+    id: string
+  ): Promise<T | null> {
+    try {
     await this.waitForInitialization();
-    const collection = this.getCollection(collectionName);
-    collection?.clear();
+      const collection = this.ensureCollection<T>(collectionName);
+      return collection.findOne({ id } as any) as T | null;
+    } catch (error) {
+      console.error(`Error getting item by id from ${collectionName}:`, error);
+      throw error;
+    }
   }
 
-  private validateData<T extends { id: string }>(data: T): void {
-  // Verifica che l'oggetto dati esista
+  async deleteData<T extends BaseEntity>(
+    collectionName: CollectionName,
+    id: string
+  ): Promise<void> {
+    try {
+      await this.waitForInitialization();
+      const collection = this.ensureCollection<T>(collectionName);
+      collection.findAndRemove({ id } as any);
+    } catch (error) {
+      console.error(`Error deleting data from ${collectionName}:`, error);
+      throw error;
+    }
+  }
+
+  private validateData<T extends BaseEntity>(data: T): void {
     if (!data) {
       throw new Error('Invalid data: data object is required');
     }
 
   // Verifica che l'id sia presente
-  if (data.id === null || data.id === undefined) {
+  if (!data.id) {
       throw new Error('Invalid data: id is required');
     }
 

@@ -2,9 +2,9 @@
   "projects": [
     {
       "id": "portfolio-app-2024",
-      "title": "Personal Portfolio Application",
+      "title": "Personal Portfolio Website Application",
       "shortDescription": "Modern portfolio website built with Angular and custom design system",
-      "fullDescription": "Advanced portfolio application showcasing frontend development expertise. Features include a custom design system, signal-based state management, SSR optimization, and multi-language support. Implements modern Angular 19 features including standalone components, new control flow, and signals for reactive state management.",
+      "fullDescription": "Advanced portfolio website showcasing frontend development expertise. Features include a custom design system, signal-based state management, SSR optimization, and multi-language support. Implements modern Angular 19 features including standalone components, new control flow, and signals for reactive state management.",
       "technologies": [
         "Angular 19",
         "TypeScript 5.5",
@@ -14,58 +14,65 @@
         "SSR",
         "i18n"
       ],
-      "featured": true,
-      "startDate": "2024-01-01",
-      "endDate": null,
       "role": "Full Stack Developer",
-      "demoUrl": "https://alessandroaprile.dev",
-      "sourceUrl": "https://github.com/netalex/portfolio-app",
-      "imageUrl": "/assets/images/projects/portfolio/main.webp",
-      "screenshots": [
-        "/assets/images/projects/portfolio/dashboard.webp",
-        "/assets/images/projects/portfolio/design-system.webp"
-      ],
-      "category": "Web Development",
-      "status": "In Progress",
-      "highlights": [
+      "duration": {
+        "start": "2024-11-01"
+      },
+      "features": [
         "Custom design system with theme support",
         "Signal-based state management",
         "Server-side rendering optimization",
         "Multi-language support (EN, IT, FR)",
         "Comprehensive test coverage"
-      ]
+      ],
+      "links": {
+        "github": "https://github.com/netalex/portfolio-app",
+        "live": "https://alessandroaprile.dev"
+      },
+      "images": {
+        "thumbnail": "/assets/images/projects/portfolio/thumbnail.webp",
+        "screenshots": [
+          "/assets/images/projects/portfolio/dashboard.webp",
+          "/assets/images/projects/portfolio/design-system.webp"
+        ]
+      },
+      "category": "WEB_DEVELOPMENT",
+      "featured": true,
+      "status": "IN_PROGRESS"
     },
     {
-      "id": "alkemy-dna-2024",
+      "id": "dna-analysis-alkemy-2024",
       "title": "DNA Analysis Management System",
-      "shortDescription": "Complex system for DNA analysis management for Italian Ministry of Justice",
-      "fullDescription": "Developed key features for three interconnected projects focused on DNA analysis systems for the Italian Ministry of Justice's Joint Forces Command. Implemented critical change requests, conducted thorough bug fixes, and integrated new features while ensuring seamless deployment across all projects.",
+      "shortDescription": "System for Italian Ministry of Justice's Joint Forces Command",
+      "fullDescription": "Worked on three interconnected projects for the Italian Ministry of Justice's Joint Forces Command, focusing on DNA analysis management systems. Implemented critical change requests, conducted thorough bug fixes, developed new features, and ensured seamless deployment across all projects.",
       "technologies": [
         "Angular",
         "TypeScript",
         "PrimeNG",
-        "RxJS",
         "Git",
         "REST API"
       ],
-      "featured": true,
-      "startDate": "2024-07-01",
-      "endDate": "2024-10-01",
       "role": "Frontend Developer",
-      "category": "Enterprise Software",
-      "status": "Completed",
-      "highlights": [
-        "Complex data visualization",
-        "Real-time updates",
-        "Advanced search functionality",
-        "Secure authentication"
-      ]
+      "duration": {
+        "start": "2024-07-01",
+        "end": "2024-10-01"
+      },
+      "features": [
+        "Critical change requests implementation",
+        "Bug fixes and stability improvements",
+        "Feature development",
+        "Cross-project integration",
+        "Performance optimization"
+      ],
+      "category": "ENTERPRISE",
+      "featured": true,
+      "status": "COMPLETED"
     },
     {
-      "id": "iccrea-2024",
+      "id": "banking-system-iccrea-2024",
       "title": "Banking Contract Management System",
-      "shortDescription": "Internal application for massive CSV upload of contract data for loans and mortgages",
-      "fullDescription": "Maintained and updated an internal application for a banking institution enabling mass upload of CSV files containing contractual data for mortgages and loans. Improved and optimized code, achieving significant frontend performance increases. Implemented new features under extremely tight deadlines while maintaining functional and design consistency.",
+      "shortDescription": "Internal application for mass CSV upload of loans and mortgages contract data",
+      "fullDescription": "Developed and maintained an internal application for ICCREA banking institution that enables mass upload and processing of CSV files containing contractual data for mortgages and loans. Enhanced frontend performance and implemented new features under tight deadlines.",
       "technologies": [
         "Angular",
         "TypeScript",
@@ -73,17 +80,20 @@
         "CSV Processing",
         "Banking APIs"
       ],
-      "startDate": "2024-02-01",
-      "endDate": "2024-06-01",
       "role": "Frontend Developer",
-      "category": "Financial Software",
-      "status": "Completed",
-      "highlights": [
+      "duration": {
+        "start": "2024-02-01",
+        "end": "2024-06-01"
+      },
+      "features": [
+        "Mass CSV data processing",
         "Performance optimization",
-        "Large-scale data processing",
         "Git hooks integration",
-        "Banking sector compliance"
-      ]
+        "Banking compliance features"
+      ],
+      "category": "ENTERPRISE",
+      "featured": false,
+      "status": "COMPLETED"
     }
   ],
   "skills": [
@@ -102,7 +112,9 @@
         "PrimeNG",
         "Signals",
         "SSR"
-      ]
+      ],
+      "featured": true,
+      "icon": "angular"
     },
     {
       "id": "react",
@@ -117,7 +129,9 @@
         "Context API",
         "React Router",
         "Next.js"
-      ]
+      ],
+      "featured": true,
+      "icon": "react"
     },
     {
       "id": "typescript",
@@ -131,7 +145,9 @@
         "Generics",
         "Decorators",
         "Module System"
-      ]
+      ],
+      "featured": true,
+      "icon": "typescript"
     },
     {
       "id": "frontend",
@@ -147,7 +163,9 @@
         "Responsive Design",
         "Web Performance",
         "Browser APIs"
-      ]
+      ],
+      "featured": true,
+      "icon": "typescript"
     }
   ],
   "experiences": [
@@ -156,6 +174,12 @@
       "company": "Volo Consulting/Orangee S.r.l",
       "role": "Frontend Developer",
       "description": "Development of DNA analysis management systems for the Italian Ministry of Justice. Implemented critical features and ensured seamless integration across multiple complex applications.",
+      "achievements": [
+        "Implemented critical change requests",
+        "Improved system stability",
+        "Developed new features",
+        "Ensured cross-project integration"
+      ],
       "technologies": [
         "Angular",
         "TypeScript",
@@ -166,13 +190,16 @@
       "startDate": "2024-07-01",
       "endDate": "2024-10-01",
       "location": "Italy",
-      "type": "remote"
+      "type": "REMOTE"
     },
     {
       "id": "thinkopen-2024",
       "company": "THINKOPEN",
       "role": "Frontend Developer",
       "description": "Worked on multiple high-profile projects including ICCREA banking systems and GFT insurance platforms. Led development teams and mentored junior developers.",
+      "achievements": [
+        "STUB - please claude compile a pertinent list of achievements"
+      ],
       "technologies": [
         "Angular",
         "React",
@@ -191,6 +218,9 @@
       "company": "3Wlab Milano/Roma",
       "role": "Frontend Developer",
       "description": "Developed an integrated document management system for the public sector and created AI-powered chatbot solutions.",
+      "achievements": [
+        "STUB - please claude compile a pertinent list of achievements",
+      ],
       "technologies": [
         "AngularJS",
         "JavaScript",
@@ -205,33 +235,66 @@
     }
   ],
   "about": {
-    "name": "Alessandro Aprile",
-    "title": "Frontend Developer",
-    "location": {
-      "country": "Italy",
-      "timezone": "CET",
-      "remote": true,
-      "availableIn": ["Milan", "Rome"]
+    "personal": {
+      "name": "Alessandro Aprile",
+      "title": "Frontend Developer",
+      "email": "aprile.alessandro@gmail.com",
+      "phone": "+393200625543",
+      "location": {
+        "country": "Italy",
+        "timezone": "CET",
+        "workLocations": [
+          "Remote",
+          "Milan",
+          "Rome"
+        ]
+      },
+      "social": {
+        "github": "https://github.com/netalex",
+        "linkedin": "https://www.linkedin.com/in/alessandro-aprile-0225106/"
+      }
+    },
+    "professionalSummary": {
+      "shortBio": "Frontend developer specializing in Angular and React, with extensive experience in enterprise applications and public sector projects.",
+      "yearsOfExperience": 10,
+      "coreTechnologies": [
+        "Angular",
+        "React",
+        "TypeScript"
+      ],
+      "focus": [
+        "Enterprise Applications",
+        "Design Systems",
+        "Frontend Architecture"
+      ],
+      "workingPreferences": {
+        "preferred": "Remote",
+        "available": [
+          "Remote",
+          "Hybrid"
+        ],
+        "locations": [
+          "Milan",
+          "Rome"
+        ]
+      }
     },
     "languages": [
       {
-        "language": "Italian",
+        "code": "it",
+        "name": "Italian",
         "level": "Native"
       },
       {
-        "language": "English",
-        "level": "Proficient"
+        "code": "en",
+        "name": "English",
+        "level": "Fluent"
       },
       {
-        "language": "French",
-        "level": "Proficient"
+        "code": "fr",
+        "name": "French",
+        "level": "Fluent"
       }
-    ],
-    "contact": {
-      "email": "aprile.alessandro@gmail.com",
-      "phone": "+393200625543",
-      "github": "https://github.com/netalex",
-      "linkedin": "https://www.linkedin.com/in/alessandro-aprile-0225106/"
-    }
+    ]
   }
 }

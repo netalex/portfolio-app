@@ -26,7 +26,7 @@ import { ConfigService } from '../../core/services/config.service';
           </a>
         </div>
       </div>
-
+      <p>config.isProduction è {{config.isProduction}}<p>
         @if (!config.isProduction) {
           <div class="dev-tools">
             <button
@@ -60,7 +60,7 @@ import { ConfigService } from '../../core/services/config.service';
       @for (project of featuredProjects(); track project.id) {
         <div class="project-card">
           <h4>{{ project.title }}</h4>
-          <p>{{ project.description }}</p>
+          <p>{{ project.shortDescription }}</p>
         </div>
       }
     </section>
@@ -77,7 +77,7 @@ import { ConfigService } from '../../core/services/config.service';
       margin-bottom: var(--spacing-16);
       position: relative;
     z-index: 1;
-    
+
     a {
       pointer-events: all;
     }

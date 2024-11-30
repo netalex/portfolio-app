@@ -1,7 +1,14 @@
 // src/app/data-access/services/db-test.service.ts
 import { Injectable, inject } from '@angular/core';
 import { DatabaseService } from './database.service';
-import { Project, Skill, Experience, SkillCategory } from '../models/portfolio.models';
+import {
+  Project,
+  ProjectCategory,
+  ProjectStatus,
+  Skill,
+  SkillCategory,
+  Experience
+} from '../models/portfolio.models';
 
 @Injectable({
   providedIn: 'root'
@@ -16,21 +23,82 @@ export class DbTestService {
       // Test Projects
       const testProjects: Project[] = [
         {
-          id: 'portfolio-2024',
-          title: 'Portfolio 2024',
-          description: 'Modern portfolio application built with Angular 19, featuring SSR, signal-based state management, and a custom design system.',
-          technologies: ['Angular', 'TypeScript', 'SCSS', 'SSR', 'LokiJS'],
-        featured: true,
-          startDate: new Date('2024-01-01')
+          "id": "portfolio-app-2024",
+          "title": "Personal Portfolio Website Application",
+          "shortDescription": "Modern portfolio website built with Angular and custom design system",
+          "fullDescription": "Advanced portfolio website showcasing frontend development expertise. Features include a custom design system, signal-based state management, SSR optimization, and multi-language support. Implements modern Angular 19 features including standalone components, new control flow, and signals for reactive state management.",
+          "technologies": [
+            "Angular 19",
+            "TypeScript 5.5",
+            "SCSS",
+            "Angular CDK",
+            "LokiJS",
+            "SSR",
+            "i18n"
+          ],
+          "role": "Full Stack Developer",
+          "duration": {
+            "start": "2024-11-01"
+          },
+          "features": [
+            "Custom design system with theme support",
+            "Signal-based state management",
+            "Server-side rendering optimization",
+            "Multi-language support (EN, IT, FR)",
+            "Comprehensive test coverage"
+          ],
+          "links": {
+            "github": "https://github.com/netalex/portfolio-app",
+            "live": "https://alessandroaprile.dev"
+          },
+          "images": {
+            "thumbnail": "/assets/images/projects/portfolio/thumbnail.webp",
+            "screenshots": [
+              "/assets/images/projects/portfolio/dashboard.webp",
+              "/assets/images/projects/portfolio/design-system.webp"
+            ]
+          },
+          category: ProjectCategory.ENTERPRISE,
+          featured: true,
+          status: ProjectStatus.IN_PROGRESS
         },
         {
-          id: 'alkemy-2024',
-          title: 'ALKEMY - DNA Analysis System',
-          description: 'Complex system for DNA analysis management for Italian Ministry of Justice',
-          technologies: ['Angular', 'TypeScript', 'PrimeNG', 'Git'],
+          "id": "dna-analysis-alkemy-2024",
+          "title": "DNA Analysis Management System",
+          "shortDescription": "System for Italian Ministry of Justice's Joint Forces Command",
+          "fullDescription": "Worked on three interconnected projects for the Italian Ministry of Justice's Joint Forces Command, focusing on DNA analysis management systems. Implemented critical change requests, conducted thorough bug fixes, developed new features, and ensured seamless deployment across all projects.",
+          "technologies": [
+            "Angular",
+            "TypeScript",
+            "PrimeNG",
+            "Git",
+            "REST API"
+          ],
+          "role": "Frontend Developer",
+          "duration": {
+            "start": "2024-07-01",
+            "end": "2024-10-01"
+          },
+          "features": [
+            "Critical change requests implementation",
+            "Bug fixes and stability improvements",
+            "Feature development",
+            "Cross-project integration",
+            "Performance optimization"
+          ],
+          // Aggiunte le proprietà obbligatorie mancanti
+          "links": {
+            "github": "https://github.com/netalex/dna-analysis-system"
+          },
+          "images": {
+            "thumbnail": "/assets/images/projects/dna-analysis/thumbnail.webp",
+            "screenshots": [
+              "/assets/images/projects/dna-analysis/main-view.webp"
+            ]
+          },
+          category: ProjectCategory.ENTERPRISE,
           featured: true,
-          startDate: new Date('2024-07-01'),
-          endDate: new Date('2024-10-01')
+          status: ProjectStatus.COMPLETED
         }
       ];
 
@@ -51,14 +119,6 @@ export class DbTestService {
           level: 85,
           yearsOfExperience: 3,
           keywords: ['Redux', 'React Native', 'Hooks', 'Context API']
-        },
-        {
-          id: 'typescript',
-          name: 'TypeScript',
-          category: SkillCategory.LANGUAGE,
-          level: 90,
-          yearsOfExperience: 5,
-          keywords: ['ES6+', 'Type System', 'Generics', 'Decorators']
         }
       ];
 
@@ -74,27 +134,24 @@ export class DbTestService {
           endDate: '2024-10-01',
           location: 'Remote',
           type: 'remote'
-        },
-        {
-          id: 'thinkopen-2024',
-          company: 'THINKOPEN',
-          role: 'Frontend Developer',
-          description: 'Various frontend development roles including work with ICCREA and GFT',
-          technologies: ['Angular', 'React', 'TypeScript', 'Node.js'],
-          startDate: '2018-02-01',
-          endDate: '2024-07-01',
-          location: 'Milan',
-          type: 'hybrid'
         }
       ];
 
       // Test Database Operations
       console.log('Clearing existing data...');
-      await Promise.all([
-        this.db.clearCollection('projects'),
-        this.db.clearCollection('skills'),
-        this.db.clearCollection('experiences')
-      ]);
+
+      // Clear collections one by one
+      for (const id of await this.db.getData<Project>('projects')) {
+        await this.db.deleteData('projects', id.id);
+      }
+
+      for (const id of await this.db.getData<Skill>('skills')) {
+        await this.db.deleteData('skills', id.id);
+      }
+
+      for (const id of await this.db.getData<Experience>('experiences')) {
+        await this.db.deleteData('experiences', id.id);
+      }
 
       console.log('Inserting test projects...');
       await Promise.all(testProjects.map(p => this.db.upsertData('projects', p)));
@@ -111,21 +168,7 @@ export class DbTestService {
       const projects = await this.db.getData<Project>('projects');
       console.log('Projects in DB:', projects);
 
-      // Test Skill Operations
-      const testSkill: Skill = {
-        id: 'skill-1',
-        name: 'Angular',
-        category: SkillCategory.FRAMEWORK,
-        level: 90,
-        yearsOfExperience: 5,
-        keywords: ['TypeScript', 'RxJS']
-      };
-
-      console.log('Inserting test skill...');
-      await this.db.upsertData('skills', testSkill);
-
-      console.log('Reading skills...');
-      const skills = await this.db.getData<Skill>('skills');
+            const skills = await this.db.getData<Skill>('skills');
       console.log('Skills in DB:', skills);
 
       const experiences = await this.db.getData<Experience>('experiences');
@@ -139,6 +182,7 @@ export class DbTestService {
           experiences: experiences.length
         }
       };
+
     } catch (error) {
       console.error('Database test failed:', error);
       return {

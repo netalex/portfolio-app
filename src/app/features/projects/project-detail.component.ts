@@ -2,13 +2,10 @@
 import { Component, signal, computed, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PortfolioStore } from '../../data-access/store/portfolio.store';
-// import { Project } from '../../data-access/models/portfolio.models';
-// import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-project-detail',
   standalone: true,
-  // imports: [DatePipe],
   template: `
     <article class="project-detail">
       @if (loading()) {
@@ -31,14 +28,14 @@ import { PortfolioStore } from '../../data-access/store/portfolio.store';
               Progetto in evidenza
             </div>
           }
-          
+
           <h1 class="project-title">{{ project()?.title }}</h1>
-          
+
           <div class="project-meta">
             <div class="project-period">
-              <span>{{ formatDate(project()?.startDate) }}</span>
-              @if (project()?.endDate) {
-                <span> - {{ formatDate(project()?.endDate) }}</span>
+              <span>{{ formatDate(project()?.duration?.start) }}</span>
+              @if (project()?.duration?.end) {
+                <span> - {{ formatDate(project()?.duration?.end) }}</span>
               } @else {
                 <span> - In corso</span>
               }
@@ -46,10 +43,10 @@ import { PortfolioStore } from '../../data-access/store/portfolio.store';
           </div>
         </header>
 
-        @if (project()?.imageUrl) {
+        @if (project()?.images?.thumbnail) {
           <div class="project-image-container">
-            <img 
-              [src]="project()?.imageUrl" 
+            <img
+              [src]="project()?.images?.thumbnail"
               [alt]="project()?.title"
               class="project-image"
             />
@@ -59,7 +56,7 @@ import { PortfolioStore } from '../../data-access/store/portfolio.store';
         <div class="project-content">
           <section class="project-description">
             <h2>Descrizione</h2>
-            <p>{{ project()?.description }}</p>
+            <p>{{ project()?.fullDescription }}</p>
           </section>
 
           <section class="project-technologies">
@@ -72,23 +69,23 @@ import { PortfolioStore } from '../../data-access/store/portfolio.store';
           </section>
 
           <section class="project-links">
-            @if (project()?.demoUrl || project()?.sourceUrl) {
+            @if (project()?.links?.demo || project()?.links?.github) {
               <h2>Collegamenti</h2>
               <div class="links-container">
-                @if (project()?.demoUrl) {
-                  <a 
-                    [href]="project()?.demoUrl" 
-                    target="_blank" 
+                @if (project()?.links?.demo) {
+                  <a
+                    [href]="project()?.links?.demo"
+                    target="_blank"
                     rel="noopener noreferrer"
                     class="project-link demo"
                   >
                     Vedi Demo
                   </a>
                 }
-                @if (project()?.sourceUrl) {
-                  <a 
-                    [href]="project()?.sourceUrl" 
-                    target="_blank" 
+                @if (project()?.links?.github) {
+                  <a
+                    [href]="project()?.links?.github"
+                    target="_blank"
                     rel="noopener noreferrer"
                     class="project-link source"
                   >
@@ -287,7 +284,7 @@ export class ProjectDetailComponent implements OnInit {
 
   loading = signal(true);
   error = signal<string | null>(null);
-  
+
   // Otteniamo il progetto corrente basandoci sull'ID nel URL
   protected readonly project = computed(() => {
     const id = this.route.snapshot.paramMap.get('id');
@@ -308,11 +305,11 @@ export class ProjectDetailComponent implements OnInit {
     }, 500);
   }
 
-  protected formatDate(date: Date | undefined): string {
+  protected formatDate(date: string | undefined): string {
     if (!date) return '';
-    return new Intl.DateTimeFormat('it-IT', { 
-      month: 'long', 
-      year: 'numeric' 
+    return new Intl.DateTimeFormat('it-IT', {
+      month: 'long',
+      year: 'numeric'
     }).format(new Date(date));
   }
 
