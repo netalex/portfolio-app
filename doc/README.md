@@ -6,6 +6,18 @@ This documentation covers the technical implementation of Alessandro Aprile's po
 
 ## Table of Contents
 
+### Architecture
+
+- **Data Layer**
+  - [Data Models and Schema](./architecture/data/models.md)
+  - [Data Relationships and Constraints](./architecture/data/relationships.md)
+- **Design System**
+  - [Components Overview](./architecture/design-system/components.md)
+  - [Theme System](./architecture/design-system/theme.md)
+- **Routing**
+  - [Route Structure](./architecture/routing/routes.md)
+  - [SSR Configuration](./architecture/routing/ssr.md)
+
 ### Guides
 
 Detailed guides for implementing specific features and functionality.
@@ -14,6 +26,11 @@ Detailed guides for implementing specific features and functionality.
 
 - [Fragment Navigation](./guides/routing/fragment-navigation.md)
 - [SSR Considerations](./guides/routing/ssr-considerations.md)
+
+### Development related guides
+
+  - [Setup Guide](./guides/development/setup.md)
+  - [Testing Guide](./guides/development/testing.md)
 
 #### Design System documentation
 
