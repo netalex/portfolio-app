@@ -29,8 +29,8 @@ Detailed guides for implementing specific features and functionality.
 
 ### Development related guides
 
-  - [Setup Guide](./guides/development/setup.md)
-  - [Testing Guide](./guides/development/testing.md)
+- [Setup Guide](./guides/development/setup.md)
+- [Testing Guide](./guides/development/testing.md)
 
 #### Design System documentation
 
@@ -81,6 +81,7 @@ Code examples and implementations.
 
 The project follows a modular structure for better organization and maintainability.
 
+<!-- TODO: update directory tree below-->
 ```plaintext
 
 PortfolioApp/
