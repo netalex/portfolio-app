@@ -1,9 +1,10 @@
 // src/app/features/projects/projects-list.component.ts
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { PortfolioStore } from '../../data-access/store/portfolio.store';
 import { ProjectCardComponent } from './components/project-card.component';
 import { ProjectFilters, ProjectFiltersComponent } from './components/project-filters.component';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-projects-list',
@@ -16,7 +17,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
         <p class="projects-subtitle">
           Una selezione dei miei lavori più significativi in ambito frontend
         </p>
-        
+
         <app-project-filters
           [technologies]="availableTechnologies()"
           (filterChange)="handleFilterChange($event)"
@@ -135,7 +136,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
     trigger('fadeSlide', [
       transition(':enter', [
         style({ opacity: 0, transform: 'translateY(20px)' }),
-        animate('300ms ease-out', 
+        animate('300ms ease-out',
           style({ opacity: 1, transform: 'translateY(0)' }))
       ])
     ])
@@ -148,7 +149,7 @@ export class ProjectsListComponent {
   projects = this.store.filteredProjects;
   loading = this.store.loading;
   error = this.store.error;
-  
+
   // Signal locale per le tecnologie disponibili
   availableTechnologies = computed(() => {
     return [...new Set(
@@ -156,12 +157,24 @@ export class ProjectsListComponent {
     )].sort();
   });
 
+// projects/projects-list.component.ts
+constructor() {
+  this.router = inject(Router);
+  // this.store = inject(PortfolioStore);
+
+  effect(() => {
+    console.log('Loaded projects:', this.projects().length);
+  });
+ }
+
+ private readonly router: Router;
+//  private readonly store: PortfolioStore;
   handleFilterChange(filters: ProjectFilters) {
     this.store.setProjectTechnologyFilter(filters.technology);
   }
 
   handleProjectClick(projectId: string) {
-    // Implementare la navigazione al dettaglio progetto
+    this.router.navigate(['/projects', projectId]);
     console.log('Project clicked:', projectId);
   }
 
