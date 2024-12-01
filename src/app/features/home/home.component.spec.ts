@@ -92,3 +92,41 @@ describe('HomeComponent', () => {
     });
   });
 });
+
+describe('Development mode tests', () => {
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HomeComponent],
+      providers: [
+        {
+          provide: ConfigService,
+          useValue: { isProduction: false }
+        },
+        {
+          provide: DbTestService,
+          useValue: { testDatabaseOperations: () => Promise.resolve({ success: true }) }
+        }
+      ]
+    });
+  });
+
+  it('should show dev tools in development mode', () => {
+    const fixture = TestBed.createComponent(HomeComponent);
+    fixture.detectChanges();
+
+    const devTools = fixture.debugElement.query(By.css('.dev-tools'));
+    expect(devTools).toBeTruthy();
+  });
+
+  it('should call testDb when button clicked', async () => {
+    const fixture = TestBed.createComponent(HomeComponent);
+    const component = fixture.componentInstance;
+    const spy = spyOn(component, 'testDb');
+
+    fixture.detectChanges();
+    const button = fixture.debugElement.query(By.css('.test-button'));
+    button.nativeElement.click();
+
+    expect(spy).toHaveBeenCalled();
+  });
+});

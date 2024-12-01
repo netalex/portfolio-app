@@ -1,11 +1,11 @@
 // src/app/data-access/models/portfolio.models.ts
 
 export interface Project {
-    id: string;
-    title: string;
+  id: string;
+  title: string;
   shortDescription: string;
   fullDescription: string;
-    technologies: string[];
+  technologies: string[];
   role: string;
   duration: {
     start: string;  // ISO date string
@@ -22,7 +22,7 @@ export interface Project {
     screenshots: string[];
   };
   category: ProjectCategory;
-    featured: boolean;
+  featured: boolean;
   status: ProjectStatus;
 }
 
@@ -37,61 +37,61 @@ export enum ProjectStatus {
   IN_PROGRESS = 'In Progress',
   COMPLETED = 'Completed',
   ARCHIVED = 'Archived'
-  }
+}
 
-  export interface SkillGroup {
-    id: string;
-    name: string;
-    description: string;
-    skills: Skill[];
-  }
-  
-
-  export interface Skill {
-    id: string;
-    name: string;
-    category: SkillCategory;
-    level: number; // 0-100
-    yearsOfExperience: number;
-    keywords: string[];
-    description?: string;
-    certifications?: Certification[];
-    featured?: boolean;
-    icon?: string;  // Path to skill icon or icon identifier
-  }
+export interface SkillGroup {
+  id: string;
+  name: string;
+  description: string;
+  skills: Skill[];
+}
 
 
-  export interface Certification {
-    name: string;
-    issuer: string;
-    date: string;
-    url?: string;
-    validUntil?: string;
-  }
-  
+export interface Skill {
+  id: string;
+  name: string;
+  category: SkillCategory;
+  level: number; // 0-100
+  yearsOfExperience: number;
+  keywords: string[];
+  description?: string;
+  certifications?: Certification[];
+  featured?: boolean;
+  icon?: string;  // Path to skill icon or icon identifier
+}
 
-  export enum SkillCategory {
-    FRONTEND = 'Frontend',
-    BACKEND = 'Backend',
-    FRAMEWORK = 'Framework',
-    LANGUAGE = 'Language',
-    DATABASE = 'Database',
-    TOOL = 'Tool',
-    CLOUD = 'Cloud',
-    SOFT = 'Soft Skill',
-    METHODOLOGY = 'Methodology'
-  }
-  export interface Experience {
-    id: string;
-    company: string;
-    role: string;
-    description: string;
-    technologies: string[];
-    startDate: string;  // ISO date string es '2022-01-15' -> ISO format
-    endDate?: string;   // Optional ISO date string
-    location: string;
-    type: 'remote' | 'onsite' | 'hybrid';
-  }
+
+export interface Certification {
+  name: string;
+  issuer: string;
+  date: string;
+  url?: string;
+  validUntil?: string;
+}
+
+
+export enum SkillCategory {
+  FRONTEND = 'Frontend',
+  BACKEND = 'Backend',
+  FRAMEWORK = 'Framework',
+  LANGUAGE = 'Language',
+  DATABASE = 'Database',
+  TOOL = 'Tool',
+  CLOUD = 'Cloud',
+  SOFT = 'Soft Skill',
+  METHODOLOGY = 'Methodology'
+}
+export interface Experience {
+  id: string;
+  company: string;
+  role: string;
+  description: string;
+  technologies: string[];
+  startDate: string;  // ISO date string es '2022-01-15' -> ISO format
+  endDate?: string;   // Optional ISO date string
+  location: string;
+  type: 'remote' | 'onsite' | 'hybrid';
+}
 
 export interface About {
   personal: PersonalInfo;

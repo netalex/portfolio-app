@@ -15,7 +15,7 @@ export class PortfolioService {
   private readonly db = inject(DatabaseService);
   private readonly store = inject(PortfolioStore);
   private readonly platformId = inject(PLATFORM_ID);
-  private dataInitialized = signal(false);
+  private readonly dataInitialized = signal(false);
 
   async loadInitialData() {
     // Evitiamo di eseguire sul server
