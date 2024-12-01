@@ -1,0 +1,222 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Portfolio Content Schema",
+  "description": "Schema definition for Alessandro Aprile's portfolio content",
+  "definitions": {
+    "dateString": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}(-\\d{2})?$",
+      "description": "Date in YYYY-MM or YYYY-MM-DD format"
+    },
+    "image": {
+      "type": "object",
+      "required": ["url", "alt"],
+      "properties": {
+        "url": {
+          "type": "string",
+          "pattern": "^/assets/images/.+\\.(webp|jpg|png|svg)$"
+        },
+        "alt": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 100
+        },
+        "caption": {
+          "type": "string",
+          "maxLength": 200
+        }
+      }
+    },
+    "technology": {
+      "type": "object",
+      "required": ["name", "category"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "category": {
+          "type": "string",
+          "enum": ["frontend", "backend", "database", "devops", "tools", "languages"]
+        },
+        "proficiency": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        }
+      }
+    }
+  },
+  "type": "object",
+  "required": ["projects", "skills", "experiences"],
+  "properties": {
+    "projects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "description", "technologies", "status"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$",
+            "minLength": 3,
+            "maxLength": 50
+          },
+          "title": {
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 100
+          },
+          "shortDescription": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 200
+          },
+          "description": {
+            "type": "string",
+            "minLength": 50,
+            "maxLength": 5000
+          },
+          "technologies": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/technology"
+            },
+            "minItems": 1
+          },
+          "images": {
+            "type": "object",
+            "required": ["thumbnail"],
+            "properties": {
+              "thumbnail": {
+                "$ref": "#/definitions/image"
+              },
+              "gallery": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/image"
+                },
+                "maxItems": 10
+              }
+            }
+          },
+          "links": {
+            "type": "object",
+            "properties": {
+              "github": {
+                "type": "string",
+                "format": "uri"
+              },
+              "demo": {
+                "type": "string",
+                "format": "uri"
+              },
+              "documentation": {
+                "type": "string",
+                "format": "uri"
+              }
+            }
+          },
+          "featured": {
+            "type": "boolean",
+            "default": false
+          },
+          "status": {
+            "type": "string",
+            "enum": ["in-progress", "completed", "archived"]
+          },
+          "startDate": {
+            "$ref": "#/definitions/dateString"
+          },
+          "endDate": {
+            "$ref": "#/definitions/dateString"
+          }
+        }
+      }
+    },
+    "skills": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["category", "items"],
+        "properties": {
+          "category": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 50
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/technology"
+            },
+            "minItems": 1
+          }
+        }
+      }
+    },
+    "experiences": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["company", "role", "startDate", "description"],
+        "properties": {
+          "company": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 100
+          },
+          "role": {
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 100
+          },
+          "startDate": {
+            "$ref": "#/definitions/dateString"
+          },
+          "endDate": {
+            "$ref": "#/definitions/dateString"
+          },
+          "current": {
+            "type": "boolean",
+            "default": false
+          },
+          "description": {
+            "type": "string",
+            "minLength": 50,
+            "maxLength": 2000
+          },
+          "technologies": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/technology"
+            }
+          },
+          "highlights": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 10,
+              "maxLength": 200
+            }
+          },
+          "location": {
+            "type": "object",
+            "properties": {
+              "city": {
+                "type": "string"
+              },
+              "country": {
+                "type": "string"
+              },
+              "remote": {
+                "type": "boolean",
+                "default": false
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
