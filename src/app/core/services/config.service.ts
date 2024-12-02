@@ -1,13 +1,15 @@
 // src/app/core/services/config.service.ts
-import { Injectable } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
 import { environment } from '@environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConfigService {
+  private readonly productionState = environment.production && !isDevMode();
+
   get isProduction(): boolean {
-    return environment.production;
+    return this.productionState;
   }
 
   get apiConfig() {

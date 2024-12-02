@@ -3,6 +3,7 @@ import { Injectable, PLATFORM_ID, inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import Loki, { Collection } from 'lokijs';
 import { environment } from '@environments/environment';
+import { ConfigService } from '../../core/services/config.service';
 import {
   Project,
   Skill,

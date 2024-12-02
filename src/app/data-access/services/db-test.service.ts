@@ -23,10 +23,10 @@ export class DbTestService {
       // Test Projects
       const testProjects: Project[] = [
         {
-          "id": "portfolio-app-2024",
-          "title": "Personal Portfolio Website Application",
-          "shortDescription": "Modern portfolio website built with Angular and custom design system",
-          "fullDescription": "Advanced portfolio website showcasing frontend development expertise. Features include a custom design system, signal-based state management, SSR optimization, and multi-language support. Implements modern Angular 19 features including standalone components, new control flow, and signals for reactive state management.",
+          "id": "TEST-portfolio-app-2024",
+          "title": "TEST Personal Portfolio Website Application",
+          "shortDescription": "TEST Modern portfolio website built with Angular and custom design system",
+          "fullDescription": "TEST Advanced portfolio website showcasing frontend development expertise. Features include a custom design system, signal-based state management, SSR optimization, and multi-language support. Implements modern Angular 19 features including standalone components, new control flow, and signals for reactive state management.",
           "technologies": [
             "Angular 19",
             "TypeScript 5.5",
@@ -63,10 +63,10 @@ export class DbTestService {
           status: ProjectStatus.IN_PROGRESS
         },
         {
-          "id": "dna-analysis-alkemy-2024",
-          "title": "DNA Analysis Management System",
-          "shortDescription": "System for Italian Ministry of Justice's Joint Forces Command",
-          "fullDescription": "Worked on three interconnected projects for the Italian Ministry of Justice's Joint Forces Command, focusing on DNA analysis management systems. Implemented critical change requests, conducted thorough bug fixes, developed new features, and ensured seamless deployment across all projects.",
+          "id": "TEST-dna-analysis-alkemy-2024",
+          "title": "TEST DNA Analysis Management System",
+          "shortDescription": "TEST System for Italian Ministry of Justice's Joint Forces Command",
+          "fullDescription": "TEST Worked on three interconnected projects for the Italian Ministry of Justice's Joint Forces Command, focusing on DNA analysis management systems. Implemented critical change requests, conducted thorough bug fixes, developed new features, and ensured seamless deployment across all projects.",
           "technologies": [
             "Angular",
             "TypeScript",
@@ -105,16 +105,16 @@ export class DbTestService {
       // Test Skills
       const testSkills: Skill[] = [
         {
-          id: 'angular',
-          name: 'Angular',
+          id: 'TEST-angular',
+          name: 'TEST Angular',
           category: SkillCategory.FRAMEWORK,
           level: 95,
           yearsOfExperience: 5,
           keywords: ['TypeScript', 'RxJS', 'NgRx', 'Angular Material', 'PrimeNG']
         },
         {
-          id: 'react',
-          name: 'React',
+          id: 'TEST-react',
+          name: 'TEST React',
           category: SkillCategory.FRAMEWORK,
           level: 85,
           yearsOfExperience: 3,
@@ -125,8 +125,8 @@ export class DbTestService {
       // Test Experience
       const testExperiences: Experience[] = [
         {
-          id: 'volo-2024',
-          company: 'Volo Consulting/Orangee S.r.l',
+          id: 'TEST-volo-2024',
+          company: 'TEST Volo Consulting/Orangee S.r.l',
           role: 'Frontend Developer',
           description: 'Development of DNA analysis management systems for the Italian Ministry of Justice',
           technologies: ['Angular', 'TypeScript', 'PrimeNG', 'Git'],
@@ -138,7 +138,7 @@ export class DbTestService {
       ];
 
       // Test Database Operations
-      console.log('Clearing existing data...');
+      console.log('Clearing existing data for db test...');
 
       // Clear collections one by one
       for (const id of await this.db.getData<Project>('projects')) {

@@ -27,7 +27,7 @@ import { ConfigService } from '../../core/services/config.service';
         </div>
       </div>
       <p>config.isProduction è {{config.isProduction}}<p>
-        @if (!config.isProduction) {
+        @if (config.features.enableDevTools && !config.isProduction) {
           <div class="dev-tools">
             <button
               (click)="testDb()"
@@ -64,6 +64,7 @@ import { ConfigService } from '../../core/services/config.service';
         </div>
       }
     </section>
+    </div>
   `,
   styles: [`
     .hero {
@@ -246,19 +247,25 @@ export class HomeComponent implements OnInit {
     });
   }
 
-
   async ngOnInit() {
     if (!this.config.isProduction) {
-      console.log('Current environment:', {
-        api: this.config.apiConfig,
-        features: this.config.features,
-        i18n: this.config.i18nConfig,
-        github: this.config.github
-      });
+      console.log("is development")
     }
+    console.log('Current environment:', {
+      api: this.config.apiConfig,
+      features: this.config.features,
+      i18n: this.config.i18nConfig,
+      github: this.config.github
+    });
+    console.log('current store', this.storeTest)
   }
 
   async testDb() {
+    if (this.config.isProduction) {
+      console.warn('Database testing is not available in production mode');
+      return;
+    }
+
     this.isTestingDb = true;
     try {
       this.lastTestResult = await this.dbTest.testDatabaseOperations();
@@ -273,4 +280,5 @@ export class HomeComponent implements OnInit {
   }
 
   featuredProjects = this.store.featuredProjects;
+  storeTest = this.store;
 }
