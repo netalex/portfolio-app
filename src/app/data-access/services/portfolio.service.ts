@@ -59,29 +59,45 @@ export class PortfolioService {
   private async loadInitialDataFromJson() {
     try {
       // Carica i dati dal file JSON incluso nell'applicazione
+      console.log('Loading initial data from JSON...');
       const response = await firstValueFrom(
-      this.http.get<{
-        projects: Project[];
-        skills: Skill[];
-        experiences: Experience[];
-      }>('/assets/data/initial-data.json')
-    );
+        this.http.get<{
+          projects: Project[];
+          skills: Skill[];
+          experiences: Experience[];
+        }>('/assets/data/initial-data.json')
+      );
+
+      console.log('Initial data loaded:', response);
 
       if (!response) throw new Error('No initial data available');
 
-      // Salva i dati nel database locale
-      await Promise.all([
-        ...response.projects.map(p => this.db.upsertData('projects', p)),
-        ...response.skills.map(s => this.db.upsertData('skills', s)),
-        ...response.experiences.map(e => this.db.upsertData('experiences', e))
+      // Raggruppa le operazioni per tipo
+      const projectUpserts = response.projects.map(p => this.db.upsertData('projects', p));
+      const skillUpserts = response.skills.map(s => this.db.upsertData('skills', s));
+      const experienceUpserts = response.experiences.map(e => this.db.upsertData('experiences', e));
+
+      // Attendi che tutte le operazioni dello stesso tipo siano completate
+      const [savedProjects, savedSkills, savedExperiences] = await Promise.all([
+        Promise.all(projectUpserts),
+        Promise.all(skillUpserts),
+        Promise.all(experienceUpserts)
       ]);
 
+      console.log('Data saved to DB:', {
+        projects: savedProjects.length,
+        skills: savedSkills.length,
+        experiences: savedExperiences.length
+      });
+
+
+
       // Aggiorna lo store
-      this.store.setProjects(response.projects);
-      this.store.setSkills(response.skills);
-      this.store.setExperiences(response.experiences);
+      this.store.setProjects(savedProjects);
+      this.store.setSkills(savedSkills);
+      this.store.setExperiences(savedExperiences);
     } catch (error) {
-      console.error('Error loading initial data from JSON:', error);
+      console.error('Error loading initial data from JSON in loadInitialDataFromJson:', error);
       throw error;
     }
   }
