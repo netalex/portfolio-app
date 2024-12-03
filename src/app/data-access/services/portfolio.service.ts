@@ -6,6 +6,7 @@ import { PortfolioStore } from '../store/portfolio.store';
 import { firstValueFrom } from 'rxjs';
 import { Project, Skill, Experience, SkillCategory } from '../models/portfolio.models';
 import { isPlatformBrowser } from '@angular/common';
+import { GitHubSyncService } from './github-sync.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,8 @@ export class PortfolioService {
   private readonly store = inject(PortfolioStore);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly dataInitialized = signal(false);
+  private readonly githubSyncService = inject(GitHubSyncService);
+
 
   async loadInitialData() {
     // Evitiamo di eseguire sul server
@@ -39,13 +42,16 @@ export class PortfolioService {
       ]);
 
       // Se non ci sono dati nel db, carica i dati iniziali dal file JSON
-      if (projects.length === 0) {
-        await this.loadInitialDataFromJson();
-      } else {
-        this.store.setProjects(projects);
-        this.store.setSkills(skills);
-        this.store.setExperiences(experiences);
-      }
+      // if (projects.length === 0) {
+      //   // await this.githubSyncService.syncData();
+      //   await this.loadInitialDataFromJson();
+      // } else {
+      //   this.store.setProjects(projects);
+      //   this.store.setSkills(skills);
+      //   this.store.setExperiences(experiences);
+      // }
+
+      await this.handleDataSync();
 
       this.dataInitialized.set(true);
     } catch (error) {
@@ -112,5 +118,29 @@ export class PortfolioService {
     }
   }
 
-  // Altri metodi per gestire skills ed experiences...
+  private async handleDataSync() {
+    const loadData = async (dataFunction: () => Promise<any>) => {
+      try {
+        const result = await dataFunction();
+        if (result && result.length > 0) {
+          this.store.setProjects(result.projects);
+          this.store.setSkills(result.skills);
+          this.store.setExperiences(result.experiences);
+          return true;
+        }
+        return false;
+      } catch (error) {
+        return false;
+      }
+    };
+
+    const githubDataLoaded = await loadData(this.githubSyncService.syncData.bind(this.githubSyncService));
+    if (!githubDataLoaded) {
+      const jsonDataLoaded = await loadData(this.loadInitialDataFromJson.bind(this));
+      if (!jsonDataLoaded) {
+        throw new Error("No data");
+      }
+    }
+  }
+
 }

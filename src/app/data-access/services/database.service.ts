@@ -91,6 +91,15 @@ export class DatabaseService {
     return collection;
   }
 
+  /**
+   * Waits for the database to be initialized before proceeding.
+   *
+   * This method checks the initialization status of the database at regular intervals.
+   * If the database is already initialized, it returns immediately.
+   * Otherwise, it sets up a polling mechanism to check the status every 100ms.
+   *
+   * @returns A Promise that resolves when the database is initialized.
+   */
   async waitForInitialization(): Promise<void> {
     if (this.initialized) return;
     return new Promise((resolve) => {
@@ -127,12 +136,21 @@ export class DatabaseService {
     }
   }
 
+  /**
+   * Retrieves data from a specified collection based on an optional query.
+   *
+   * @typeParam T - The type of entity being retrieved, which must extend BaseEntity.
+   * @param collectionName - The name of the collection to query.
+   * @param query - An optional partial object of type T to filter the results. Default is an empty object.
+   * @returns A promise that resolves to an array of entities of type T matching the query.
+   * @throws Will throw an error if there's a problem accessing the database or if the collection doesn't exist.
+   */
   async getData<T extends BaseEntity>(
     collectionName: CollectionName,
     query: Partial<T> = {}
   ): Promise<T[]> {
     try {
-    await this.waitForInitialization();
+      await this.waitForInitialization();
       const collection = this.ensureCollection<T>(collectionName);
       return collection.find(query as any) as T[];
     } catch (error) {
