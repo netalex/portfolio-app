@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { DatabaseService } from './database.service';
 import { PortfolioStore } from '../store/portfolio.store';
 import { firstValueFrom } from 'rxjs';
-import { Project, Skill, Experience, SkillCategory } from '../models/portfolio.models';
+import { Project, Skill, Experience, SkillCategory, About } from '../models/portfolio.models';
 import { isPlatformBrowser } from '@angular/common';
 import { GitHubSyncService } from './github-sync.service';
 
@@ -38,7 +38,8 @@ export class PortfolioService {
       const [projects, skills, experiences] = await Promise.all([
         this.db.getData<Project>('projects'),
         this.db.getData<Skill>('skills'),
-        this.db.getData<Experience>('experiences')
+        this.db.getData<Experience>('experiences'),
+        this.db.getData<About>('about')
       ]);
 
       // Se non ci sono dati nel db, carica i dati iniziali dal file JSON
@@ -71,11 +72,11 @@ export class PortfolioService {
           projects: Project[];
           skills: Skill[];
           experiences: Experience[];
+        about: About; // Modificato: ora è un singolo oggetto, non un array
         }>('/assets/data/initial-data.json')
       );
 
       console.log('Initial data loaded:', response);
-
       if (!response) throw new Error('No initial data available');
 
       // Raggruppa le operazioni per tipo
@@ -83,25 +84,38 @@ export class PortfolioService {
       const skillUpserts = response.skills.map(s => this.db.upsertData('skills', s));
       const experienceUpserts = response.experiences.map(e => this.db.upsertData('experiences', e));
 
+    // Modifichiamo la gestione di about
+    const aboutData = await this.db.upsertData('about', response.about);
+
       // Attendi che tutte le operazioni dello stesso tipo siano completate
-      const [savedProjects, savedSkills, savedExperiences] = await Promise.all([
+      const [savedProjects, savedSkills, savedExperiences, /* savedAbout */] = await Promise.all([
         Promise.all(projectUpserts),
         Promise.all(skillUpserts),
-        Promise.all(experienceUpserts)
+        Promise.all(experienceUpserts),
+        // Promise.all(aboutUpserts)
       ]);
 
       console.log('Data saved to DB:', {
-        projects: savedProjects.length,
-        skills: savedSkills.length,
-        experiences: savedExperiences.length
-      });
+      projects: {
+        count: savedProjects.length,
+        items: savedProjects
+      },
+      skills: {
+        count: savedSkills.length,
+        items: savedSkills
+      },
+      experiences: {
+        count: savedExperiences.length,
+        items: savedExperiences
+      },
+      about: aboutData // Ora è un singolo oggetto
+    });
 
-
-
-      // Aggiorna lo store
+    // Aggiorniamo lo store con i dati salvati
       this.store.setProjects(savedProjects);
       this.store.setSkills(savedSkills);
       this.store.setExperiences(savedExperiences);
+    this.store.setAbout(aboutData); // Ora passiamo l'oggetto direttamente
     } catch (error) {
       console.error('Error loading initial data from JSON in loadInitialDataFromJson:', error);
       throw error;
@@ -126,6 +140,7 @@ export class PortfolioService {
           this.store.setProjects(result.projects);
           this.store.setSkills(result.skills);
           this.store.setExperiences(result.experiences);
+          this.store.setAbout(result.about);
           return true;
         }
         return false;

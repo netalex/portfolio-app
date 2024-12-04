@@ -235,6 +235,7 @@
     }
   ],
   "about": {
+    "id": "about",
     "personal": {
       "name": "Alessandro Aprile",
       "title": "Frontend Developer",

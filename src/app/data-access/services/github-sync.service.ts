@@ -7,7 +7,7 @@ import { firstValueFrom } from 'rxjs';
   providedIn: 'root'
 })
 export class GitHubSyncService {
-  private readonly GITHUB_API_URL = 'https://github.com/netalex/alessandro-aprile-portfolio-content/';
+  private readonly GITHUB_RAW_URL = 'https://raw.githubusercontent.com/netalex/alessandro-aprile-portfolio-content/main/';
 
   constructor(
     private readonly http: HttpClient,
@@ -55,7 +55,7 @@ export class GitHubSyncService {
    * @throws Will throw an error if the HTTP request fails or if the JSON parsing fails.
    */
   private async fetchJsonFile(path: string): Promise<any> {
-    const response = await firstValueFrom(this.http.get(`${this.GITHUB_API_URL}${path}`)); // CFR https://angular.love/rxjs-heads-up-topromise-is-being-deprecated
+    const response = await firstValueFrom(this.http.get(`${this.GITHUB_RAW_URL}${path}`)); // CFR https://angular.love/rxjs-heads-up-topromise-is-being-deprecated
     const content = atob((response as any).content);
     return JSON.parse(content);
   }

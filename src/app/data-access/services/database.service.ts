@@ -22,7 +22,7 @@ interface BaseEntity {
 }
 
 // Ora possiamo vincolare T a BaseEntity
-type CollectionName = 'projects' | 'skills' | 'experiences' | 'skillGroups' | 'certifications';
+type CollectionName = 'projects' | 'skills' | 'experiences' | 'skillGroups' | 'certifications' | 'about';
 
 @Injectable({
   providedIn: 'root'

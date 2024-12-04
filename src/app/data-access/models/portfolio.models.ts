@@ -94,6 +94,7 @@ export interface Experience {
 }
 
 export interface About {
+  id: string;
   personal: PersonalInfo;
   professionalSummary: ProfessionalSummary;
   languages: Language[];

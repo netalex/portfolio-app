@@ -1,5 +1,7 @@
 // src/app/core/components/footer.component.ts
-import { Component } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
+import { PortfolioStore } from '../../data-access/store/portfolio.store';
+import { About } from '../../data-access/models/portfolio.models';
 
 @Component({
   selector: 'app-footer',
@@ -7,28 +9,52 @@ import { Component } from '@angular/core';
   template: `
     <footer class="app-footer">
       <div class="footer-container">
-        <div class="footer-content">
+          @if (about(); as aboutData) {
+          <div class="footer-content">
           <div class="footer-info">
-            <p>© 2024 Alessandro Aprile. All rights reserved.</p>
+              <p>© {{currentYear}} {{ aboutData.personal.name }}. All rights reserved.</p>
+          </div>
+
+          <div class="footer-contact">
+              <p>
+                <a [href]="emailString()">
+                  {{ aboutData.personal.email }}
+                </a>
+              </p>
+              <p>{{ aboutData.personal.location.country }} 
+                 ({{ aboutData.personal.location.timezone }})</p>
           </div>
 
           <div class="footer-social">
-            <a
-              href="https://github.com/netalex"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="social-link">
-              GitHub
-            </a>
-            <a
-              href="https://www.linkedin.com/in/alessandro-aprile-0225106/"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="social-link">
-              LinkedIn
-            </a>
+            <p>
+              <a
+                [href]="aboutData.personal.social.github"
+                target="_blank"
+                rel="noopener noreferrer"
+                  class="social-link"
+                >
+                GitHub
+              </a>
+            </p>
+            <p>
+              <a
+                [href]="aboutData.personal.social.linkedin"
+                target="_blank"
+                rel="noopener noreferrer"
+                  class="social-link"
+                >
+                LinkedIn
+              </a>
+            </p>
+            </div>
           </div>
-        </div>
+          } @else {
+          <div class="footer-content">
+            <div class="footer-info">
+              <p>© {{currentYear}} Loading...</p>
+            </div>
+          </div>
+          }
       </div>
     </footer>
   `,
@@ -50,20 +76,32 @@ import { Component } from '@angular/core';
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: var(--spacing-4);
 
       @media (max-width: 640px) {
         flex-direction: column;
-        gap: var(--spacing-4);
         text-align: center;
       }
     }
 
     .footer-social {
       display: flex;
-      gap: var(--spacing-4);
+      flex-direction: column;
+      gap: var(--spacing-2);
     }
 
     .social-link {
+      color: var(--foreground);
+      text-decoration: none;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: var(--primary);
+      }
+    }
+
+    .footer-contact a {
       color: var(--foreground);
       text-decoration: none;
 
@@ -73,4 +111,20 @@ import { Component } from '@angular/core';
     }
   `]
 })
-export class FooterComponent {}
+export class FooterComponent {
+  private readonly store = inject(PortfolioStore);
+  
+  // Signal per i dati about
+  readonly about = this.store.about;
+  
+  // Computed signal per l'email string
+  readonly emailString = computed(() => {
+    const aboutData = this.about();
+    if (!aboutData) return '#';
+    
+    return `mailto:${aboutData.personal.email}?subject=Hello`;
+  });
+
+  // Anno corrente per il copyright
+  readonly currentYear = new Date().getFullYear();
+}
