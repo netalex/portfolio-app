@@ -363,7 +363,7 @@ export class DesignSystemComponent implements AfterViewInit {
       name: 'Surface',
       value: 'var(--surface)',
       cssVar: '--surface',
-      hex: '#ffffff',
+      hex: '#e4e4e4',
       rgb: '255, 255, 255',
     },
     {

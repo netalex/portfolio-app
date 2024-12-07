@@ -65,20 +65,22 @@
         "Performance optimization"
       ],
       "category": "ENTERPRISE",
-      "featured": true,
+      "featured": false,
       "status": "COMPLETED"
     },
     {
       "id": "banking-system-iccrea-2024",
       "title": "Banking Contract Management System",
       "shortDescription": "Internal application for mass CSV upload of loans and mortgages contract data",
-      "fullDescription": "Developed and maintained an internal application for ICCREA banking institution that enables mass upload and processing of CSV files containing contractual data for mortgages and loans. Enhanced frontend performance and implemented new features under tight deadlines.",
+      "fullDescription": "Developed and maintained an internal application for ICCREA, a major Italian banking institution, that enables mass upload and processing of CSV files containing contractual data for mortgages and loans. Enhanced frontend performance and implemented new features under tight deadlines.",
       "technologies": [
         "Angular",
         "TypeScript",
         "Git",
+        "Git Hooks",
         "CSV Processing",
-        "Banking APIs"
+        "REST API",
+        "Angular Material"
       ],
       "role": "Frontend Developer",
       "duration": {
@@ -89,10 +91,443 @@
         "Mass CSV data processing",
         "Performance optimization",
         "Git hooks integration",
+        "Continuous delivery with Git hooks",
         "Banking compliance features"
       ],
       "category": "ENTERPRISE",
       "featured": false,
+      "status": "COMPLETED"
+    },
+    {
+      "id": "gft-insurance-dashboard-2023",
+      "title": "Insurance Branch Dashboard System",
+      "shortDescription": "Centralized dashboard tool for insurance company branch management",
+      "fullDescription": "Developed a comprehensive dashboard system for a major insurance company that centralizes branch management and monitoring. The project achieved an impressive 80% test coverage across 116,000 lines of code, significantly improved development efficiency through mentoring junior developers, and successfully integrated a customized PrimeNG WYSIWYG editor. The system serves as a central hub for branch operations, data visualization, and performance monitoring.",
+      "technologies": [
+        "Angular",
+        "TypeScript",
+        "PrimeNG",
+        "Jasmine",
+        "Karma",
+        "RxJS",
+        "REST API"
+      ],
+      "role": "Front End Developer",
+      "duration": {
+        "start": "2023-01",
+        "end": "2023-12"
+      },
+      "features": [
+        "Extensive test coverage (80%)",
+        "Custom WYSIWYG editor integration",
+        "Real-time data visualization",
+        "Branch performance monitoring",
+        "Advanced filtering and search",
+        "Report generation",
+        "Role-based access control"
+      ],
+      "links": {
+        "github": null,
+        "live": null
+      },
+      "images": {
+        "thumbnail": "/assets/images/projects/gft-insurance/thumbnail.webp",
+        "screenshots": [
+          "/assets/images/projects/gft-insurance/dashboard.webp",
+          "/assets/images/projects/gft-insurance/editor.webp"
+        ]
+      },
+      "category": "ENTERPRISE",
+      "featured": false,
+      "status": "COMPLETED"
+    },
+    {
+      "id": "marina-militare-crm-2022",
+      "title": "Italian Navy submarine CRM Portal",
+      "shortDescription": "CRM portal section for the Italian Ministry of Defense - Navy",
+      "fullDescription": "Developed a crucial section of the CRM portal for the Italian Navy, featuring a custom-integrated Ace.js editor component and comprehensive team leadership responsibilities. The project involved managing an 8000+ line codebase, implementing an agile framework, and coordinating with a cross-functional team of 10 members including front-end/back-end developers and database specialists. Key achievements included successful knowledge transfer to junior developers and meeting strict military-grade security requirements.",
+      "technologies": [
+        "Angular",
+        "TypeScript",
+        "Ace.js",
+        "REST API",
+        "RxJS",
+        "Angular Material",
+        "Agile"
+      ],
+      "role": "Front End Developer",
+      "duration": {
+        "start": "2022-01",
+        "end": "2022-12"
+      },
+      "features": [
+        "Custom Ace.js editor integration",
+        "Military-grade security compliance",
+        "Advanced document management",
+        "Team collaboration tools",
+        "Audit logging system",
+        "Real-time updates",
+        "Role-based permissions"
+      ],
+      "links": {
+        "github": null,
+        "live": null
+      },
+      "images": {
+        "thumbnail": "/assets/images/projects/marina-militare/thumbnail.webp",
+        "screenshots": [
+          "/assets/images/projects/marina-militare/portal.webp",
+          "/assets/images/projects/marina-militare/editor.webp"
+        ]
+      },
+      "category": "ENTERPRISE",
+      "featured": true,
+      "status": "COMPLETED"
+    },
+    {
+      "id": "nextip-crm-2022",
+      "title": "NextIP Call Center CRM",
+      "shortDescription": "React-based CRM transformation for call center operations",
+      "fullDescription": "Led the transformation of a legacy PHP monolithic web application into a modern React-based CRM system for call centers. The project achieved a 20% increase in application speed through modern front-end architecture and optimized state management. The new system provided enhanced user experience and improved call center efficiency through real-time updates and streamlined workflows.",
+      "technologies": [
+        "React",
+        "TypeScript",
+        "Redux",
+        "REST API",
+        "Material-UI",
+        "WebSocket",
+        "PHP"
+      ],
+      "role": "Front End Developer",
+      "duration": {
+        "start": "2022-01",
+        "end": "2022-12"
+      },
+      "features": [
+        "Legacy system modernization",
+        "Real-time call monitoring",
+        "Advanced search capabilities",
+        "Customer interaction tracking",
+        "Performance analytics",
+        "Integration with phone systems",
+        "Customizable dashboards"
+      ],
+      "links": {
+        "github": null,
+        "live": null
+      },
+      "images": {
+        "thumbnail": "/assets/images/projects/nextip/thumbnail.webp",
+        "screenshots": [
+          "/assets/images/projects/nextip/dashboard.webp",
+          "/assets/images/projects/nextip/calls.webp"
+        ]
+      },
+      "category": "ENTERPRISE",
+      "featured": false,
+      "status": "COMPLETED"
+    },
+    {
+      "id": "abstract-decision-suite-2020",
+      "title": "Corporate Decision Making Suite",
+      "shortDescription": "Mobile and web application suite for enterprise decision making",
+      "fullDescription": "Developed a comprehensive suite of mobile and web applications focused on corporate decision-making processes. As the senior team member, produced over 50 pages of technical documentation and maintained post-release developments. Each application in the suite grew to over 10,000 lines of code, demonstrating robust architecture and maintainability. The system facilitated data-driven decision making across multiple organizational levels.",
+      "technologies": [
+        "React",
+        "React Native",
+        "TypeScript",
+        "Redux",
+        "Node.js",
+        "REST API",
+        "MongoDB"
+      ],
+      "role": "Senior Front End Developer",
+      "duration": {
+        "start": "2020-01",
+        "end": "2022-12"
+      },
+      "features": [
+        "Cross-platform compatibility",
+        "Real-time collaboration",
+        "Data visualization",
+        "Decision workflow automation",
+        "Mobile-first design",
+        "Offline capability",
+        "Enterprise integration"
+      ],
+      "links": {
+        "github": null,
+        "live": null
+      },
+      "images": {
+        "thumbnail": "/assets/images/projects/abstract/thumbnail.webp",
+        "screenshots": [
+          "/assets/images/projects/abstract/mobile.webp",
+          "/assets/images/projects/abstract/web.webp"
+        ]
+      },
+      "category": "ENTERPRISE",
+      "featured": true,
+      "status": "COMPLETED"
+    },
+    {
+      "id": "emmelibri-erp-2020",
+      "title": "EmmeLibri B2B Distribution ERP",
+      "shortDescription": "Front end ERP system for B2B book distribution",
+      "fullDescription": "Enhanced and maintained a comprehensive ERP system for B2B book distribution, achieving a 50% reduction in system bugs through methodical code maintenance and implementing strategic change requests. Successfully trained team members on Angular, reducing onboarding time by 25% and improving overall team productivity. The system managed complex book distribution workflows and inventory management processes.",
+      "technologies": [
+        "Angular",
+        "TypeScript",
+        "RxJS",
+        "REST API",
+        "Angular Material",
+        "Bootstrap",
+        "SQL"
+      ],
+      "role": "Front End Developer",
+      "duration": {
+        "start": "2020-01",
+        "end": "2020-12"
+      },
+      "features": [
+        "Inventory management",
+        "Order processing",
+        "Supplier integration",
+        "Real-time stock updates",
+        "Advanced search system",
+        "Reporting tools",
+        "User management"
+      ],
+      "links": {
+        "github": null,
+        "live": null
+      },
+      "images": {
+        "thumbnail": "/assets/images/projects/emmelibri/thumbnail.webp",
+        "screenshots": [
+          "/assets/images/projects/emmelibri/inventory.webp",
+          "/assets/images/projects/emmelibri/orders.webp"
+        ]
+      },
+      "category": "ENTERPRISE",
+      "featured": false,
+      "status": "COMPLETED"
+    },
+    {
+      "id": "engineering-aice-2020",
+      "title": "Aircraft Maintenance Management System",
+      "shortDescription": "Aviation maintenance management software transformation",
+      "fullDescription": "Restructured a legacy aircraft maintenance management application into a modern Single Page Application using Angular, resulting in a 20% performance improvement. The system manages maintenance schedules, part inventory, and compliance requirements for aircraft maintenance operations. The modernization effort included implementing real-time updates, improved user interface, and enhanced data visualization capabilities.",
+      "technologies": [
+        "Angular",
+        "TypeScript",
+        "RxJS",
+        "REST API",
+        "D3.js",
+        "Bootstrap",
+        "WebSocket"
+      ],
+      "role": "Front End Developer",
+      "duration": {
+        "start": "2020-01",
+        "end": "2020-06"
+      },
+      "features": [
+        "Real-time maintenance tracking",
+        "Part inventory management",
+        "Compliance reporting",
+        "Interactive maintenance schedules",
+        "Document management",
+        "Alert system",
+        "Mobile optimization"
+      ],
+      "links": {
+        "github": null,
+        "live": null
+      },
+      "images": {
+        "thumbnail": "/assets/images/projects/aice/thumbnail.webp",
+        "screenshots": [
+          "/assets/images/projects/aice/dashboard.webp",
+          "/assets/images/projects/aice/maintenance.webp"
+        ]
+      },
+      "category": "ENTERPRISE",
+      "featured": false,
+      "status": "COMPLETED"
+    },
+    {
+      "id": "intesi-psd2-2018",
+      "title": "PSD2 Bank Access Management Interface",
+      "shortDescription": "Banking access management system compliant with PSD2 regulations",
+      "fullDescription": "Developed a comprehensive PSD2-compliant banking access management interface, successfully leading a team of 4 junior developers. The project involved designing application flows based on complex architectural specifications and creating detailed functional analysis documentation. Met all delivery deadlines while maintaining high code quality and regulatory compliance. The system manages secure banking access, authentication, and transaction authorization according to EU PSD2 standards.",
+      "technologies": [
+        "Angular",
+        "TypeScript",
+        "OAuth 2.0",
+        "JWT",
+        "REST API",
+        "Angular Material",
+        "RxJS",
+        "keyCloack",
+        "JHipster"
+      ],
+      "role": "Front End Developer",
+      "duration": {
+        "start": "2018-01",
+        "end": "2020-12"
+      },
+      "features": [
+        "PSD2 compliance",
+        "Secure authentication",
+        "Transaction authorization",
+        "Access management",
+        "Audit logging",
+        "Real-time notifications",
+        "Multi-factor authentication"
+      ],
+      "links": {
+        "github": null,
+        "live": null
+      },
+      "images": {
+        "thumbnail": "/assets/images/projects/intesi/thumbnail.webp",
+        "screenshots": [
+          "/assets/images/projects/intesi/dashboard.webp",
+          "/assets/images/projects/intesi/auth.webp"
+        ]
+      },
+      "category": "ENTERPRISE",
+      "featured": true,
+      "status": "COMPLETED"
+    },
+    {
+      "id": "spindox-medical-retail-2019",
+      "title": "Medical Devices Retail System",
+      "shortDescription": "Integrated retail system for medical acoustic devices sales for AMPLIFON APAC",
+      "fullDescription": "Created a web interface for an APAC oriented integrated medical acoustic devices retail sales system for the worldwide leaders of the market (Amplifon). Successfully trained a junior engineer, achieving full autonomy in Angular development within just 2 months. Reviewed and improved technical documentation, providing valuable front-end implementation suggestions. The system manages inventory, sales, and compliance requirements specific to medical device retail operations.",
+      "technologies": [
+        "Angular",
+        "TypeScript",
+        "REST API",
+        "Bootstrap",
+        "RxJS",
+        "Redux",
+        "Material Design"
+      ],
+      "role": "Front End Developer",
+      "duration": {
+        "start": "2019-01",
+        "end": "2019-12"
+      },
+      "features": [
+        "Inventory management",
+        "Sales processing",
+        "Compliance tracking",
+        "Customer management",
+        "Reporting system",
+        "Device tracking",
+        "Order management"
+      ],
+      "links": {
+        "github": null,
+        "live": null
+      },
+      "images": {
+        "thumbnail": "/assets/images/projects/spindox/thumbnail.webp",
+        "screenshots": [
+          "/assets/images/projects/spindox/inventory.webp",
+          "/assets/images/projects/spindox/sales.webp"
+        ]
+      },
+      "category": "ENTERPRISE",
+      "featured": true,
+      "status": "COMPLETED"
+    },
+    {
+      "id": "vittoria-assicurazioni-2018",
+      "title": "Insurance Management Platform",
+      "shortDescription": "Core insurance management system for Vittoria Assicurazioni",
+      "fullDescription": "Contributed to the development of a comprehensive insurance management platform for Vittoria Assicurazioni. The system handles policy management, claims processing, and customer relationship management. Implemented modern front-end architecture using Angular, ensuring responsive design and optimal performance across all devices.",
+      "technologies": [
+        "Angular",
+        "TypeScript",
+        "REST API",
+        "RxJS",
+        "Bootstrap",
+        "Angular Material",
+        "Redux"
+      ],
+      "role": "Front End Developer",
+      "duration": {
+        "start": "2018-01",
+        "end": "2018-06"
+      },
+      "features": [
+        "Policy management",
+        "Claims processing",
+        "Customer portal",
+        "Document management",
+        "Payment processing",
+        "Reporting system",
+        "Agent dashboard"
+      ],
+      "links": {
+        "github": null,
+        "live": null
+      },
+      "images": {
+        "thumbnail": "/assets/images/projects/vittoria/thumbnail.webp",
+        "screenshots": [
+          "/assets/images/projects/vittoria/dashboard.webp",
+          "/assets/images/projects/vittoria/claims.webp"
+        ]
+      },
+      "category": "ENTERPRISE",
+      "featured": false,
+      "status": "COMPLETED"
+    },
+    {
+      "id": "lutech-ivd-lis-2018",
+      "title": "Clinical Laboratory IVD LIS System",
+      "shortDescription": "Web application for clinical laboratory management",
+      "fullDescription": "Developed an IVD LIS (In Vitro Diagnostic Laboratory Information System) web application for clinical laboratories, implementing the interface using Angular and PrimeNG. Created comprehensive project documentation following ISO 13485:2012 standards, including Software Design Specification (SDS) and Test Protocol (TP) documentation. The system manages laboratory workflows, test results, and quality control processes.",
+      "technologies": [
+        "Angular",
+        "TypeScript",
+        "PrimeNG",
+        "REST API",
+        "RxJS",
+        "Bootstrap",
+        "Jest"
+      ],
+      "role": "Front End Developer",
+      "duration": {
+        "start": "2018-01",
+        "end": "2018-12"
+      },
+      "features": [
+        "Laboratory workflow management",
+        "Test result tracking",
+        "Quality control monitoring",
+        "Equipment integration",
+        "Report generation",
+        "Sample tracking",
+        "Compliance management"
+      ],
+      "links": {
+        "github": null,
+        "live": null
+      },
+      "images": {
+        "thumbnail": "/assets/images/projects/lutech/thumbnail.webp",
+        "screenshots": [
+          "/assets/images/projects/lutech/dashboard.webp",
+          "/assets/images/projects/lutech/results.webp"
+        ]
+      },
+      "category": "ENTERPRISE",
+      "featured": true,
       "status": "COMPLETED"
     }
   ],
@@ -190,7 +625,10 @@
       "startDate": "2024-07-01",
       "endDate": "2024-10-01",
       "location": "Italy",
-      "type": "REMOTE"
+      "type": "REMOTE",
+      "projects": [
+        "dna-analysis-alkemy-2024"
+      ]
     },
     {
       "id": "thinkopen-2024",
@@ -211,7 +649,20 @@
       "startDate": "2018-02-01",
       "endDate": "2024-07-01",
       "location": "Milan",
-      "type": "hybrid"
+      "type": "hybrid",
+      "projects": [
+        "banking-system-iccrea-2024",
+        "gft-insurance-dashboard-2023",
+        "vittoria-assicurazioni-2018",
+        "intesi-psd2-2018",
+        "engineering-aice-2020",
+        "emmelibri-erp-2020",
+        "lutech-ivd-lis-2018",
+        "spindox-medical-retail-2019",
+        "nextip-crm-2022",
+        "abstract-decision-suite-2020",
+        "marina-militare-crm-2022"
+      ]
     },
     {
       "id": "3wlab-2017",

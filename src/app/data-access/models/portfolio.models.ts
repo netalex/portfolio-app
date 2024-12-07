@@ -91,6 +91,7 @@ export interface Experience {
   endDate?: string;   // Optional ISO date string
   location: string;
   type: 'remote' | 'onsite' | 'hybrid';
+  projects?: string[]; // Array of project IDs
 }
 
 export interface About {

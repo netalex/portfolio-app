@@ -26,7 +26,7 @@
 
   --secondary: var(--neutral-700);
   --secondary-rgb: 44, 62, 80;
-  --secondary-foreground: var(--neutral-50);
+  --secondary-foreground: var(--neutral-200);
 
   // Colori di stato
   --color-success: #10b981;
@@ -34,7 +34,7 @@
   --color-warning: #f59e0b;
   --color-info: #3b82f6;
 
-  --surface: var(--neutral-50);
+  --surface: var(--neutral-200);
   --surface-rgb: 255, 255, 255;
   --surface-foreground: var(--neutral-900);
   --surface-variant: var(--neutral-100);
@@ -57,7 +57,7 @@
 
 .dark-theme {
   --background: var(--neutral-900);
-  --foreground: var(--neutral-50);
+  --foreground: var(--neutral-200);
   --primary: var(--primary-400);
   --primary-foreground: var(--neutral-900);
   
@@ -65,11 +65,11 @@
   --secondary-foreground: var(--neutral-900);
   
   --surface: var(--neutral-800);
-  --surface-foreground: var(--neutral-50);
+  --surface-foreground: var(--neutral-200);
   --surface-variant: var(--neutral-700);
   --surface-variant-hover: var(--neutral-600);
   
-  --text: var(--neutral-50);
+  --text: var(--neutral-200);
   --text-secondary: var(--neutral-400);
 
   --color-success: #34d399;

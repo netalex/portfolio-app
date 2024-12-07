@@ -23,6 +23,20 @@ export class PortfolioService {
   // Signal readonly per l'UI
   readonly isInitialized = computed(() => this.initialized());
 
+  getProjectsByExperience(experienceId: string) {
+    return computed(() => {
+      const experience = this.store.experiences().find(e => e.id === experienceId);
+      if (!experience?.projects?.length) return [];
+
+      return this.store.projects()
+        .filter(project => experience.projects!.includes(project.id))
+        .sort((a, b) => {
+          return new Date(b.duration.start).getTime() -
+                 new Date(a.duration.start).getTime();
+        });
+    });
+  }
+
   async loadInitialData() {
     // Evitiamo di eseguire sul server e caricamenti multipli
     if (!isPlatformBrowser(this.platformId) || this.dataInitialized()) {

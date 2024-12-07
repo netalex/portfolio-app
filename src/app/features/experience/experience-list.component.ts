@@ -1,43 +1,64 @@
 // src/app/features/experience/experience-list.component.ts
 import { Component, inject } from '@angular/core';
 import { PortfolioStore } from '../../data-access/store/portfolio.store';
+import { PortfolioService } from '../../data-access/services/portfolio.service';
+import { ProjectCardComponent } from '../projects/project-card.component';
+
+
 
 @Component({
   selector: 'app-experience-list',
   standalone: true,
+  imports: [ProjectCardComponent],
   template: `
-    <div class="experience-container">
-      @if (loading()) {
-        <div class="loading">Loading experiences...</div>
-      }
+  <div class="experience-container">
+  @if (loading()) {
+    <div class="loading">Loading experiences...</div>
+  }
 
-      @if (error()) {
-        <div class="error">{{ error() }}</div>
-      }
+  @if (error()) {
+    <div class="error">{{ error() }}</div>
+  }
 
-      @if (experiences().length) {
-        <div class="experience-timeline">
-          @for (experience of experiences(); track experience.id) {
-            <div class="experience-card">
-              <div class="experience-period">
-                {{ formatDate(experience.startDate) }} -
-                {{ experience.endDate ? formatDate(experience.endDate) : 'Present' }}
-              </div>
-              <div class="experience-content">
-                <h3>{{ experience.company }}</h3>
-                <h4>{{ experience.role }}</h4>
-                <p>{{ experience.description }}</p>
-                <div class="experience-technologies">
-                  @for (tech of experience.technologies; track tech) {
-                    <span class="tech-badge">{{ tech }}</span>
+  @if (experiences().length) {
+    <div class="experience-timeline">
+      @for (experience of experiences(); track experience.id) {
+        <div class="experience-card">
+          <div class="experience-period">
+            {{ formatDate(experience.startDate) }} -
+            {{ experience.endDate ? formatDate(experience.endDate) : 'Present' }}
+          </div>
+          <div class="experience-content">
+            <h3>{{ experience.company }}</h3>
+            <h4>{{ experience.role }}</h4>
+            <p>{{ experience.description }}</p>
+            <div class="experience-technologies">
+              @for (tech of experience.technologies; track tech) {
+                <span class="tech-badge">{{ tech }}</span>
+              }
+            </div>
+
+            <!-- Progetti correlati -->
+            @if (portfolioService.getProjectsByExperience(experience.id)().length) {
+              <div class="related-projects">
+                <h5>Projects</h5>
+                <div class="projects-grid">
+                  @for (project of portfolioService.getProjectsByExperience(experience.id)();
+                        track project.id) {
+                    <app-project-card
+                      [project]="project"
+                      class="nested-project"
+                    />
                   }
                 </div>
               </div>
-            </div>
-          }
+            }
+          </div>
         </div>
       }
     </div>
+  }
+</div>
   `,
   styles: [`
     .experience-container {
@@ -104,10 +125,57 @@ import { PortfolioStore } from '../../data-access/store/portfolio.store';
       border-radius: var(--radius-sm);
       font-size: 0.8em;
     }
+
+    /* Stili per i progetti correlati */
+    .related-projects {
+      margin-top: var(--spacing-3);
+      padding-top: var(--spacing-2);
+      border-top: 1px solid var(--surface-variant);
+    }
+
+    .related-projects h5 {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-bottom: var(--spacing-2);
+    }
+
+    .projects-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+  }
+
+    .nested-project {
+      transform: scale(0.95);
+      transform-origin: top left;
+      transition: transform 0.2s ease;
+    }
+
+    .nested-project:hover {
+      transform: scale(0.98);
+    }
+
+    .nested-project {
+      margin-left: var(--spacing-4);
+      position: relative;
+    }
+  
+    .nested-project::before {
+      content: '';
+      position: absolute;
+      left: -12px; /* Allineato con il padding del contenuto */
+      top: 40px; /* Allineato verticalmente con il testo */
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--primary);
+      opacity: 0.7;
+    }
   `]
 })
 export class ExperienceListComponent {
   private readonly store = inject(PortfolioStore);
+  protected readonly portfolioService = inject(PortfolioService);
 
   experiences = this.store.sortedExperiences;
   loading = this.store.loading;

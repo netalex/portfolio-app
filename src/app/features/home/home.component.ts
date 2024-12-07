@@ -4,11 +4,12 @@ import { PortfolioStore } from '../../data-access/store/portfolio.store';
 import { Meta, Title } from '@angular/platform-browser';
 import { DbTestService } from '../../data-access/services/db-test.service';
 import { ConfigService } from '../../core/services/config.service';
+import { ProjectCardComponent } from '../projects/project-card.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, ProjectCardComponent],
   template: `
   <div class="home-container">
       <section class="hero">
@@ -58,10 +59,7 @@ import { ConfigService } from '../../core/services/config.service';
     <section class="featured-projects">
       <h3>Featured Projects</h3>
       @for (project of featuredProjects(); track project.id) {
-        <div class="project-card">
-          <h4>{{ project.title }}</h4>
-          <p>{{ project.shortDescription }}</p>
-        </div>
+        <app-project-card [project]="project" />
       }
     </section>
     </div>
