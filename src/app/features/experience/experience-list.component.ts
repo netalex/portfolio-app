@@ -11,54 +11,53 @@ import { ProjectCardComponent } from '../projects/project-card.component';
   standalone: true,
   imports: [ProjectCardComponent],
   template: `
-  <div class="experience-container">
-  @if (loading()) {
-    <div class="loading">Loading experiences...</div>
-  }
-
-  @if (error()) {
-    <div class="error">{{ error() }}</div>
-  }
-
-  @if (experiences().length) {
-    <div class="experience-timeline">
-      @for (experience of experiences(); track experience.id) {
-        <div class="experience-card">
-          <div class="experience-period">
-            {{ formatDate(experience.startDate) }} -
-            {{ experience.endDate ? formatDate(experience.endDate) : 'Present' }}
-          </div>
-          <div class="experience-content">
-            <h3>{{ experience.company }}</h3>
-            <h4>{{ experience.role }}</h4>
-            <p>{{ experience.description }}</p>
-            <div class="experience-technologies">
-              @for (tech of experience.technologies; track tech) {
-                <span class="tech-badge">{{ tech }}</span>
+  <section class="experience-section body-section">
+    <div class="experience-container">
+    @if (loading()) {
+      <div class="loading">Loading experiences...</div>
+    }
+    @if (error()) {
+      <div class="error">{{ error() }}</div>
+    }
+    @if (experiences().length) {
+      <div class="experience-timeline">
+        @for (experience of experiences(); track experience.id) {
+          <div class="experience-card">
+            <div class="experience-period">
+              {{ formatDate(experience.startDate) }} -
+              {{ experience.endDate ? formatDate(experience.endDate) : 'Present' }}
+            </div>
+            <div class="experience-content">
+              <h3>{{ experience.company }}</h3>
+              <h4>{{ experience.role }}</h4>
+              <p>{{ experience.description }}</p>
+              <div class="experience-technologies">
+                @for (tech of experience.technologies; track tech) {
+                  <span class="tech-badge">{{ tech }}</span>
+                }
+              </div>
+              <!-- Progetti correlati -->
+              @if (portfolioService.getProjectsByExperience(experience.id)().length) {
+                <div class="related-projects">
+                  <h5>Projects</h5>
+                  <div class="projects-grid">
+                    @for (project of portfolioService.getProjectsByExperience(experience.id)();
+                          track project.id) {
+                      <app-project-card
+                        [project]="project"
+                        class="nested-project"
+                      />
+                    }
+                  </div>
+                </div>
               }
             </div>
-
-            <!-- Progetti correlati -->
-            @if (portfolioService.getProjectsByExperience(experience.id)().length) {
-              <div class="related-projects">
-                <h5>Projects</h5>
-                <div class="projects-grid">
-                  @for (project of portfolioService.getProjectsByExperience(experience.id)();
-                        track project.id) {
-                    <app-project-card
-                      [project]="project"
-                      class="nested-project"
-                    />
-                  }
-                </div>
-              </div>
-            }
           </div>
-        </div>
-      }
+        }
+      </div>
+    }
     </div>
-  }
-</div>
+  </section>
   `,
   styles: [`
     .experience-container {

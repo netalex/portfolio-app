@@ -7,7 +7,7 @@ import { PortfolioStore } from '../../data-access/store/portfolio.store';
   selector: 'app-project-detail',
   standalone: true,
   template: `
-    <article class="project-detail">
+    <article class="project-detail body-section">
       @if (loading()) {
         <div class="loading-state">
           <div class="loading-spinner"></div>

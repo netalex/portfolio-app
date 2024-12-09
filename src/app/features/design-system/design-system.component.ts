@@ -44,7 +44,7 @@ interface SpacingToken {
         </nav>
       </header>
 
-      <section id="colors" class="section">
+      <section id="colors" class="ds-internal-section">
         <h2>Colors</h2>
         <div class="color-grid">
           @for (color of colors; track color.name) {
@@ -63,7 +63,7 @@ interface SpacingToken {
         <a (click)="scrollToTop()" class="back-to-top">↑</a>
       </section>
 
-      <section id="typography" class="section">
+      <section id="typography" class="ds-internal-section">
         <h2>Typography</h2>
         <div class="typography-samples">
           @for (sample of typographySamples; track sample.name) {
@@ -79,7 +79,7 @@ interface SpacingToken {
         <a (click)="scrollToTop()" class="back-to-top">↑</a>
       </section>
 
-      <section id="spacing" class="section">
+      <section id="spacing" class="ds-internal-section">
         <h2>Spacing</h2>
         <div class="spacing-samples">
           @for (space of spacing; track space.name) {
@@ -95,7 +95,7 @@ interface SpacingToken {
         <a (click)="scrollToTop()" class="back-to-top">↑</a>
       </section>
 
-      <section id="components" class="section">
+      <section id="components" class="ds-internal-section">
         <h2>Components</h2>
         <!-- Component demos to be added -->
       </section>
@@ -143,7 +143,7 @@ interface SpacingToken {
         }
       }
 
-      .section {
+      .ds-internal-section {
         scroll-margin-top: 2rem; // Aggiunto per migliorare lo scroll to anchor
         margin-bottom: var(--spacing-16);
 

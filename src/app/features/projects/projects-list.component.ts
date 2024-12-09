@@ -11,7 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   standalone: true,
   imports: [ProjectCardComponent, ProjectFiltersComponent],
   template: `
-    <section class="projects-section">
+    <section class="projects-section body-section">
       <header class="projects-header">
         <h1>I Miei Progetti</h1>
         <p class="projects-subtitle">
