@@ -59,11 +59,16 @@ import { About } from '../../data-access/models/portfolio.models';
     </footer>
   `,
   styles: [`
+  // TODO: this style is present also in capp.component.ts. wich to retain?
     .app-footer {
       background: var(--background);
       border-top: 1px solid var(--neutral-200);
       padding: var(--spacing-8) 0;
-      margin-top: auto;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
     }
 
     .footer-container {

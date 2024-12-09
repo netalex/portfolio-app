@@ -16,12 +16,12 @@ export class PortfolioService {
   private readonly db = inject(DatabaseService);
   private readonly store = inject(PortfolioStore);
   private readonly platformId = inject(PLATFORM_ID);
-  private readonly dataInitialized = signal(false);
   private readonly githubSyncService = inject(GitHubSyncService);
   private readonly initialized = signal(false);
 
   // Signal readonly per l'UI
   readonly isInitialized = computed(() => this.initialized());
+
 
   getProjectsByExperience(experienceId: string) {
     return computed(() => {
@@ -32,14 +32,14 @@ export class PortfolioService {
         .filter(project => experience.projects!.includes(project.id))
         .sort((a, b) => {
           return new Date(b.duration.start).getTime() -
-                 new Date(a.duration.start).getTime();
+            new Date(a.duration.start).getTime();
         });
     });
   }
 
   async loadInitialData() {
     // Evitiamo di eseguire sul server e caricamenti multipli
-    if (!isPlatformBrowser(this.platformId) || this.dataInitialized()) {
+    if (!isPlatformBrowser(this.platformId) || this.initialized()) {
       return;
     }
 
@@ -49,7 +49,7 @@ export class PortfolioService {
       // Attendiamo l'inizializzazione del database
       await this.db.waitForInitialization();
 
-            // Carica dati dal database locale
+      // Carica dati dal database locale
       const [projects, skills, experiences, about] = await Promise.all([
         this.db.getData<Project>('projects'),
         this.db.getData<Skill>('skills'),
@@ -68,7 +68,6 @@ export class PortfolioService {
         }
       }
 
-      this.dataInitialized.set(true);
       this.initialized.set(true);
     } catch (error) {
       this.store.setError(error instanceof Error ? error.message : 'Error loading data');
@@ -78,10 +77,10 @@ export class PortfolioService {
     }
   }
 
-  private async loadInitialDataFromJson() {
+  private async loadInitialDataFromLocalJson() {
     try {
       // Carica i dati dal file JSON incluso nell'applicazione
-      console.log('Loading initial data from JSON...');
+      console.log('Loading initial data from local JSON...');
       const response = await firstValueFrom(
         this.http.get<{
           projects: Project[];
@@ -103,7 +102,7 @@ export class PortfolioService {
       const aboutData = await this.db.upsertData('about', response.about);
 
       // Attendi che tutte le operazioni dello stesso tipo siano completate
-      const [savedProjects, savedSkills, savedExperiences, /* savedAbout */] = await Promise.all([
+      const [savedProjects, savedSkills, savedExperiences] = await Promise.all([
         Promise.all(projectUpserts),
         Promise.all(skillUpserts),
         Promise.all(experienceUpserts)
@@ -122,7 +121,7 @@ export class PortfolioService {
           count: savedExperiences.length,
           items: savedExperiences
         },
-        about: aboutData // Ora è un singolo oggetto
+        about: aboutData
       });
 
       // Aggiorniamo lo store con i dati salvati
@@ -131,7 +130,7 @@ export class PortfolioService {
       this.store.setExperiences(savedExperiences);
       this.store.setAbout(aboutData); // Ora passiamo l'oggetto direttamente
     } catch (error) {
-      console.error('Error loading initial data from JSON in loadInitialDataFromJson:', error);
+      console.error('Error loading initial data from local JSON in loadInitialDataFromLocalJson:', error);
       throw error;
     }
   }
@@ -159,13 +158,14 @@ export class PortfolioService {
         }
         return false;
       } catch (error) {
+        console.error('Error loading data in HanldeDataSync: ', error);
         return false;
       }
     };
 
     const githubDataLoaded = await loadData(this.githubSyncService.syncData.bind(this.githubSyncService));
     if (!githubDataLoaded) {
-      const jsonDataLoaded = await loadData(this.loadInitialDataFromJson.bind(this));
+      const jsonDataLoaded = await loadData(this.loadInitialDataFromLocalJson.bind(this));
       if (!jsonDataLoaded) {
         throw new Error("No data");
       }

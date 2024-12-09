@@ -14,7 +14,7 @@ import { isPlatformBrowser } from '@angular/common';
     <div class="app-container">
       <app-header />
       <main class="main-content">
-    <router-outlet />
+        <router-outlet />
       </main>
       <app-footer />
     </div>
@@ -26,11 +26,23 @@ import { isPlatformBrowser } from '@angular/common';
       flex-direction: column;
     }
 
+    //TODO: move this in styles.scss
+    :root {
+      --header-height: 5rem; /* Definiamo l'altezza del header */
+      --footer-height: 5rem; /* Definiamo l'altezza del footer */
+    }
+
     .main-content {
       flex: 1;
-      margin-top: var(--header-height); // Definiamo questa variabile nel tema
-      padding: var(--spacing-4);
+      margin-top: var(--header-height);
+      padding: var(--spacing-4) 0 calc(var(--footer-height) + var(--spacing-4));
       background: var(--background);
+    }
+
+    app-footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
     }
   `]
 })
@@ -46,7 +58,7 @@ export class AppComponent implements OnInit {
         .catch(error => {
           console.error('Failed to load initial data:', error);
           //TODO: Qui potremmo gestire l'errore in modo più user-friendly
-    });
+        });
     }
-}
+  }
 }

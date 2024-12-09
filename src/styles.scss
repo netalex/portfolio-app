@@ -2,7 +2,6 @@
 @use '@angular/material' as mat;
 @use 'app/design-system/styles' as ds;
 
-
 // Reset base
 *,
 *::before,
@@ -15,6 +14,7 @@
 html,
 body {
   height: 100%;
+  margin: 0;
 }
 
 body {
@@ -25,10 +25,14 @@ body {
   background: var(--background);
 }
 
+section {
+  margin-bottom: var(--spacing-40) !important;
+}
+
 // Utility classes
 .container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 75rem; // Assuming 1200px is approximately 75rem (1rem = 16px by default)
   margin: 0 auto;
   padding: var(--spacing-4);
 }
