@@ -22,7 +22,6 @@ export class PortfolioService {
   // Signal readonly per l'UI
   readonly isInitialized = computed(() => this.initialized());
 
-
   getProjectsByExperience(experienceId: string) {
     return computed(() => {
       const experience = this.store.experiences().find(e => e.id === experienceId);
@@ -158,7 +157,7 @@ export class PortfolioService {
         }
         return false;
       } catch (error) {
-        console.error('Error loading data in HanldeDataSync: ', error);
+        console.error('Error loading data in handleDataSync: ', error);
         return false;
       }
     };

@@ -4,7 +4,7 @@ import { PortfolioStore } from '../../data-access/store/portfolio.store';
 import { ProjectCardComponent } from './components/project-card.component';
 import { ProjectFilters, ProjectFiltersComponent } from './components/project-filters.component';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-projects-list',
@@ -88,12 +88,6 @@ import { ActivatedRoute, Router } from '@angular/router';
       gap: var(--spacing-6);
     }
 
-    // .project-card {
-    //   padding: var(--spacing-4);
-    //   border-radius: var(--radius-md);
-    //   background: var(--surface);
-    //   box-shadow: var(--shadow-sm);
-    // }
     .loading-container, .error-container, .no-results {
       text-align: center;
       padding: var(--spacing-8);
@@ -157,25 +151,25 @@ export class ProjectsListComponent {
     )].sort();
   });
 
-// projects/projects-list.component.ts
-constructor() {
-  this.router = inject(Router);
-  // this.store = inject(PortfolioStore);
+  // projects/projects-list.component.ts
+  constructor() {
+    this.router = inject(Router);
 
-  effect(() => {
-    console.log('Loaded projects:', this.projects().length);
-  });
- }
+    effect(() => {
+      console.log('Loaded projects: \n', this.projects().length, this.projects());
+    });
+  }
 
- private readonly router: Router;
-//  private readonly store: PortfolioStore;
+  private readonly router: Router;
+
   handleFilterChange(filters: ProjectFilters) {
     this.store.setProjectTechnologyFilter(filters.technology);
+    console.log("pippo  ~ file: projects-list.component.ts:169 ~ ProjectsListComponent ~ handleFilterChange ~ this.store.setProjectTechnologyFilter(filters.technology);:", this.store.setProjectTechnologyFilter(filters.technology));
   }
 
   handleProjectClick(projectId: string) {
     this.router.navigate(['/projects', projectId]);
-    console.log('Project clicked:', projectId);
+    console.log("pippo  ~ file: projects-list.component.ts:174 ~ ProjectsListComponent ~ handleProjectClick ~ projectId Project clicked:", projectId)
   }
 
   retryLoading() {

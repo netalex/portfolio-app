@@ -6,12 +6,29 @@ import { DbTestService } from '../../data-access/services/db-test.service';
 import { ConfigService } from '../../core/services/config.service';
 import { ProjectCardComponent } from '../projects/project-card.component';
 
+/**
+ * Interface representing the result of a database test.
+ */
+interface TestResult {
+  success: boolean;
+  counts?: {
+    projects: number;
+    skills: number;
+    experiences: number;
+  };
+  error?: string;
+}
+
+/**
+ * The HomeComponent class is responsible for rendering the home page of the application.
+ * It includes a hero section with a name, role, tagline, and action buttons, as well as a section for featured projects.
+ */
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [RouterLink, ProjectCardComponent],
   template: `
-  <div class="home-container">
+  <div class="home-container body-section">
       <section class="hero">
       <div class="hero-content">
         <h1 class="name">Alessandro Aprile</h1>
@@ -75,11 +92,11 @@ import { ProjectCardComponent } from '../projects/project-card.component';
       text-align: center;
       margin-bottom: var(--spacing-16);
       position: relative;
-    z-index: 1;
+      z-index: 1;
 
-    a {
-      pointer-events: all;
-    }
+      a {
+        pointer-events: all;
+      }
 
     }
 
@@ -118,42 +135,42 @@ import { ProjectCardComponent } from '../projects/project-card.component';
       display: flex;
       gap: var(--spacing-4);
       justify-content: center;
-    position: relative;
-    z-index: 2;  // Assicuriamoci che sia sopra eventuali altri elementi
+      position: relative;
+      z-index: 2;  // Assicuriamoci che sia sopra eventuali altri elementi
     }
 
     .hero-btn {
-    display: inline-block;
+      display: inline-block;
       padding: var(--spacing-3) var(--spacing-6);
       border-radius: var(--radius-md);
       text-decoration: none;
       font-weight: 500;
       transition: all 0.2s ease;
-    position: relative;
-    z-index: 2;
-    pointer-events: all;  // Forza la clickability
-    cursor: pointer;      // Rende esplicito che è cliccabile
+      position: relative;
+      z-index: 2;
+      pointer-events: all;  // Forza la clickability
+      cursor: pointer;      // Rende esplicito che è cliccabile
 
       &.primary {
         background: var(--primary);
         color: white;
-      border: 2px solid var(--primary);
+        border: 2px solid var(--primary);
 
         &:hover {
-        background: white;
-        color: var(--primary);  // Testo diventa blu
+          background: white;
+          color: var(--primary);  // Testo diventa blu
           transform: translateY(-2px);
         }
       }
 
       &.secondary {
-      background: white;
+        background: white;
         color: var(--primary);
-      border: 2px solid var(--primary);
+        border: 2px solid var(--primary);
 
         &:hover {
-        background: var(--primary);
-        color: white;  // Testo diventa bianco
+          background: var(--primary);
+          color: white;  // Testo diventa bianco
           transform: translateY(-2px);
         }
       }
@@ -228,15 +245,49 @@ import { ProjectCardComponent } from '../projects/project-card.component';
   `]
 })
 export class HomeComponent implements OnInit {
+  /**
+   * Service for testing database operations.
+   */
   private readonly dbTest = inject(DbTestService);
-  protected readonly config = inject(ConfigService);
-  protected isTestingDb = false;
-  protected lastTestResult: any = null;
 
+  /**
+   * Service for configuration settings.
+   */
+  protected readonly config = inject(ConfigService);
+
+  /**
+   * Flag indicating if a database test is in progress.
+   */
+  protected isTestingDb = false;
+
+  /**
+   * Result of the last database test.
+   */
+  protected lastTestResult: TestResult | undefined = undefined;
+
+  /**
+   * Store for portfolio data.
+   */
   private readonly store = inject(PortfolioStore);
+
+  /**
+   * Service for setting meta tags.
+   */
   private readonly meta = inject(Meta);
+
+  /**
+   * Service for setting the document title.
+   */
   private readonly title = inject(Title);
 
+  /**
+   * Method to get featured projects from the store.
+   */
+  featuredProjects = this.store.featuredProjects;
+
+  /**
+   * Constructor to set the document title and meta description.
+   */
   constructor() {
     this.title.setTitle('Alessandro Aprile - Frontend Developer');
     this.meta.updateTag({
@@ -245,6 +296,10 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  /**
+   * Lifecycle hook that runs on initialization.
+   * Logs the current environment configuration and the store state if the environment is not production.
+   */
   async ngOnInit() {
     if (!this.config.isProduction) {
       console.log("is development")
@@ -255,8 +310,9 @@ export class HomeComponent implements OnInit {
       i18n: this.config.i18nConfig,
       github: this.config.github
     });
-    console.log('current store', this.storeTest)
+    console.log("pippo current store ~ file: home.component.ts:316 ~ HomeComponent ~ ngOnInit ~ this.store:", this.store)
   }
+
 
   async testDb() {
     if (this.config.isProduction) {
@@ -272,11 +328,13 @@ export class HomeComponent implements OnInit {
         success: false,
         error: error instanceof Error ? error.message : 'Unknown error'
       };
+
+        console.log("pippo  ~ file: home.component.ts:332 ~ HomeComponent ~ testDb ~ error:", error)
+
     } finally {
       this.isTestingDb = false;
+      console.log("pippo ~ HomeComponent ~ testDb ~ this.isTestingDb:", this.isTestingDb)
     }
   }
 
-  featuredProjects = this.store.featuredProjects;
-  storeTest = this.store;
 }
